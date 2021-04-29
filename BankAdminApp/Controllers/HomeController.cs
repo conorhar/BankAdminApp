@@ -23,6 +23,7 @@ namespace BankAdminApp.Controllers
 
         public IActionResult Index()
         {
+            //test
             return View();
         }
 
