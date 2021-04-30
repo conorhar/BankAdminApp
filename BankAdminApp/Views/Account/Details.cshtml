@@ -1,0 +1,160 @@
+﻿@using BankAdminApp.Data
+@model BankAdminApp.ViewModels.AccountDetailsViewModel
+
+@{
+    ViewData["Title"] = "Account Page";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-icon card-header-rose">
+                    <div class="card-icon">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <h4 class="card-title ">Transactions for <b>Account number: @Model.AccountId</b></h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Amount</th>
+                                    <th>Balance</th>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Operation</th>
+                                    <th>Symbol</th>
+                                    <th>Bank</th>
+                                    <th>Account</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                @foreach (var t in Model.TransactionItems)
+                                {
+                                    <tr>
+                                        <td>@t.TransactionId</td>
+                                        <td>@t.Amount</td>
+                                        <td>@t.Balance</td>
+                                        <td>@t.Date</td>
+                                        <td>@t.Type</td>
+                                        <td>@t.Operation</td>
+                                        <td>@t.Symbol</td>
+                                        <td>@t.Bank</td>
+                                        <td>@t.Account</td>
+                                    </tr>
+                                }
+                            
+                                @*<tr>
+                                    <td>
+                                        1
+                                    </td>
+                                    <td>
+                                        Dakota Rice
+                                    </td>
+                                    <td>
+                                        Niger
+                                    </td>
+                                    <td>
+                                        Oud-Turnhout
+                                    </td>
+                                    <td>
+                                        $36,738
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        2
+                                    </td>
+                                    <td>
+                                        Minerva Hooper
+                                    </td>
+                                    <td>
+                                        Curaçao
+                                    </td>
+                                    <td>
+                                        Sinaai-Waas
+                                    </td>
+                                    <td>
+                                        $23,789
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        3
+                                    </td>
+                                    <td>
+                                        Sage Rodriguez
+                                    </td>
+                                    <td>
+                                        Netherlands
+                                    </td>
+                                    <td>
+                                        Baileux
+                                    </td>
+                                    <td>
+                                        $56,142
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        4
+                                    </td>
+                                    <td>
+                                        Philip Chaney
+                                    </td>
+                                    <td>
+                                        Korea, South
+                                    </td>
+                                    <td>
+                                        Overland Park
+                                    </td>
+                                    <td>
+                                        $38,735
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        5
+                                    </td>
+                                    <td>
+                                        Doris Greene
+                                    </td>
+                                    <td>
+                                        Malawi
+                                    </td>
+                                    <td>
+                                        Feldkirchen in Kärnten
+                                    </td>
+                                    <td>
+                                        $63,542
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        6
+                                    </td>
+                                    <td>
+                                        Mason Porter
+                                    </td>
+                                    <td>
+                                        Chile
+                                    </td>
+                                    <td>
+                                        Gloucester
+                                    </td>
+                                    <td>
+                                        $78,615
+                                    </td>
+                                </tr>*@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
