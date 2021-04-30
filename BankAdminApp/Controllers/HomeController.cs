@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using BankAdminApp.Data;
+using BankAdminApp.ViewModels;
 
 namespace BankAdminApp.Controllers
 {
@@ -23,8 +24,15 @@ namespace BankAdminApp.Controllers
 
         public IActionResult Index()
         {
-            //test
-            return View();
+            var viewModel = new HomeIndexViewModel
+            {
+                Country = "All",
+                TotalCustomers = _dbContext.Customers.Count(),
+                TotalAccounts = _dbContext.Accounts.Count(),
+                TotalBalance = _dbContext.Accounts.Sum(r => r.Balance)
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

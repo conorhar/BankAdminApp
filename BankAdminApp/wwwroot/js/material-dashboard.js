@@ -799,7 +799,7 @@ md = {
     };
 
     $('#worldMap').vectorMap({
-      map: 'world_mill_en',
+        map: 'europe_mill',
       backgroundColor: "transparent",
       zoomOnScroll: false,
       regionStyle: {
