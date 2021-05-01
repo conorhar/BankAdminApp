@@ -16,7 +16,7 @@
                     </div>
                     <h4 class="card-title ">Transactions for <b>Account number: @Model.AccountId</b></h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body table-hover">
                     <div class="table-responsive">
                         <table class="table">
                             <thead class=" text-primary">
@@ -26,17 +26,14 @@
                                     <th>Balance</th>
                                     <th>Date</th>
                                     <th>Type</th>
-                                    @*<th>Operation</th>
-                                        <th>Symbol</th>
-                                        <th>Bank</th>
-                                        <th>Account</th>*@
                                 </tr>
                             </thead>
                             <tbody>
 
                                 @foreach (var t in Model.TransactionItems)
                                 {
-                                    <tr class="clickable-row" style="cursor: pointer;" onclick="showAllDetails(@t.TransactionId)" 
+                                    
+                                    <tr class="clickable-row" style="cursor: pointer;" onclick="showAllDetails(@t.JsonObj)" 
                                         data-toggle="modal" data-target="#transactionModal">
                                         <td>@t.TransactionId</td>
 
@@ -52,115 +49,9 @@
                                         <td><b>@t.Balance</b></td>
                                         <td>@t.Date</td>
                                         <td>@t.Type</td>
-                                        @*<td>@t.Operation</td>
-                                            <td>@t.Symbol</td>
-                                            <td>@t.Bank</td>
-                                            <td>@t.Account</td>*@
                                     </tr>
                                 }
-
-                                @*<tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Niger
-                                        </td>
-                                        <td>
-                                            Oud-Turnhout
-                                        </td>
-                                        <td>
-                                            $36,738
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            2
-                                        </td>
-                                        <td>
-                                            Minerva Hooper
-                                        </td>
-                                        <td>
-                                            Curaçao
-                                        </td>
-                                        <td>
-                                            Sinaai-Waas
-                                        </td>
-                                        <td>
-                                            $23,789
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            3
-                                        </td>
-                                        <td>
-                                            Sage Rodriguez
-                                        </td>
-                                        <td>
-                                            Netherlands
-                                        </td>
-                                        <td>
-                                            Baileux
-                                        </td>
-                                        <td>
-                                            $56,142
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            4
-                                        </td>
-                                        <td>
-                                            Philip Chaney
-                                        </td>
-                                        <td>
-                                            Korea, South
-                                        </td>
-                                        <td>
-                                            Overland Park
-                                        </td>
-                                        <td>
-                                            $38,735
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            5
-                                        </td>
-                                        <td>
-                                            Doris Greene
-                                        </td>
-                                        <td>
-                                            Malawi
-                                        </td>
-                                        <td>
-                                            Feldkirchen in Kärnten
-                                        </td>
-                                        <td>
-                                            $63,542
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            6
-                                        </td>
-                                        <td>
-                                            Mason Porter
-                                        </td>
-                                        <td>
-                                            Chile
-                                        </td>
-                                        <td>
-                                            Gloucester
-                                        </td>
-                                        <td>
-                                            $78,615
-                                        </td>
-                                    </tr>*@
+                                
                             </tbody>
                         </table>
                     </div>
@@ -172,15 +63,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Modal title</h4>
+                    <h4 class="modal-title">Transaction details</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         <i class="material-icons">clear</i>
                     </button>
                 </div>
                 <div class="modal-body" id="transaction-details">
-                    <p>
-                        Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
-                    </p>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
@@ -193,12 +82,35 @@
 @section Scripts
 {
     <script>
-            
-        function showAllDetails(transactionId) {
-            $("#transaction-details").text(transactionId);
+        function isNullOrWhiteSpace(str) {
+            return (!str || str.length === 0 || /^\s*$/.test(str));
         }
 
-        
-            
+        function showAllDetails(obj) {
+
+            var output = `<h5><b>Id:</b> ${obj.TransactionId}</h5>
+                            <h5><b>Date:</b> ${obj.Date.slice(0, 10)}</h5>
+                            <h5><b>Type:</b> ${obj.Type}</h5>`;
+
+            if (!(isNullOrWhiteSpace(obj.Operation))) {
+                output += `<h5><b>Operation:</b> ${obj.Operation}</h5>`;
+            }
+
+            output += `<h5><b>Amount:</b> ${(Math.round(obj.Amount * 100) / 100).toFixed(2).toString().replace('.', ',')}</h5>
+                        <h5><b>Balance:</b> ${(Math.round(obj.Balance * 100) / 100).toFixed(2).toString().replace('.', ',')}</h5>`;
+
+            if (!(isNullOrWhiteSpace(obj.Symbol))) {
+                output += `<h5><b>Symbol:</b> ${obj.Symbol}</h5>`;
+            }
+
+            if (obj.Bank) {
+                output += `<h5><b>Bank:</b> ${obj.Bank}</h5>
+                            <h5><b>Account:</b> ${obj.Account}</h5>`;
+            }
+
+            $("#transaction-details").html(output);
+        }
+
+
     </script>
 }

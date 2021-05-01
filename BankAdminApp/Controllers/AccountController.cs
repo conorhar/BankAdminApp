@@ -2,6 +2,7 @@
 using BankAdminApp.Data;
 using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace BankAdminApp.Controllers
 {
@@ -19,6 +20,8 @@ namespace BankAdminApp.Controllers
             var dbTransactions = _dbContext.Transactions.Where(r => r.AccountId == id)
                 .OrderByDescending(r => r.Date);
 
+            
+
             var viewModel = new AccountDetailsViewModel
             {
                 AccountId = id,
@@ -28,12 +31,9 @@ namespace BankAdminApp.Controllers
                     TransactionId = r.TransactionId,
                     Date = r.Date.ToString("yyyy-MM-dd"),
                     Type = r.Type,
-                    Operation = r.Operation,
                     Amount = r.Amount,
                     Balance = r.Balance,
-                    Symbol = r.Symbol,
-                    Bank = r.Bank,
-                    Account = r.Account
+                    JsonObj = JsonConvert.SerializeObject(r)
                 }).ToList()
             };
 
