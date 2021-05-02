@@ -8,50 +8,59 @@
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 mr-auto ml-auto">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">account_balance</i>
+                    </div>
+                    <p class="card-category">Account number</p>
+                    <h3 class="card-title">@Model.AccountId</h3>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 mr-auto ml-auto">
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">attach_money</i>
+                    </div>
+                    <p class="card-category">Balance</p>
+                    <h3 class="card-title">@Model.Balance</h3>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header card-header-icon card-header-rose">
                     <div class="card-icon">
                         <i class="material-icons">receipt_long</i>
                     </div>
-                    <h4 class="card-title ">Transactions for <b>Account number: @Model.AccountId</b></h4>
+                    <h4 class="card-title ">Account transactions</h4>
                 </div>
                 <div class="card-body table-hover">
                     <div class="table-responsive">
                         <table class="table">
                             <thead class=" text-primary">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Amount</th>
-                                    <th>Balance</th>
-                                    <th>Date</th>
-                                    <th>Type</th>
-                                </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Amount</th>
+                                <th>Balance</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                            </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="transactions">
 
-                                @foreach (var t in Model.TransactionItems)
-                                {
-                                    
-                                    <tr class="clickable-row" style="cursor: pointer;" onclick="showAllDetails(@t.JsonObj)" 
-                                        data-toggle="modal" data-target="#transactionModal">
-                                        <td>@t.TransactionId</td>
+                            @foreach (var t in Model.TransactionItems)
+                            {
+                                <partial name="_AccountTransactionRow" model="t"/>
+                            }
 
-                                        @if (t.Type == "Credit")
-                                        {
-                                            <td><b style="color: green">@t.Amount</b></td>
-                                        }
-                                        else
-                                        {
-                                            <td><b style="color: red">@t.Amount</b></td>
-                                        }
-
-                                        <td><b>@t.Balance</b></td>
-                                        <td>@t.Date</td>
-                                        <td>@t.Type</td>
-                                    </tr>
-                                }
-                                
                             </tbody>
                         </table>
                     </div>
@@ -59,6 +68,11 @@
             </div>
         </div>
     </div>
+    
+    <button id="load-more-btn" class="btn btn-primary btn-round" onclick="checkIfEnded(); fetch20more(); return false;">
+        <i class="material-icons">refresh</i> Load more
+    </button>
+    
     <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -69,7 +83,7 @@
                     </button>
                 </div>
                 <div class="modal-body" id="transaction-details">
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
@@ -111,6 +125,28 @@
             $("#transaction-details").html(output);
         }
 
+        var clickCounter = 0;
+
+        function checkIfEnded() {
+            clickCounter += 1;
+
+            if (clickCounter == @Model.AmountClicksUntilEnd) {
+                $("#load-more-btn").attr('disabled', 'disabled');
+            }
+        }
+        
+        var pos = 0;
+
+        function fetch20more() {
+            pos += 20;
+
+            $.ajax({
+                url: "/account/gettransactionsfrom/" + @Model.AccountId + "?pos=" + pos,
+                success: function(result) {
+                    $("#transactions").append(result);
+                }
+            });
+        }
 
     </script>
 }

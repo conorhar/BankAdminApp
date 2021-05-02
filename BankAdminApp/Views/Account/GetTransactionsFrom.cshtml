@@ -1,0 +1,19 @@
+﻿@model BankAdminApp.ViewModels.AccountGetTransactionsFromViewModel
+
+@{
+    Layout = null;
+}
+
+@if (!Model.ReachedEnd)
+{
+    foreach (var t in Model.TransactionItems)
+    {
+        <partial name="_AccountTransactionRow" model="t"/>
+    }
+}
+
+@if (Model.ReachedEnd)
+{
+    <p id="transactions-finished" class="text-danger">No more transactions to show</p>
+}
+

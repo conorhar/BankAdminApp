@@ -22,7 +22,7 @@ namespace BankAdminApp.ViewModels
             public int AccountNumber { get; set; }
             public string Frequency { get; set; }
             public string CreationDate { get; set; }
-            public Decimal Balance { get; set; }
+            public decimal Balance { get; set; }
             public string AccountOwnership { get; set; }
         }
     }

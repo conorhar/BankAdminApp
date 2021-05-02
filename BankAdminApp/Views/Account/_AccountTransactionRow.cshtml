@@ -1,0 +1,26 @@
+﻿@model BankAdminApp.ViewModels.AccountTransactionRowViewModel
+
+@{
+    Layout = null;
+}
+
+<tr class="clickable-row" style="cursor: pointer;" onclick="showAllDetails(@Model.JsonObj)"
+    data-toggle="modal" data-target="#transactionModal">
+    <td>@Model.TransactionId</td>
+
+    @if (Model.Type == "Credit")
+    {
+        <td><b style="color: green">@Model.Amount</b></td>
+    }
+    else
+    {
+        <td><b style="color: red">@Model.Amount</b></td>
+    }
+
+    <td><b>@Model.Balance</b></td>
+    <td>@Model.Date</td>
+    <td>@Model.Type</td>
+</tr>
+    
+
+
