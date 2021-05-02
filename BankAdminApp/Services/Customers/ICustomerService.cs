@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BankAdminApp.Data;
 
 namespace BankAdminApp.Services.Customers
@@ -11,5 +12,6 @@ namespace BankAdminApp.Services.Customers
         string GetNationalIdOutput(Customer c);
         List<Account> GetAccounts(Customer c);
         string GetAccountOwnershipInfo(Account a);
+        IQueryable<Customer> GetResults(string q);
     }
 }

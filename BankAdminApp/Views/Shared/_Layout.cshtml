@@ -88,6 +88,12 @@ The above copyright notice and this permission notice shall be included in all c
                         </a>
                     </li>
                     <li class="nav-item ">
+                        <a class="nav-link" asp-controller="Customer" asp-action="Index">
+                            <i class="material-icons">supervised_user_circle</i>
+                            <p> Customers </p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
                         <a class="nav-link" data-toggle="collapse" href="#pagesExamples">
                             <i class="material-icons">image</i>
                             <p>
@@ -363,9 +369,9 @@ The above copyright notice and this permission notice shall be included in all c
                         <span class="navbar-toggler-icon icon-bar"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-end">
-                        <form class="navbar-form" method="get" asp-controller="Customer" asp-action="Details">
+                        <form class="navbar-form" method="get" asp-controller="Customer" asp-action="Index">
                             <div class="input-group no-border">
-                                <input type="text" value="" class="form-control" placeholder="Search or find by id..." name="id">
+                                <input type="text" value="" class="form-control" placeholder="Search or find by id..." name="q">
                                 <button type="submit" class="btn btn-white btn-round btn-just-icon">
                                     <i class="material-icons">search</i>
                                     <div class="ripple-container"></div>

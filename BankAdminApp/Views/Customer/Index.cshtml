@@ -1,0 +1,86 @@
+﻿@using BankAdminApp.Data
+@using System.Collections.Specialized
+@model BankAdminApp.ViewModels.CustomerIndexViewModel
+
+@{
+    ViewData["Title"] = "Customer Index";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-icon card-header-rose">
+                    <div class="card-icon">
+                        <i class="material-icons">groups</i>
+                    </div>
+                    <h4 class="card-title ">Results</h4>
+                </div>
+                <div class="card-body table-hover">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Date of birth</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @foreach (var t in Model.CustomerItems)
+                            {
+                                <tr class="clickable-row" style="cursor: pointer;" onclick="toCustomerPage(@t.Id);">
+                                    <td>@t.Id</td>
+                                    <td>@t.FullName</td>
+                                    <td>@t.Address</td>
+                                    <td>@t.City</td>
+                                    <td>@t.Birthday</td>
+                                </tr>
+                            }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="ml-auto">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#link" aria-label="Previous">
+                        <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#link">1</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#link">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#link">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#link" aria-label="Next">
+                        <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        function toCustomerPage(id) {
+            window.location.href = '/customer/details?id=' + id;
+        }
+
+    </script>
+}

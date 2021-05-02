@@ -57,5 +57,12 @@ namespace BankAdminApp.Services.Customers
 
             return disposition.Type;
         }
+
+        public IQueryable<Customer> GetResults(string q)
+        {
+            return _dbContext.Customers.Take(50).Where(r =>
+                q == null || r.Givenname.Contains(q) || r.Surname.Contains(q)
+                || r.City.Contains(q));
+        }
     }
 }

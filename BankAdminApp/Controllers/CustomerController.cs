@@ -18,6 +18,30 @@ namespace BankAdminApp.Controllers
             _customerService = customerService;
         }
 
+        public IActionResult Index(string q)
+        {
+            if (int.TryParse(q, out int n) && _dbContext.Customers.Any(r => r.CustomerId == n))
+            {
+                return RedirectToAction("Details", new { id = n});
+            }
+
+
+
+            var viewModel = new CustomerIndexViewModel
+            {
+                CustomerItems = _customerService.GetResults(q).Select(r => new CustomerIndexViewModel.CustomerItem
+                {
+                    Id = r.CustomerId,
+                    FullName = _customerService.GetFullName(r),
+                    Address = r.Streetaddress,
+                    City = r.City,
+                    Birthday = Convert.ToDateTime(r.Birthday).ToString("yyyy-MM-dd")
+                }).ToList()
+            };
+
+            return View(viewModel);
+        }
+
         public IActionResult Details(int id)
         {
             var dbCustomer = _dbContext.Customers.First(r => r.CustomerId == id);
