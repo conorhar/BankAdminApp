@@ -58,6 +58,15 @@ namespace BankAdminApp.Services.Customers
             return disposition.Type;
         }
 
+        public IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q, int page, int pageSize)
+        {
+            var query = GetResults(q);
+            query = AddSorting(query, sortField, sortOrder);
+            query = AddPaging(query, page, pageSize);
+
+            return query;
+        }
+
         private IQueryable<Customer> GetResults(string q)
         {
             return _dbContext.Customers.Where(r =>
@@ -65,10 +74,8 @@ namespace BankAdminApp.Services.Customers
                 || r.City.Contains(q));
         }
 
-        public IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q)
+        private IQueryable<Customer> AddSorting(IQueryable<Customer> query, string sortField, string sortOrder)
         {
-            var query = GetResults(q);
-
             if (sortField == "Id")
             {
                 if (sortOrder == "asc")
@@ -118,6 +125,13 @@ namespace BankAdminApp.Services.Customers
             }
 
             return query;
+        }
+
+        private IQueryable<Customer> AddPaging(IQueryable<Customer> query, int page, int pageSize)
+        {
+            int howManyRecordsToSkip = (page - 1) * pageSize;
+
+            return query.Skip(howManyRecordsToSkip).Take(pageSize);
         }
 
         public int GetTotalAmount(string q)

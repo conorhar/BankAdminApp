@@ -26,18 +26,12 @@ namespace BankAdminApp.Controllers
                 return RedirectToAction("Details", new { id = n });
             }
 
-            int totalAmountInCollection = _customerService.GetTotalAmount(q);
-
             if (string.IsNullOrEmpty(sortField)) sortField = "Id";
             if (string.IsNullOrEmpty(sortOrder)) sortOrder = "asc";
 
-            var query = _customerService.BuildQuery(sortField, sortOrder, q);
-
             int pageSize = 50;
 
-            int howManyRecordsToSkip = (page - 1) * pageSize;
-
-            query = query.Skip(howManyRecordsToSkip).Take(pageSize);
+            var query = _customerService.BuildQuery(sortField, sortOrder, q, page, pageSize);
             
             var viewModel = new CustomerIndexViewModel
             {
@@ -52,6 +46,7 @@ namespace BankAdminApp.Controllers
                 }).ToList()
             };
 
+            int totalAmountInCollection = _customerService.GetTotalAmount(q);
             int totalPages = (int)Math.Ceiling((double)totalAmountInCollection / pageSize);
 
             var pager = new Pager(totalAmountInCollection, page, pageSize);

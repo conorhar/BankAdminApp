@@ -17,28 +17,18 @@
                     <h4 class="card-title ">Results</h4>
                 </div>
                 <div class="card-body table-hover">
-
+                    
+                    @if (Model.q != null)
+                    {
+                    <span>Search: "@Model.q" - </span>
+                    }
+                    
                     <span>@Model.CustomerItems.Count customers</span>
+                    
                     @if (Model.TotalAmount > 50)
                     {
                         <span>of @Model.TotalAmount results</span>
                     }
-                    
-                    @*@if (Model.CustomerItems.Count == 50)
-                    {
-                        if (Model.q != null)
-                        {
-                            <p>Search: "@Model.q" - 50 of @Model.TotalAmount</p>
-                        }
-                        else
-                        {
-                            <p>50 of @Model.TotalAmount</p>
-                        }
-                    }
-                    else
-                    {
-                        <p>@Model.CustomerItems.Count customers</p>
-                    }*@
 
                     @if (Model.CustomerItems.Any())
                     {
