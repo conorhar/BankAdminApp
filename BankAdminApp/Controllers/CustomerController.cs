@@ -25,8 +25,6 @@ namespace BankAdminApp.Controllers
                 return RedirectToAction("Details", new { id = n});
             }
 
-
-
             var viewModel = new CustomerIndexViewModel
             {
                 CustomerItems = _customerService.GetResults(q).Select(r => new CustomerIndexViewModel.CustomerItem

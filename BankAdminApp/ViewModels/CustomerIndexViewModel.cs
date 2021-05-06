@@ -4,6 +4,7 @@ namespace BankAdminApp.ViewModels
 {
     public class CustomerIndexViewModel
     {
+        public string q { get; set; }
         public List<CustomerItem> CustomerItems { get; set; }
 
         public class CustomerItem

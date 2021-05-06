@@ -17,33 +17,42 @@
                     <h4 class="card-title ">Results</h4>
                 </div>
                 <div class="card-body table-hover">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead class=" text-primary">
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>City</th>
-                                <th>Date of birth</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            @foreach (var t in Model.CustomerItems)
-                            {
-                                <tr class="clickable-row" style="cursor: pointer;" onclick="toCustomerPage(@t.Id);">
-                                    <td>@t.Id</td>
-                                    <td>@t.FullName</td>
-                                    <td>@t.Address</td>
-                                    <td>@t.City</td>
-                                    <td>@t.Birthday</td>
+                    
+                    @if (Model.CustomerItems.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>Date of birth</th>
                                 </tr>
-                            }
-                                
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+
+                                @foreach (var t in Model.CustomerItems)
+                                {
+                                    <tr class="clickable-row" style="cursor: pointer;" onclick="toCustomerPage(@t.Id);">
+                                        <td>@t.Id</td>
+                                        <td>@t.FullName</td>
+                                        <td>@t.Address</td>
+                                        <td>@t.City</td>
+                                        <td>@t.Birthday</td>
+                                    </tr>
+                                }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-danger">No customers found</p>
+                    }
+                    
                 </div>
             </div>
         </div>
