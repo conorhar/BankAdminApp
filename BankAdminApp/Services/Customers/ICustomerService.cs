@@ -12,6 +12,6 @@ namespace BankAdminApp.Services.Customers
         string GetNationalIdOutput(Customer c);
         List<Account> GetAccounts(Customer c);
         string GetAccountOwnershipInfo(Account a);
-        IQueryable<Customer> GetResults(string q);
+        IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q);
     }
 }

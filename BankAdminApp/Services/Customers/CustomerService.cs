@@ -58,11 +58,66 @@ namespace BankAdminApp.Services.Customers
             return disposition.Type;
         }
 
-        public IQueryable<Customer> GetResults(string q)
+        private IQueryable<Customer> GetResults(string q)
         {
-            return _dbContext.Customers.Take(50).Where(r =>
+            return _dbContext.Customers.Where(r =>
                 q == null || r.Givenname.Contains(q) || r.Surname.Contains(q)
                 || r.City.Contains(q));
+        }
+
+        public IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q)
+        {
+            var query = GetResults(q);
+
+            if (sortField == "Id")
+            {
+                if (sortOrder == "asc")
+                    query = query.OrderBy(r => r.CustomerId);
+                else
+                    query = query.OrderByDescending(r => r.CustomerId);
+            }
+
+            if (sortField == "FirstName")
+            {
+                if (sortOrder == "asc")
+                    query = query.OrderBy(r => r.Givenname);
+                else
+                    query = query.OrderByDescending(r => r.Givenname);
+            }
+
+            if (sortField == "Surname")
+            {
+                if (sortOrder == "asc")
+                    query = query.OrderBy(r => r.Surname);
+                else
+                    query = query.OrderByDescending(r => r.Surname);
+            }
+
+            if (sortField == "Address")
+            {
+                if (sortOrder == "asc")
+                    query = query.OrderBy(r => r.Streetaddress);
+                else
+                    query = query.OrderByDescending(r => r.Streetaddress);
+            }
+
+            if (sortField == "City")
+            {
+                if (sortOrder == "asc")
+                    query = query.OrderBy(r => r.City);
+                else
+                    query = query.OrderByDescending(r => r.City);
+            }
+
+            if (sortField == "Birthday")
+            {
+                if (sortOrder == "asc")
+                    query = query.OrderBy(r => r.Birthday);
+                else
+                    query = query.OrderByDescending(r => r.Birthday);
+            }
+
+            return query;
         }
     }
 }

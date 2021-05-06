@@ -17,32 +17,135 @@
                     <h4 class="card-title ">Results</h4>
                 </div>
                 <div class="card-body table-hover">
-                    
+
+                    @if (Model.q != null)
+                    {
+                        <p>Search: "@Model.q" - @Model.CustomerItems.Count customers found</p>
+                    }
+
                     @if (Model.CustomerItems.Any())
                     {
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class=" text-primary">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>City</th>
-                                    <th>Date of birth</th>
-                                </tr>
+                                    <tr>
+                                        <th>
+                                            <a asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" asp-route-sortField="Id"
+                                               asp-route-sortOrder="@(Model.SortField == "Id" ? Model.OppositeSortOrder : "")">
+                                                ID
+                                                @if (Model.SortField == "Id")
+                                                {
+                                                    if (Model.SortOrder == "asc")
+                                                    {
+                                                        <i class="material-icons">arrow_drop_up</i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="material-icons">arrow_drop_down</i>
+                                                    }
+                                                }
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" asp-route-sortField="FirstName"
+                                               asp-route-sortOrder="@(Model.SortField == "FirstName" ? Model.OppositeSortOrder : "")">
+                                                First name
+                                                @if (Model.SortField == "FirstName")
+                                                {
+                                                    if (Model.SortOrder == "asc")
+                                                    {
+                                                        <i class="material-icons">arrow_drop_up</i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="material-icons">arrow_drop_down</i>
+                                                    }
+                                                }
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" asp-route-sortField="Surname"
+                                               asp-route-sortOrder="@(Model.SortField == "Surname" ? Model.OppositeSortOrder : "")">
+                                                Surname
+                                                @if (Model.SortField == "Surname")
+                                                {
+                                                    if (Model.SortOrder == "asc")
+                                                    {
+                                                        <i class="material-icons">arrow_drop_up</i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="material-icons">arrow_drop_down</i>
+                                                    }
+                                                }
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" asp-route-sortField="Address"
+                                               asp-route-sortOrder="@(Model.SortField == "Address" ? Model.OppositeSortOrder : "")">
+                                                Address
+                                                @if (Model.SortField == "Address")
+                                                {
+                                                    if (Model.SortOrder == "asc")
+                                                    {
+                                                        <i class="material-icons">arrow_drop_up</i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="material-icons">arrow_drop_down</i>
+                                                    }
+                                                }
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" asp-route-sortField="City"
+                                               asp-route-sortOrder="@(Model.SortField == "City" ? Model.OppositeSortOrder : "")">
+                                                City
+                                                @if (Model.SortField == "City")
+                                                {
+                                                    if (Model.SortOrder == "asc")
+                                                    {
+                                                        <i class="material-icons">arrow_drop_up</i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="material-icons">arrow_drop_down</i>
+                                                    }
+                                                }
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" asp-route-sortField="Birthday"
+                                               asp-route-sortOrder="@(Model.SortField == "Birthday" ? Model.OppositeSortOrder : "")">
+                                                Date of birth
+                                                @if (Model.SortField == "Birthday")
+                                                {
+                                                    if (Model.SortOrder == "asc")
+                                                    {
+                                                        <i class="material-icons">arrow_drop_up</i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="material-icons">arrow_drop_down</i>
+                                                    }
+                                                }
+                                            </a>
+                                        </th>
+                                    </tr>
                                 </thead>
                                 <tbody>
 
-                                @foreach (var t in Model.CustomerItems)
-                                {
-                                    <tr class="clickable-row" style="cursor: pointer;" onclick="toCustomerPage(@t.Id);">
-                                        <td>@t.Id</td>
-                                        <td>@t.FullName</td>
-                                        <td>@t.Address</td>
-                                        <td>@t.City</td>
-                                        <td>@t.Birthday</td>
-                                    </tr>
-                                }
+                                    @foreach (var t in Model.CustomerItems)
+                                    {
+                                        <tr class="clickable-row" style="cursor: pointer;" onclick="toCustomerPage(@t.Id);">
+                                            <td>@t.Id</td>
+                                            <td>@t.FirstName</td>
+                                            <td>@t.Surname</td>
+                                            <td>@t.Address</td>
+                                            <td>@t.City</td>
+                                            <td>@t.Birthday</td>
+                                        </tr>
+                                    }
 
                                 </tbody>
                             </table>
@@ -52,7 +155,7 @@
                     {
                         <p class="text-danger">No customers found</p>
                     }
-                    
+
                 </div>
             </div>
         </div>

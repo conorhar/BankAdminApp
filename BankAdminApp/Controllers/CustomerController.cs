@@ -18,25 +18,35 @@ namespace BankAdminApp.Controllers
             _customerService = customerService;
         }
 
-        public IActionResult Index(string q)
+        public IActionResult Index(string q, string sortField, string sortOrder)
         {
             if (int.TryParse(q, out int n) && _dbContext.Customers.Any(r => r.CustomerId == n))
             {
                 return RedirectToAction("Details", new { id = n});
             }
 
+            if (string.IsNullOrEmpty(sortField)) sortField = "Id";
+            if (string.IsNullOrEmpty(sortOrder)) sortOrder = "asc";
+
+            var query = _customerService.BuildQuery(sortField, sortOrder, q);
+
             var viewModel = new CustomerIndexViewModel
             {
-                CustomerItems = _customerService.GetResults(q).Select(r => new CustomerIndexViewModel.CustomerItem
+                CustomerItems = query.Select(r => new CustomerIndexViewModel.CustomerItem
                 {
                     Id = r.CustomerId,
-                    FullName = _customerService.GetFullName(r),
+                    FirstName = r.Givenname,
+                    Surname = r.Surname,
                     Address = r.Streetaddress,
                     City = r.City,
                     Birthday = Convert.ToDateTime(r.Birthday).ToString("yyyy-MM-dd")
                 }).ToList()
             };
 
+            viewModel.q = q;
+            viewModel.SortField = sortField;
+            viewModel.SortOrder = sortOrder;
+            viewModel.OppositeSortOrder = sortOrder == "asc" ? "desc" : "asc";
             return View(viewModel);
         }
 
