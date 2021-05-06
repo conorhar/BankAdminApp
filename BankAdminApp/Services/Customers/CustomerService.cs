@@ -119,5 +119,13 @@ namespace BankAdminApp.Services.Customers
 
             return query;
         }
+
+        public int GetTotalAmount(string q)
+        {
+            if (q == null)
+                return _dbContext.Customers.Count();
+
+            return GetResults(q).Count();
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using BankAdminApp.Data;
 using BankAdminApp.Services.Customers;
 using BankAdminApp.ViewModels;
+using JW;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankAdminApp.Controllers
@@ -18,18 +19,26 @@ namespace BankAdminApp.Controllers
             _customerService = customerService;
         }
 
-        public IActionResult Index(string q, string sortField, string sortOrder)
+        public IActionResult Index(string q, string sortField, string sortOrder, int page = 1)
         {
             if (int.TryParse(q, out int n) && _dbContext.Customers.Any(r => r.CustomerId == n))
             {
-                return RedirectToAction("Details", new { id = n});
+                return RedirectToAction("Details", new { id = n });
             }
+
+            int totalAmountInCollection = _customerService.GetTotalAmount(q);
 
             if (string.IsNullOrEmpty(sortField)) sortField = "Id";
             if (string.IsNullOrEmpty(sortOrder)) sortOrder = "asc";
 
             var query = _customerService.BuildQuery(sortField, sortOrder, q);
 
+            int pageSize = 50;
+
+            int howManyRecordsToSkip = (page - 1) * pageSize;
+
+            query = query.Skip(howManyRecordsToSkip).Take(pageSize);
+            
             var viewModel = new CustomerIndexViewModel
             {
                 CustomerItems = query.Select(r => new CustomerIndexViewModel.CustomerItem
@@ -43,6 +52,14 @@ namespace BankAdminApp.Controllers
                 }).ToList()
             };
 
+            int totalPages = (int)Math.Ceiling((double)totalAmountInCollection / pageSize);
+
+            var pager = new Pager(totalAmountInCollection, page, pageSize);
+
+            viewModel.PagerNumbers = pager.Pages;
+            viewModel.LastPage = totalPages;
+            viewModel.TotalAmount = totalAmountInCollection;
+            viewModel.Page = page;
             viewModel.q = q;
             viewModel.SortField = sortField;
             viewModel.SortOrder = sortOrder;

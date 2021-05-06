@@ -18,10 +18,27 @@
                 </div>
                 <div class="card-body table-hover">
 
-                    @if (Model.q != null)
+                    <span>@Model.CustomerItems.Count customers</span>
+                    @if (Model.TotalAmount > 50)
                     {
-                        <p>Search: "@Model.q" - @Model.CustomerItems.Count customers found</p>
+                        <span>of @Model.TotalAmount results</span>
                     }
+                    
+                    @*@if (Model.CustomerItems.Count == 50)
+                    {
+                        if (Model.q != null)
+                        {
+                            <p>Search: "@Model.q" - 50 of @Model.TotalAmount</p>
+                        }
+                        else
+                        {
+                            <p>50 of @Model.TotalAmount</p>
+                        }
+                    }
+                    else
+                    {
+                        <p>@Model.CustomerItems.Count customers</p>
+                    }*@
 
                     @if (Model.CustomerItems.Any())
                     {
@@ -37,11 +54,11 @@
                                                 {
                                                     if (Model.SortOrder == "asc")
                                                     {
-                                                        <i class="material-icons">arrow_drop_up</i>
+                                                        <i class="fas fa-sort-amount-down-alt"></i>
                                                     }
                                                     else
                                                     {
-                                                        <i class="material-icons">arrow_drop_down</i>
+                                                        <i class="fas fa-sort-amount-up-alt"></i>
                                                     }
                                                 }
                                             </a>
@@ -54,11 +71,11 @@
                                                 {
                                                     if (Model.SortOrder == "asc")
                                                     {
-                                                        <i class="material-icons">arrow_drop_up</i>
+                                                        <i class="fas fa-sort-amount-down-alt"></i>
                                                     }
                                                     else
                                                     {
-                                                        <i class="material-icons">arrow_drop_down</i>
+                                                        <i class="fas fa-sort-amount-up-alt"></i>
                                                     }
                                                 }
                                             </a>
@@ -71,11 +88,11 @@
                                                 {
                                                     if (Model.SortOrder == "asc")
                                                     {
-                                                        <i class="material-icons">arrow_drop_up</i>
+                                                        <i class="fas fa-sort-amount-down-alt"></i>
                                                     }
                                                     else
                                                     {
-                                                        <i class="material-icons">arrow_drop_down</i>
+                                                        <i class="fas fa-sort-amount-up-alt"></i>
                                                     }
                                                 }
                                             </a>
@@ -88,11 +105,11 @@
                                                 {
                                                     if (Model.SortOrder == "asc")
                                                     {
-                                                        <i class="material-icons">arrow_drop_up</i>
+                                                        <i class="fas fa-sort-amount-down-alt"></i>
                                                     }
                                                     else
                                                     {
-                                                        <i class="material-icons">arrow_drop_down</i>
+                                                        <i class="fas fa-sort-amount-up-alt"></i>
                                                     }
                                                 }
                                             </a>
@@ -105,11 +122,11 @@
                                                 {
                                                     if (Model.SortOrder == "asc")
                                                     {
-                                                        <i class="material-icons">arrow_drop_up</i>
+                                                        <i class="fas fa-sort-amount-down-alt"></i>
                                                     }
                                                     else
                                                     {
-                                                        <i class="material-icons">arrow_drop_down</i>
+                                                        <i class="fas fa-sort-amount-up-alt"></i>
                                                     }
                                                 }
                                             </a>
@@ -122,11 +139,11 @@
                                                 {
                                                     if (Model.SortOrder == "asc")
                                                     {
-                                                        <i class="material-icons">arrow_drop_up</i>
+                                                        <i class="fas fa-sort-amount-down-alt"></i>
                                                     }
                                                     else
                                                     {
-                                                        <i class="material-icons">arrow_drop_down</i>
+                                                        <i class="fas fa-sort-amount-up-alt"></i>
                                                     }
                                                 }
                                             </a>
@@ -163,19 +180,39 @@
     <div class="row">
         <div class="ml-auto">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="javascript:;">First</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:;">Previous</a></li>
                 <li class="page-item">
-                    <a class="page-link" href="#link">1</a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="#link">2</a>
+                    <a class="page-link first-prev" asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" 
+                       asp-route-sortField="@Model.SortField" asp-route-sortOrder="@Model.SortOrder" asp-route-page="1">
+                        First
+                    </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="#link">3</a>
+                    <a class="page-link first-prev" asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" 
+                       asp-route-sortField="@Model.SortField" asp-route-sortOrder="@Model.SortOrder" asp-route-page="@(Model.Page - 1)">
+                        Previous
+                    </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="javascript:;">Next</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:;">Last</a></li>
+                
+                @foreach (var p in Model.PagerNumbers)
+                {
+                    <li id="page-item-@p" class="page-item">
+                        <a class="page-link" asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" 
+                           asp-route-sortField="@Model.SortField" asp-route-sortOrder="@Model.SortOrder" asp-route-page="@p">@p</a>
+                    </li>
+                }
+               
+                <li class="page-item">
+                    <a class="page-link next-last" asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" 
+                       asp-route-sortField="@Model.SortField" asp-route-sortOrder="@Model.SortOrder" asp-route-page="@(Model.Page + 1)">
+                        Next
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link next-last" asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" 
+                       asp-route-sortField="@Model.SortField" asp-route-sortOrder="@Model.SortOrder" asp-route-page="@Model.LastPage">
+                        Last
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -188,5 +225,14 @@
             window.location.href = '/customer/details?id=' + id;
         }
 
+        $("#page-item-@Model.Page").addClass("active");
+
+        if (@Model.Page === 1) {
+            $(".first-prev").removeAttr('href');  
+        }
+
+        if (@Model.Page === @Model.LastPage) {
+            $(".next-last").removeAttr('href');
+        }
     </script>
 }

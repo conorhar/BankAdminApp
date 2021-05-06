@@ -9,6 +9,10 @@ namespace BankAdminApp.ViewModels
         public string SortOrder { get; set; }
         public string OppositeSortOrder { get; set; }
         public string q { get; set; }
+        public int Page { get; set; }
+        public int TotalAmount { get; set; }
+        public IEnumerable<int> PagerNumbers { get; set; }
+        public int LastPage { get; set; }
 
         public class CustomerItem
         {

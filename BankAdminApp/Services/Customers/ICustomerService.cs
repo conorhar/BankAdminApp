@@ -13,5 +13,6 @@ namespace BankAdminApp.Services.Customers
         List<Account> GetAccounts(Customer c);
         string GetAccountOwnershipInfo(Account a);
         IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q);
+        int GetTotalAmount(string q);
     }
 }
