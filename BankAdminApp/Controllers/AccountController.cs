@@ -30,6 +30,7 @@ namespace BankAdminApp.Controllers
                 AmountClicksUntilEnd = (_accountService.GetTotalAmountTransactions(id) / 20) + 1,
                 AccountId = dbAccount.AccountId,
                 Balance = dbAccount.Balance,
+                TotalTransactions = _accountService.GetTotalAmountTransactions(id),
 
                 TransactionItems = dbTransactions.Select(r => new AccountTransactionRowViewModel()
                 {

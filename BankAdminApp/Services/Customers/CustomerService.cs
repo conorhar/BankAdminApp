@@ -51,9 +51,9 @@ namespace BankAdminApp.Services.Customers
             return list;
         }
 
-        public string GetAccountOwnershipInfo(Account a)
+        public string GetAccountOwnershipInfo(int customerId, int accountId)
         {
-            var disposition = _dbContext.Dispositions.First(r => r.AccountId == a.AccountId);
+            var disposition = _dbContext.Dispositions.First(r => r.AccountId == accountId && r.CustomerId == customerId);
 
             return disposition.Type;
         }

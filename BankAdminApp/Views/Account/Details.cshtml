@@ -43,6 +43,9 @@
                     <h4 class="card-title ">Account transactions</h4>
                 </div>
                 <div class="card-body table-hover">
+                    
+                    <span>@Model.TotalTransactions results</span>
+
                     <div class="table-responsive">
                         <table class="table">
                             <thead class=" text-primary">
@@ -96,6 +99,10 @@
 @section Scripts
 {
     <script>
+        if (@Model.TotalTransactions <= 20) {
+            $("#load-more-btn").hide();
+        }
+
         function isNullOrWhiteSpace(str) {
             return (!str || str.length === 0 || /^\s*$/.test(str));
         }

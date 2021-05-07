@@ -83,7 +83,7 @@ namespace BankAdminApp.Controllers
                     Balance = r.Balance,
                     CreationDate = r.Created.ToString("yyyy-MM-dd"),
                     Frequency = r.Frequency,
-                    AccountOwnership = _customerService.GetAccountOwnershipInfo(r)
+                    AccountOwnership = _customerService.GetAccountOwnershipInfo(dbCustomer.CustomerId, r.AccountId)
                 }).ToList()
             };
 

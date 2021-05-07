@@ -17,14 +17,21 @@
                     <h4 class="card-title ">Results</h4>
                 </div>
                 <div class="card-body table-hover">
-                    
+
                     @if (Model.q != null)
                     {
-                    <span>Search: "@Model.q" - </span>
+                        <span>Search: "@Model.q" - </span>
                     }
-                    
-                    <span>@Model.CustomerItems.Count customers</span>
-                    
+
+                    @if (Model.TotalAmount == 1)
+                    {
+                        <span>1 customer</span>
+                    }
+                    else if (Model.TotalAmount != 0)
+                    {
+                        <span>@Model.CustomerItems.Count customers</span>
+                    }
+
                     @if (Model.TotalAmount > 50)
                     {
                         <span>of @Model.TotalAmount results</span>
@@ -160,7 +167,7 @@
                     }
                     else
                     {
-                        <p class="text-danger">No customers found</p>
+                        <span class="text-danger">No customers found</span>
                     }
 
                 </div>
