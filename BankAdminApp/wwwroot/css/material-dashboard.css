@@ -30230,4 +30230,10 @@ select.selectpicker {
   }
 }
 
-/*# sourceMappingURL=dashboard-pro.css.map */
+.field-validation-error {
+    width: 100% !important;
+    margin-top: .25rem !important;
+    font-size: 80% !important;
+    color: #dc3545 !important;
+}
+    /*# sourceMappingURL=dashboard-pro.css.map */

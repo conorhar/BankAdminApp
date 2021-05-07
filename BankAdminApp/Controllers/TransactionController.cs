@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using BankAdminApp.Data;
+using BankAdminApp.Services.Transactions;
+using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -10,16 +12,35 @@ namespace BankAdminApp.Controllers
     public class TransactionController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly ITransactionService _transactionService;
 
-        public TransactionController(ApplicationDbContext dbContext)
+        public TransactionController(ApplicationDbContext dbContext, ITransactionService transactionService)
         {
             _dbContext = dbContext;
+            _transactionService = transactionService;
         }
 
-        // GET
         public IActionResult New()
         {
             return View();
+        }
+        
+        public IActionResult Wizard(string customerId)
+        {
+            var viewModel = new TransactionWizardViewModel
+            {
+                AllOperations = _transactionService.GetOperationListItems()
+            };
+            
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Wizard(TransactionWizardViewModel viewModel)
+        {
+            viewModel.AllAccounts = _transactionService.GetAccountListItems(viewModel.CustomerId);
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -32,7 +53,7 @@ namespace BankAdminApp.Controllers
                     where c.CustomerId == n
                     select new
                     {
-                        label = $"{c.Givenname} {c.Surname} ({c.CustomerId})",
+                        label = $"{c.Givenname} {c.Surname} (id: {c.CustomerId})",
                         val = c.CustomerId
                     }).ToList();
 
@@ -50,6 +71,14 @@ namespace BankAdminApp.Controllers
 
                 return Json(customers);
             }
+        }
+
+        public int CheckCustomerId(int id)
+        {
+            if (_dbContext.Customers.Any(r => r.CustomerId == id))
+                return 1;
+
+            return 2;
         }
     }
 }

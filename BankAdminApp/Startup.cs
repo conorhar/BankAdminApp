@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BankAdminApp.Services.Accounts;
 using BankAdminApp.Services.Customers;
+using BankAdminApp.Services.Transactions;
 
 namespace BankAdminApp
 {
@@ -31,6 +32,7 @@ namespace BankAdminApp
         {
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<ITransactionService, TransactionService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
