@@ -7,6 +7,7 @@ namespace BankAdminApp.ViewModels
     public class TransactionWizardViewModel
     {
         public int CustomerId { get; set; }
+        public string CustomerName  { get; set; }
         public int AccountId { get; set; }
         public decimal Amount { get; set; }
         public decimal Balance { get; set; }

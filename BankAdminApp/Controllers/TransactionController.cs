@@ -29,6 +29,7 @@ namespace BankAdminApp.Controllers
         {
             var viewModel = new TransactionWizardViewModel
             {
+                CustomerId = Convert.ToInt32(customerId),
                 AllOperations = _transactionService.GetOperationListItems()
             };
             

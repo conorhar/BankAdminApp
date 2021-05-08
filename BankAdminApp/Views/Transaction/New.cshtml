@@ -61,9 +61,18 @@
             });
 
             $("#submit-btn").click(function() {
+                var input = $("#customer-search").val();
+                var id = 0;
+
+                var regExp = /\(([^)]+)\)/;
+                var matches = regExp.exec(input);
+
+                if (matches != null) {
+                     id = matches[1].substr(4);
+                }
 
                 $.ajax({
-                    url: "/transaction/checkcustomerid?id=" + $("#customer-id").val(),
+                    url: "/transaction/checkcustomerid?id=" + id,
                     success: function(result) {
                         if (result === 1) {
                              $("#customer-form").submit();
