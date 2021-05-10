@@ -35,9 +35,34 @@
             </div>
             <div class="card-footer ">
                 <div class="ml-auto">
-                    <button type="submit" class="btn btn-fill btn-rose">Finish</button>
+                    <button id="finish-btn" type="button" class="btn btn-fill btn-rose">Finish</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        $(function() {
+            $("#finish-btn").click(function() {
+
+                var transaction = {
+                    accountid: @Model.AccountId,
+                    operation: "@Model.Operation",
+                    amount: @Model.Amount
+                };
+
+                $.ajax({
+                    url: '@Url.Action("MakeTransaction", "Transaction")',
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(transaction)
+                }).done(function(result){
+                    //do something
+                });
+            });
+        });
+    </script>
+}

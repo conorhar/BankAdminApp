@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BankAdminApp.Data;
+using BankAdminApp.Models;
 using BankAdminApp.Services.Customers;
 using BankAdminApp.Services.Transactions;
 using BankAdminApp.ViewModels;
@@ -10,6 +11,13 @@ using Newtonsoft.Json;
 
 namespace BankAdminApp.Controllers
 {
+    public class Transact
+    {
+        public int AccountId { get; set; }
+        public string Operation { get; set; }
+        public decimal Amount { get; set; }
+    }
+
     public class TransactionController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
@@ -95,6 +103,12 @@ namespace BankAdminApp.Controllers
             };
 
             return View(currentViewModel);
+        }
+
+        [HttpPost]
+        public bool MakeTransaction([FromBody] Transact t)
+        {
+            return true;
         }
 
         [HttpPost]
