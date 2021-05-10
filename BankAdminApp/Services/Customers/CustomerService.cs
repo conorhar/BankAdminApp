@@ -37,11 +37,11 @@ namespace BankAdminApp.Services.Customers
             return result;
         }
 
-        public List<Account> GetAccounts(Customer c)
+        public List<Account> GetAccounts(int customerId)
         {
             var list = new List<Account>();
 
-            var dispositions = _dbContext.Dispositions.Where(r => r.CustomerId == c.CustomerId).ToList();
+            var dispositions = _dbContext.Dispositions.Where(r => r.CustomerId == customerId).ToList();
 
             foreach (var d in dispositions)
             {

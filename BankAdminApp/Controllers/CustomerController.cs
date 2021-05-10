@@ -77,7 +77,7 @@ namespace BankAdminApp.Controllers
                 Id = dbCustomer.CustomerId,
                 NationalId = _customerService.GetNationalIdOutput(dbCustomer),
                 
-                AccountItems = _customerService.GetAccounts(dbCustomer).Select(r => new CustomerDetailsViewModel.AccountItem
+                AccountItems = _customerService.GetAccounts(dbCustomer.CustomerId).Select(r => new CustomerDetailsViewModel.AccountItem
                 {
                     AccountNumber = r.AccountId,
                     Balance = r.Balance,

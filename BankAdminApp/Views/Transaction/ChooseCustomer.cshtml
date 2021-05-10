@@ -12,7 +12,7 @@
                 <h4 class="card-title">Choose customer</h4>
             </div>
             <div class="card-body ">
-                <form id="customer-form" method="get" asp-controller="Transaction" asp-action="Wizard">
+                <form id="customer-form" method="get" asp-controller="Transaction" asp-action="ChooseAccountAndOperation">
                     <div class="form-group">
                         <label class="bmd-label-floating">Search customers by name or id</label>
                         <input type="text" class="form-control" id="customer-search" name="CustomerName">
@@ -61,6 +61,18 @@
             });
 
             $("#submit-btn").click(function() {
+                formSubmit();
+            });
+
+            $('#customer-search').keypress(function (e) {
+                var key = e.which;
+                if(key === 13) {
+                    e.preventDefault();
+                    formSubmit();
+                }
+            });   
+
+            function formSubmit() {
                 var input = $("#customer-search").val();
                 var id = 0;
 
@@ -68,14 +80,14 @@
                 var matches = regExp.exec(input);
 
                 if (matches != null) {
-                     id = matches[1].substr(4);
+                    id = matches[1].substr(4);
                 }
 
                 $.ajax({
                     url: "/transaction/checkcustomerid?id=" + id,
                     success: function(result) {
                         if (result === 1) {
-                             $("#customer-form").submit();
+                            $("#customer-form").submit();
                         }
                         else {
                             swal({
@@ -87,7 +99,7 @@
                         }
                     }
                 });
-            });
+            }
         });
     </script>
 }

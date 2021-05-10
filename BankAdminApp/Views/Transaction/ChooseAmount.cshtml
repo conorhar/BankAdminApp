@@ -1,0 +1,71 @@
+﻿@model BankAdminApp.ViewModels.TransactionChooseAmountViewModel
+
+@{
+    ViewData["Title"] = "New transaction";
+}
+
+<div class="row">
+    <div class="col-md-8 ml-auto mr-auto">
+        <div class="card ">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">request_quote</i>
+                </div>
+                <h4 class="card-title">Customer: @Model.CustomerName (@Model.CustomerId) - Account number: @Model.AccountId</h4>
+            </div>
+            <div class="card-body ">
+                <form id="form" method="post" asp-controller="Transaction" asp-action="ChooseAmount" class="form-horizontal">
+                    <div class="row">
+                        <label class="col-md-3 col-form-label">Operation</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="@Model.Operation" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="Amount" class="col-md-3 col-form-label">Transaction amount in SEK</label>
+                        <div class="col-md-9">
+                            <div class="form-group has-default">
+                                <input asp-for="Amount" class="form-control">
+                                <span asp-validation-for="Amount" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.Operation == "Remittance to Another Bank")
+                    {
+                        <div class="row">
+                            <label asp-for="Bank" class="col-md-3 col-form-label">Bank code for receiver</label>
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <input asp-for="Bank" class="form-control">
+                                    <span asp-validation-for="Bank" class="field-validation-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label asp-for="ExternalAccount" class="col-md-3 col-form-label">Account number receiver</label>
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <input asp-for="ExternalAccount" class="form-control">
+                                    <span asp-validation-for="ExternalAccount" class="field-validation-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <input asp-for="CustomerId" type="hidden" />
+                    <input asp-for="CustomerName" type="hidden" />
+                    <input asp-for="Operation" type="hidden" />
+                    <input asp-for="AccountId" type="hidden" />
+                </form>
+            </div>
+            <div class="card-footer ">
+                <div class="ml-auto">
+                    <button form="form" type="submit" class="btn btn-fill btn-rose">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

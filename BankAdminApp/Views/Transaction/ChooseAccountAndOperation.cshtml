@@ -1,0 +1,44 @@
+﻿@model BankAdminApp.ViewModels.TransactionChooseAccountAndOperationViewModel
+
+@{
+    ViewData["Title"] = "New transaction";
+}
+
+<div class="row">
+    <div class="col-md-8 ml-auto mr-auto">
+        <div class="card ">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">request_quote</i>
+                </div>
+                <h4 class="card-title">New transaction for @Model.CustomerName Id: @Model.CustomerId</h4>
+            </div>
+            <div class="card-body ">
+                <form id="form" method="post" asp-controller="Transaction" asp-action="ChooseAccountAndOperation">
+                    <br />
+                    <div class="col-lg-5 col-md-6 col-sm-3">
+                        <div class="form-group">
+                            <select asp-for="SelectedAccountId" asp-items="@Model.AllAccounts" class="form-control selectpicker" data-size="7" data-style="btn btn-primary btn-round" title="Single Select"></select>
+                            <span style="display: block;" asp-validation-for="SelectedAccountId" class="field-validation-error ml-3"></span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-lg-5 col-md-6 col-sm-3">
+                        <div class="form-group">
+                            <select style="width: 400px !important;" asp-for="SelectedOperationId" asp-items="Model.AllOperations" class="form-control selectpicker" data-size="7" data-style="btn btn-primary btn-round" title="Single Select"></select>
+                            <span style="display: block;" asp-validation-for="SelectedOperationId" class="field-validation-error ml-3"></span>
+                        </div>
+                    </div>
+                    <input asp-for="CustomerId" type="hidden" />
+                    <input asp-for="CustomerName" type="hidden" />
+                </form>
+            </div>
+            <div class="card-footer ">
+                <div class="ml-auto">
+                    <button type="submit" form="form" class="btn btn-fill btn-rose">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BankAdminApp.Data;
+using BankAdminApp.Services.Customers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BankAdminApp.Services.Transactions
@@ -8,10 +9,12 @@ namespace BankAdminApp.Services.Transactions
     public class TransactionService : ITransactionService
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly ICustomerService _customerService;
 
-        public TransactionService(ApplicationDbContext dbContext)
+        public TransactionService(ApplicationDbContext dbContext, ICustomerService customerService)
         {
             _dbContext = dbContext;
+            _customerService = customerService;
         }
 
         public List<SelectListItem> GetOperationListItems()
@@ -30,16 +33,11 @@ namespace BankAdminApp.Services.Transactions
 
         public List<SelectListItem> GetAccountListItems(int customerId)
         {
-            var accountList = new List<Account>();
-
-            var dispositions = _dbContext.Dispositions.Where(r => r.CustomerId == customerId).ToList();
-
-            foreach (var d in dispositions)
-            {
-                accountList.AddRange(_dbContext.Accounts.Where(r => r.AccountId == d.AccountId));
-            }
+            var accountList = _customerService.GetAccounts(customerId);
 
             var listItems = new List<SelectListItem>();
+
+            listItems.Add(new SelectListItem { Value = "0", Text = "Choose an account..." });
 
             listItems.AddRange(accountList.Select(r => new SelectListItem
             {
@@ -48,6 +46,11 @@ namespace BankAdminApp.Services.Transactions
             }));
 
             return listItems;
+        }
+
+        public string GetOperationString(int selectedOperationId)
+        {
+            return GetOperationListItems().First(r => r.Value == selectedOperationId.ToString()).Text;
         }
     }
 }

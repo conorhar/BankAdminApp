@@ -1,0 +1,43 @@
+﻿@model BankAdminApp.ViewModels.TransactionConfirmViewModel
+
+@{
+    ViewData["Title"] = "New transaction";
+}
+
+<div class="row">
+    <div class="col-md-8 ml-auto mr-auto">
+        <div class="card ">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">request_quote</i>
+                </div>
+                <h4 class="card-title">Confirm transaction details</h4>
+            </div>
+            <div class="card-body ">
+                <br/>
+                <h5 class="card-title"><b>Customer name:</b> @Model.CustomerName</h5>
+                <br/>
+                <h5 class="card-title"><b>Customer Id:</b> @Model.CustomerId</h5>
+                <br/>
+                <h5 class="card-title"><b>Account number:</b> @Model.AccountId</h5>
+                <br/>
+                <h5 class="card-title"><b>Operation:</b> @Model.Operation</h5>
+                <br/>
+                <h5 class="card-title"><b>Bank code receiver:</b> @Model.Bank</h5>
+                <br/>
+                <h5 class="card-title"><b>Account number receiver:</b> @Model.ExternalAccount</h5>
+                <br/>
+                <h5 class="card-title"><b>Current balance:</b> @Model.CurrentBalance</h5>
+                <br/>
+                <h5 class="card-title"><b>Transaction amount:</b> @Model.Amount</h5>
+                <br/>
+                <h5 class="card-title"><b>Remaining balance:</b> @(Model.CurrentBalance - Model.Amount)</h5>
+            </div>
+            <div class="card-footer ">
+                <div class="ml-auto">
+                    <button type="submit" class="btn btn-fill btn-rose">Finish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
