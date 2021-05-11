@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BankAdminApp.Data;
 using BankAdminApp.Services.Customers;
+using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BankAdminApp.Services.Transactions
@@ -51,6 +53,40 @@ namespace BankAdminApp.Services.Transactions
         public string GetOperationString(int selectedOperationId)
         {
             return GetOperationListItems().First(r => r.Value == selectedOperationId.ToString()).Text;
+        }
+
+        public Transaction CreateTransaction(TransactionConfirmViewModel viewModel)
+        {
+            var transaction = new Transaction
+            {
+                AccountId = viewModel.AccountId,
+                Date = DateTime.Now.Date,
+                Type = viewModel.Type,
+                Operation = viewModel.Operation,
+                Amount = viewModel.Amount,
+                Symbol = ""
+            };
+
+            if (viewModel.Type == "Credit")
+                transaction.Balance = (_dbContext.Accounts.First(r => r.AccountId == viewModel.AccountId).Balance) + viewModel.Amount;
+            else
+                transaction.Balance = (_dbContext.Accounts.First(r => r.AccountId == viewModel.AccountId).Balance) - viewModel.Amount;
+            
+            if (!string.IsNullOrEmpty(viewModel.Bank))
+                transaction.Bank = viewModel.Bank;
+
+            if (!string.IsNullOrEmpty(viewModel.ExternalAccount))
+                transaction.Account = viewModel.ExternalAccount;
+
+            return transaction;
+        }
+
+        public string GetType(string operation)
+        {
+            if (operation == "Credit" || operation == "Credit in Cash")
+                return "Credit";
+            else
+                return "Debit";
         }
     }
 }

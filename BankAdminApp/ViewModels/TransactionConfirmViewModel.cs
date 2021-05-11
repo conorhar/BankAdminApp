@@ -10,5 +10,6 @@
         public string Bank { get; set; }
         public string ExternalAccount { get; set; }
         public decimal CurrentBalance { get; set; }
+        public string Type { get; set; }
     }
 }

@@ -10,12 +10,6 @@ namespace BankAdminApp.ViewModels
         public int CustomerId { get; set; }
         public string CustomerName  { get; set; }
         
-        [Required(ErrorMessage = "Please enter an amount")]
-        public decimal Amount { get; set; }
-        public decimal Balance { get; set; }
-        public string Bank { get; set; }
-        public string ExternalAccount { get; set; }
-
         [Range(1, 1000000, ErrorMessage = "Please choose an operation")]
         public int SelectedOperationId { get; set; }
         public List<SelectListItem> AllOperations { get; set; }

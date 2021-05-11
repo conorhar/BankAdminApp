@@ -13,5 +13,6 @@ namespace BankAdminApp.ViewModels
         public decimal Amount { get; set; }
         public string Bank { get; set; }
         public string ExternalAccount { get; set; }
+        public decimal CurrentBalance { get; set; }
     }
 }

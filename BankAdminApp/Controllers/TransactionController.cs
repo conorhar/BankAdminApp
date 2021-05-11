@@ -11,13 +11,6 @@ using Newtonsoft.Json;
 
 namespace BankAdminApp.Controllers
 {
-    public class Transact
-    {
-        public int AccountId { get; set; }
-        public string Operation { get; set; }
-        public decimal Amount { get; set; }
-    }
-
     public class TransactionController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
@@ -56,7 +49,15 @@ namespace BankAdminApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("ChooseAmount", viewModel);
+                var nextViewModel = new TransactionChooseAmountViewModel
+                {
+                    AccountId = viewModel.SelectedAccountId,
+                    Operation = _transactionService.GetOperationString(viewModel.SelectedOperationId),
+                    CustomerId = viewModel.CustomerId,
+                    CustomerName = viewModel.CustomerName
+                };
+
+                return View("ChooseAmount", nextViewModel);
             }
 
             viewModel.AllAccounts = _transactionService.GetAccountListItems(viewModel.CustomerId);
@@ -64,51 +65,66 @@ namespace BankAdminApp.Controllers
             return View(viewModel);
         }
         
-        public IActionResult ChooseAmount(TransactionChooseAccountAndOperationViewModel viewModel)
-        {
-            var currentViewModel = new TransactionChooseAmountViewModel
-            {
-                AccountId = viewModel.SelectedAccountId,
-                Operation = _transactionService.GetOperationString(viewModel.SelectedOperationId),
-                CustomerId = viewModel.CustomerId,
-                CustomerName = viewModel.CustomerName
-            };
+        //public IActionResult ChooseAmount(TransactionChooseAccountAndOperationViewModel viewModel)
+        //{
+        //    var currentViewModel = new TransactionChooseAmountViewModel
+        //    {
+        //        AccountId = viewModel.SelectedAccountId,
+        //        Operation = _transactionService.GetOperationString(viewModel.SelectedOperationId),
+        //        CustomerId = viewModel.CustomerId,
+        //        CustomerName = viewModel.CustomerName,
+        //        CurrentBalance = _dbContext.Accounts.First(r => r.AccountId == viewModel.SelectedAccountId).Balance
+        //    };
 
-            return View(currentViewModel);
-        }
+        //    return View(currentViewModel);
+        //}
 
         [HttpPost]
         public IActionResult ChooseAmount(TransactionChooseAmountViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Confirm", viewModel);
+                var nextViewModel = new TransactionConfirmViewModel
+                {
+                    CustomerId = viewModel.CustomerId,
+                    CustomerName = viewModel.CustomerName,
+                    AccountId = viewModel.AccountId,
+                    Operation = viewModel.Operation,
+                    Amount = viewModel.Amount,
+                    Bank = viewModel.Bank,
+                    ExternalAccount = viewModel.ExternalAccount,
+                    CurrentBalance = _dbContext.Accounts.First(r => r.AccountId == viewModel.AccountId).Balance,
+                    Type = _transactionService.GetType(viewModel.Operation)
+                };
+
+                return View("Confirm", nextViewModel);
             }
 
             return View(viewModel);
         }
 
-        public IActionResult Confirm(TransactionChooseAmountViewModel viewModel)
-        {
-            var currentViewModel = new TransactionConfirmViewModel
-            {
-                CustomerId = viewModel.CustomerId,
-                CustomerName = viewModel.CustomerName,
-                AccountId = viewModel.AccountId,
-                Operation = viewModel.Operation,
-                Amount = viewModel.Amount,
-                Bank = viewModel.Bank,
-                ExternalAccount = viewModel.ExternalAccount,
-                CurrentBalance = _dbContext.Accounts.First(r => r.AccountId == viewModel.AccountId).Balance
-            };
-
-            return View(currentViewModel);
-        }
+        //[HttpPost]
+        //public IActionResult Confirm(TransactionConfirmViewModel viewModel)
+        //{
+        //    return View(viewModel);
+        //}
 
         [HttpPost]
-        public bool MakeTransaction([FromBody] Transact t)
+        public IActionResult Complete(TransactionConfirmViewModel viewModel)
         {
-            return true;
+            if (ModelState.IsValid)
+            {
+                var account = _dbContext.Accounts.First(r => r.AccountId == viewModel.AccountId);
+                var transaction = _transactionService.CreateTransaction(viewModel);
+
+                _dbContext.Transactions.Add(transaction);
+                account.Balance = transaction.Balance;
+                _dbContext.SaveChanges();
+
+                return RedirectToAction("Index", "Home", new { accountId = viewModel.AccountId});
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

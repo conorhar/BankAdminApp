@@ -4,6 +4,15 @@
     ViewData["Title"] = "New transaction";
 }
 
+<form id="form" method="post" asp-controller="Transaction" asp-action="Complete">
+    <input asp-for="AccountId" type="hidden" />
+    <input asp-for="Operation" type="hidden" />
+    <input asp-for="Type" type="hidden" />
+    <input asp-for="Amount" type="hidden" />
+    <input asp-for="Bank" type="hidden" />
+    <input asp-for="ExternalAccount" type="hidden" />
+</form>
+
 <div class="row">
     <div class="col-md-8 ml-auto mr-auto">
         <div class="card ">
@@ -22,20 +31,28 @@
                 <h5 class="card-title"><b>Account number:</b> @Model.AccountId</h5>
                 <br/>
                 <h5 class="card-title"><b>Operation:</b> @Model.Operation</h5>
-                <br/>
-                <h5 class="card-title"><b>Bank code receiver:</b> @Model.Bank</h5>
-                <br/>
-                <h5 class="card-title"><b>Account number receiver:</b> @Model.ExternalAccount</h5>
+                
+                @if (Model.Operation == "Remittance to Another Bank")
+                {
+                    <br/>
+                    <h5 class="card-title"><b>Bank code receiver:</b> @Model.Bank</h5>
+                    <br/>
+                    <h5 class="card-title"><b>Account number receiver:</b> @Model.ExternalAccount</h5>
+                }
+                
                 <br/>
                 <h5 class="card-title"><b>Current balance:</b> @Model.CurrentBalance</h5>
                 <br/>
-                <h5 class="card-title"><b>Transaction amount:</b> @Model.Amount</h5>
+                <h5 class="card-title"><b>Transaction amount:</b> @Model.Amount.ToString("F")</h5>
                 <br/>
-                <h5 class="card-title"><b>Remaining balance:</b> @(Model.CurrentBalance - Model.Amount)</h5>
+                <h5 class="card-title">
+                    <b>Remaining balance:</b> 
+                    @(Model.Type == "Debit" ? (Model.CurrentBalance - Model.Amount) : (Model.CurrentBalance + Model.Amount))
+                </h5>
             </div>
             <div class="card-footer ">
                 <div class="ml-auto">
-                    <button id="finish-btn" type="button" class="btn btn-fill btn-rose">Finish</button>
+                    <button form="form" type="submit" class="btn btn-fill btn-rose">Complete transaction</button>
                 </div>
             </div>
         </div>
@@ -45,24 +62,32 @@
 @section Scripts
 {
     <script>
-        $(function() {
-            $("#finish-btn").click(function() {
+        @*$(function () {
+            $("#finish-btn").click(function () {
+                console.log(@Model.AmountString);
 
                 var transaction = {
                     accountid: @Model.AccountId,
                     operation: "@Model.Operation",
-                    amount: @Model.Amount
+                    amount: @Model.AmountString,
+                    bank: "@Model.Bank",
+                    externalaccount: "@Model.ExternalAccount"
                 };
 
                 $.ajax({
-                    url: '@Url.Action("MakeTransaction", "Transaction")',
+                    url: '@Url.Action("CompleteTransaction", "Transaction")',
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(transaction)
                 }).done(function(result){
-                    //do something
+                    swal({
+                        title: "Success",
+                        text: "Transaction completed! Returning to dashboard",
+                        buttonsStyling: false,
+                        confirmButtonClass: "btn btn-info"
+                    }).catch(swal.noop);
                 });
             });
-        });
+        });*@
     </script>
 }

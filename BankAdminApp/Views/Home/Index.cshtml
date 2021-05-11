@@ -57,13 +57,13 @@
                         <div class="table-responsive table-sales">
                             <table class="table">
                                 <thead>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th class="text-right">Customers</th>
-                                    <th class="text-right">Accounts</th>
-                                    <th class="text-right">Balance</th>
-                                </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th class="text-right">Customers</th>
+                                        <th class="text-right">Accounts</th>
+                                        <th class="text-right">Balance</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
@@ -165,3 +165,39 @@
         </div>
     </div>
 </div>
+
+<!-- notice modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notice">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Transaction completed successfully!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-success btn-round mr-1" data-dismiss="modal">Stay here</button>
+                <a class="btn btn-info btn-round" asp-controller="Account" asp-action="Details" asp-route-id="@Model.AccountId">
+                    See transaction on account page
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end notice modal -->
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+
+            setTimeout(function() {
+                if (@Model.AccountId !== 0) {
+                    $("#successModal").modal('show');
+                }
+            },
+            500);
+        })
+    </script>
+}

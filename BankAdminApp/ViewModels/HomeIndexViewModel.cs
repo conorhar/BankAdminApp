@@ -8,5 +8,6 @@ namespace BankAdminApp.ViewModels
         public int TotalCustomers { get; set; }
         public int TotalAccounts { get; set; }
         public decimal TotalBalance { get; set; }
+        public int AccountId { get; set; }
     }
 }

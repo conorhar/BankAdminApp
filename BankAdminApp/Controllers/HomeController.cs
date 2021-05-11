@@ -22,14 +22,15 @@ namespace BankAdminApp.Controllers
             _dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int accountId)
         {
             var viewModel = new HomeIndexViewModel
             {
                 Country = "All",
                 TotalCustomers = _dbContext.Customers.Count(),
                 TotalAccounts = _dbContext.Accounts.Count(),
-                TotalBalance = _dbContext.Accounts.Sum(r => r.Balance)
+                TotalBalance = _dbContext.Accounts.Sum(r => r.Balance),
+                AccountId = accountId
             };
 
             return View(viewModel);
