@@ -49,12 +49,16 @@ namespace BankAdminApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                string operation = _transactionService.GetOperationString(viewModel.SelectedOperationId);
+
                 var nextViewModel = new TransactionChooseAmountViewModel
                 {
                     AccountId = viewModel.SelectedAccountId,
-                    Operation = _transactionService.GetOperationString(viewModel.SelectedOperationId),
+                    Operation = operation,
                     CustomerId = viewModel.CustomerId,
-                    CustomerName = viewModel.CustomerName
+                    CustomerName = viewModel.CustomerName,
+                    CurrentBalance = _dbContext.Accounts.First(r => r.AccountId == viewModel.SelectedAccountId).Balance,
+                    Type = _transactionService.GetType(operation)
                 };
 
                 return View("ChooseAmount", nextViewModel);
@@ -64,20 +68,6 @@ namespace BankAdminApp.Controllers
             viewModel.AllOperations = _transactionService.GetOperationListItems();
             return View(viewModel);
         }
-        
-        //public IActionResult ChooseAmount(TransactionChooseAccountAndOperationViewModel viewModel)
-        //{
-        //    var currentViewModel = new TransactionChooseAmountViewModel
-        //    {
-        //        AccountId = viewModel.SelectedAccountId,
-        //        Operation = _transactionService.GetOperationString(viewModel.SelectedOperationId),
-        //        CustomerId = viewModel.CustomerId,
-        //        CustomerName = viewModel.CustomerName,
-        //        CurrentBalance = _dbContext.Accounts.First(r => r.AccountId == viewModel.SelectedAccountId).Balance
-        //    };
-
-        //    return View(currentViewModel);
-        //}
 
         [HttpPost]
         public IActionResult ChooseAmount(TransactionChooseAmountViewModel viewModel)
@@ -93,8 +83,8 @@ namespace BankAdminApp.Controllers
                     Amount = viewModel.Amount,
                     Bank = viewModel.Bank,
                     ExternalAccount = viewModel.ExternalAccount,
-                    CurrentBalance = _dbContext.Accounts.First(r => r.AccountId == viewModel.AccountId).Balance,
-                    Type = _transactionService.GetType(viewModel.Operation)
+                    Type = viewModel.Type,
+                    CurrentBalance = viewModel.CurrentBalance
                 };
 
                 return View("Confirm", nextViewModel);
@@ -103,14 +93,8 @@ namespace BankAdminApp.Controllers
             return View(viewModel);
         }
 
-        //[HttpPost]
-        //public IActionResult Confirm(TransactionConfirmViewModel viewModel)
-        //{
-        //    return View(viewModel);
-        //}
-
         [HttpPost]
-        public IActionResult Complete(TransactionConfirmViewModel viewModel)
+        public IActionResult Confirm(TransactionConfirmViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -163,6 +147,19 @@ namespace BankAdminApp.Controllers
                 return 1;
 
             return 2;
+        }
+
+        [HttpGet]
+        public IActionResult CheckBalance(decimal amount, int accountId, string type)
+        {
+            var account = _dbContext.Accounts.First(r => r.AccountId == accountId);
+
+            if (type == "Debit" && account.Balance < amount)
+            {
+                return Json("Insufficient funds in account");
+            }
+
+            return Json(true);
         }
     }
 }

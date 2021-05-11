@@ -24,6 +24,14 @@
                         </div>
                     </div>
                     <div class="row">
+                        <label class="col-md-3 col-form-label">Current balance</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="@Model.CurrentBalance" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <label asp-for="Amount" class="col-md-3 col-form-label">Transaction amount in SEK</label>
                         <div class="col-md-9">
                             <div class="form-group has-default">
@@ -59,6 +67,9 @@
                     <input asp-for="CustomerName" type="hidden" />
                     <input asp-for="Operation" type="hidden" />
                     <input asp-for="AccountId" type="hidden" />
+                    <input asp-for="CurrentBalance" type="hidden" />
+                    <input asp-for="Type" type="hidden" />
+
                 </form>
             </div>
             <div class="card-footer ">
