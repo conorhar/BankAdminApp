@@ -28,7 +28,8 @@ namespace BankAdminApp.Services.Transactions
             list.Add(new SelectListItem { Value = "2", Text = "Credit in Cash" });
             list.Add(new SelectListItem { Value = "3", Text = "Credit Card Withdrawal" });
             list.Add(new SelectListItem { Value = "4", Text = "Remittance to Another Bank" });
-            list.Add(new SelectListItem { Value = "5", Text = "Withdrawal in Cash" });
+            list.Add(new SelectListItem { Value = "5", Text = "Remittance to Internal Account" });
+            list.Add(new SelectListItem { Value = "6", Text = "Withdrawal in Cash" });
 
             return list;
         }

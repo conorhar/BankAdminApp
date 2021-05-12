@@ -16,17 +16,20 @@ namespace BankAdminApp.ViewModels
 
         [Required(ErrorMessage = "Please enter an amount")]
         [Range(0.01, Double.MaxValue, ErrorMessage = "Minimum transaction is 0,01")]
-        [Remote("CheckBalance", "Transaction", AdditionalFields = "AccountId, Type")]
+        [Remote("ValidateAmount", "Transaction", AdditionalFields = "AccountId, Type")]
         public decimal Amount { get; set; }
-        
-        [BankCode(ErrorMessage = "Invalid bank code - required: 2 capital letters eg. BA")]
+
+        //[BankCode(ErrorMessage = "Invalid bank code - required: 2 capital letters eg. BA")]
+        [Remote("ValidateBankCode", "Transaction", AdditionalFields = "Operation")]
         public string Bank { get; set; }
-        
-        [AccountNumber(ErrorMessage = "Invalid account number - required: 8 digits")]
+
+        //[AccountNumber(ErrorMessage = "Invalid account number - required: 8 digits")]
+        [Remote("ValidateExternalAccount", "Transaction", AdditionalFields = "Operation")]
         public string ExternalAccount { get; set; }
         
         public decimal CurrentBalance { get; set; }
         public string Type { get; set; }
+        public int InternalAccountId { get; set; }
     }
 
     public class AccountNumberAttribute : ValidationAttribute, IClientModelValidator
@@ -37,7 +40,7 @@ namespace BankAdminApp.ViewModels
 
             if (int.TryParse(accountNumber, out int n) && accountNumber.Length == 8)
                 return ValidationResult.Success;
-            
+
             return new ValidationResult(ErrorMessage);
         }
 

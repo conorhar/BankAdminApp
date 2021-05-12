@@ -8,6 +8,8 @@ $.validator.methods.number = function(value, element) {
 }
 
 
+
+
 $.validator.addMethod("validaccountno",
     function (value, element, params) {
 

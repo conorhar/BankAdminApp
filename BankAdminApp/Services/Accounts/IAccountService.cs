@@ -7,5 +7,8 @@ namespace BankAdminApp.Services.Accounts
     {
         IQueryable<Transaction> GetTransactionsFrom(int id, int pos);
         int GetTotalAmountTransactions(int id);
+        string GetCustomerFullName(int accountId);
+        string GetCustomerFirstName(int accountId);
+        string GetCustomerLastName(int accountId);
     }
 }

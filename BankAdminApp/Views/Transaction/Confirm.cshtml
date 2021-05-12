@@ -47,7 +47,7 @@
                 <br/>
                 <h5 class="card-title">
                     <b>Remaining balance:</b> 
-                    @(Model.Type == "Debit" ? (Model.CurrentBalance - Model.Amount) : (Model.CurrentBalance + Model.Amount))
+                    @(Model.Type == "Debit" ? (Model.CurrentBalance - Model.Amount).ToString("F") : (Model.CurrentBalance + Model.Amount).ToString("F"))
                 </h5>
             </div>
             <div class="card-footer ">

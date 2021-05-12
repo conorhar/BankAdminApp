@@ -41,6 +41,20 @@
                         </div>
                     </div>
 
+                    @if (Model.Operation == "Remittance to Internal Account")
+                    {
+                        <div class="row">
+                            <label class="col-md-3 col-form-label">Choose account</label>
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="account-search" placeholder="Search by account number" name="CustomerName">
+                                    <input type="hidden" class="form-control" id="account-id" name="CustomerId">
+                                    <span class="field-validation-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
                     @if (Model.Operation == "Remittance to Another Bank")
                     {
                         <div class="row">
@@ -80,4 +94,39 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            $(function() {
+                $("#account-search").autocomplete({
+                    source: function(request, response) {
+                        $.ajax({
+                            url: '/Transaction/AutoCompleteAccount/',
+                            data: { "prefix": request.term },
+                            type: "POST",
+                            success: function(data) {
+                                response($.map(data,
+                                    function(item) {
+                                        return item;
+                                    }))
+                            },
+                            error: function(response) {
+                                alert(response.responseText);
+                            },
+                            failure: function(response) {
+                                alert(response.responseText);
+                            }
+                        });
+                    },
+                    select: function(e, i) {
+                        $("#account-id").val(i.item.val);
+                    },
+                    minLength: 1
+                });
+            });
+        });
+    </script>
+}
 

@@ -1,15 +1,18 @@
 ﻿using System.Linq;
 using BankAdminApp.Data;
+using BankAdminApp.Services.Customers;
 
 namespace BankAdminApp.Services.Accounts
 {
     public class AccountService : IAccountService
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly ICustomerService _customerService;
 
-        public AccountService(ApplicationDbContext dbContext)
+        public AccountService(ApplicationDbContext dbContext, ICustomerService customerService)
         {
             _dbContext = dbContext;
+            _customerService = customerService;
         }
 
         public IQueryable<Transaction> GetTransactionsFrom(int id, int pos)
@@ -32,6 +35,27 @@ namespace BankAdminApp.Services.Accounts
             var allTransactions = _dbContext.Transactions.Where(r => r.AccountId == id);
 
             return allTransactions.Count();
+        }
+
+        public string GetCustomerFullName(int accountId)
+        {
+            var customerId = _dbContext.Dispositions.First(r => r.AccountId == accountId).CustomerId;
+
+            return _customerService.GetFullName(_dbContext.Customers.First(r => r.CustomerId == customerId));
+        }
+
+        public string GetCustomerFirstName(int accountId)
+        {
+            var customerId = _dbContext.Dispositions.First(r => r.AccountId == accountId).CustomerId;
+
+            return _dbContext.Customers.First(r => r.CustomerId == customerId).Givenname;
+        }
+
+        public string GetCustomerLastName(int accountId)
+        {
+            var customerId = _dbContext.Dispositions.First(r => r.AccountId == accountId).CustomerId;
+
+            return _dbContext.Customers.First(r => r.CustomerId == customerId).Surname;
         }
     }
 }

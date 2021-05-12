@@ -37,7 +37,7 @@
                 $("#customer-search").autocomplete({
                     source: function (request, response) {
                         $.ajax({
-                            url: '/Transaction/AutoComplete/',
+                            url: '/Transaction/AutoCompleteCustomer/',
                             data: { "prefix": request.term },
                             type: "POST",
                             success: function (data) {
