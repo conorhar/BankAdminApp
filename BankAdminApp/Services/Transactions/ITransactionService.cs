@@ -12,5 +12,6 @@ namespace BankAdminApp.Services.Transactions
         string GetOperationString(int selectedOperationId);
         Transaction CreateTransaction(TransactionConfirmViewModel viewModel);
         string GetType(string operation);
+        Transaction CreateTransactionForReceiver(TransactionConfirmViewModel viewModel);
     }
 }

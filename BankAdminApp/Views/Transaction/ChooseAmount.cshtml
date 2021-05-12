@@ -47,9 +47,9 @@
                             <label class="col-md-3 col-form-label">Choose account</label>
                             <div class="col-md-9">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="account-search" placeholder="Search by account number" name="CustomerName">
-                                    <input type="hidden" class="form-control" id="account-id" name="CustomerId">
-                                    <span class="field-validation-error"></span>
+                                    <input type="text" class="form-control" id="account-search" placeholder="Search by account number">
+                                    <input asp-for="InternalAccountId" type="hidden" class="form-control" id="account-id">
+                                    <span asp-validation-for="InternalAccountId" class="field-validation-error"></span>
                                 </div>
                             </div>
                         </div>

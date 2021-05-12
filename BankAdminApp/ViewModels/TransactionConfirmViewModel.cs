@@ -11,5 +11,6 @@
         public string ExternalAccount { get; set; }
         public decimal CurrentBalance { get; set; }
         public string Type { get; set; }
+        public int InternalAccountId { get; set; }
     }
 }

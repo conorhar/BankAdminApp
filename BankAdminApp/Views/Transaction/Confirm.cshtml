@@ -11,6 +11,7 @@
     <input asp-for="Amount" type="hidden" />
     <input asp-for="Bank" type="hidden" />
     <input asp-for="ExternalAccount" type="hidden" />
+    <input asp-for="InternalAccountId" type="hidden" />
 </form>
 
 <div class="row">
@@ -23,30 +24,36 @@
                 <h4 class="card-title">Confirm transaction details</h4>
             </div>
             <div class="card-body ">
-                <br/>
+                <br />
                 <h5 class="card-title"><b>Customer name:</b> @Model.CustomerName</h5>
-                <br/>
+                <br />
                 <h5 class="card-title"><b>Customer Id:</b> @Model.CustomerId</h5>
-                <br/>
+                <br />
                 <h5 class="card-title"><b>Account number:</b> @Model.AccountId</h5>
-                <br/>
+                <br />
                 <h5 class="card-title"><b>Operation:</b> @Model.Operation</h5>
-                
+
                 @if (Model.Operation == "Remittance to Another Bank")
                 {
-                    <br/>
+                    <br />
                     <h5 class="card-title"><b>Bank code receiver:</b> @Model.Bank</h5>
-                    <br/>
+                    <br />
                     <h5 class="card-title"><b>Account number receiver:</b> @Model.ExternalAccount</h5>
                 }
-                
-                <br/>
+
+                @if (Model.Operation == "Remittance to Internal Account")
+                {
+                    <br />
+                    <h5 class="card-title"><b>Account number receiver:</b> @Model.InternalAccountId</h5>
+                }
+
+                <br />
                 <h5 class="card-title"><b>Current balance:</b> @Model.CurrentBalance</h5>
-                <br/>
+                <br />
                 <h5 class="card-title"><b>Transaction amount:</b> @Model.Amount.ToString("F")</h5>
-                <br/>
+                <br />
                 <h5 class="card-title">
-                    <b>Remaining balance:</b> 
+                    <b>Remaining balance:</b>
                     @(Model.Type == "Debit" ? (Model.CurrentBalance - Model.Amount).ToString("F") : (Model.CurrentBalance + Model.Amount).ToString("F"))
                 </h5>
             </div>

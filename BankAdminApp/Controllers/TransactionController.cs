@@ -91,7 +91,8 @@ namespace BankAdminApp.Controllers
                     Bank = viewModel.Bank,
                     ExternalAccount = viewModel.ExternalAccount,
                     Type = viewModel.Type,
-                    CurrentBalance = viewModel.CurrentBalance
+                    CurrentBalance = viewModel.CurrentBalance,
+                    InternalAccountId = viewModel.InternalAccountId
                 };
 
                 return View("Confirm", nextViewModel);
@@ -110,6 +111,10 @@ namespace BankAdminApp.Controllers
 
                 _dbContext.Transactions.Add(transaction);
                 account.Balance = transaction.Balance;
+                if (transaction.Operation == "Remittance to Internal Account")
+                {
+                    _dbContext.Transactions.Add(_transactionService.CreateTransactionForReceiver(viewModel));
+                }
                 _dbContext.SaveChanges();
 
                 return RedirectToAction("Index", "Home", new { accountId = viewModel.AccountId});
@@ -164,20 +169,6 @@ namespace BankAdminApp.Controllers
                 return Json(accounts);
             }
             else return Json("no accounts found");
-
-            //else
-            //{
-            //    var accounts = (from a in _dbContext.Accounts
-            //        where _accountService.GetCustomerFirstName(a.AccountId).StartsWith(prefix) || 
-            //              _accountService.GetCustomerLastName(a.AccountId).StartsWith(prefix)
-            //        select new
-            //        {
-            //            label = $"Account id: {a.AccountId} - {_accountService.GetCustomerFullName(a.AccountId)}",
-            //            val = a.AccountId
-            //        }).ToList();
-
-            //    return Json(accounts);
-            //}
         }
 
         public int CheckCustomerId(int id)
@@ -253,7 +244,12 @@ namespace BankAdminApp.Controllers
                 if (string.IsNullOrWhiteSpace(viewModel.Bank))
                     ModelState.AddModelError("Bank", "Please enter receiver's bank code");
             }
-                
+
+            if (viewModel.Operation == "Remittance to Internal Account")
+            {
+                if (viewModel.InternalAccountId == 0)
+                    ModelState.AddModelError("InternalAccountId", "Please choose an account");
+            }
         }
     }
 }

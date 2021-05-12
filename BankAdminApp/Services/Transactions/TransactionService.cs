@@ -79,6 +79,31 @@ namespace BankAdminApp.Services.Transactions
             if (!string.IsNullOrEmpty(viewModel.ExternalAccount))
                 transaction.Account = viewModel.ExternalAccount;
 
+            if (viewModel.Operation == "Remittance to Internal Account")
+            {
+                transaction.Bank = "BB";
+                transaction.Account = viewModel.InternalAccountId.ToString();
+            }
+
+            return transaction;
+        }
+
+        public Transaction CreateTransactionForReceiver(TransactionConfirmViewModel viewModel)
+        {
+            var transaction = new Transaction
+            {
+                AccountId = viewModel.InternalAccountId,
+                Date = DateTime.Now.Date,
+                Type = "Credit",
+                Operation = "Collection from Internal Account",
+                Amount = viewModel.Amount,
+                Symbol = "",
+                Balance = _dbContext.Accounts.First(r => r.AccountId == Convert.ToInt32(viewModel.InternalAccountId))
+                    .Balance += viewModel.Amount,
+                Bank = "BB",
+                Account = viewModel.AccountId.ToString()
+            };
+
             return transaction;
         }
 
