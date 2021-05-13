@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BankAdminApp.Data;
+using BankAdminApp.Services.Accounts;
+using SharedThings.Models;
 using BankAdminApp.Services.Customers;
 using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SharedThings;
 
 namespace BankAdminApp.Services.Transactions
 {
@@ -12,11 +14,13 @@ namespace BankAdminApp.Services.Transactions
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ICustomerService _customerService;
+        private readonly IAccountService _accountService;
 
-        public TransactionService(ApplicationDbContext dbContext, ICustomerService customerService)
+        public TransactionService(ApplicationDbContext dbContext, ICustomerService customerService, IAccountService accountService)
         {
             _dbContext = dbContext;
             _customerService = customerService;
+            _accountService = accountService;
         }
 
         public List<SelectListItem> GetOperationListItems()
@@ -69,9 +73,9 @@ namespace BankAdminApp.Services.Transactions
             };
 
             if (viewModel.Type == "Credit")
-                transaction.Balance = (_dbContext.Accounts.First(r => r.AccountId == viewModel.AccountId).Balance) + viewModel.Amount;
+                transaction.Balance = (_accountService.GetBalance(viewModel.AccountId)) + viewModel.Amount;
             else
-                transaction.Balance = (_dbContext.Accounts.First(r => r.AccountId == viewModel.AccountId).Balance) - viewModel.Amount;
+                transaction.Balance = (_accountService.GetBalance(viewModel.AccountId)) - viewModel.Amount;
             
             if (!string.IsNullOrEmpty(viewModel.Bank))
                 transaction.Bank = viewModel.Bank;

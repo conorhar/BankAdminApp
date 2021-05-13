@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using BankAdminApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using SharedThings;
 
 namespace BankAdminApp
 {

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
 using BankAdminApp.Data;
-using BankAdminApp.Models;
+using SharedThings.Models;
 using BankAdminApp.Services.Accounts;
 using BankAdminApp.Services.Customers;
 using BankAdminApp.Services.Transactions;
+using BankAdminApp.Services.Validation;
 using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using SharedThings;
 
 namespace BankAdminApp.Controllers
 {
@@ -19,14 +21,16 @@ namespace BankAdminApp.Controllers
         private readonly ITransactionService _transactionService;
         private readonly ICustomerService _customerService;
         private readonly IAccountService _accountService;
+        private readonly IValidationService _validationService;
 
         public TransactionController(ApplicationDbContext dbContext, ITransactionService transactionService, 
-            ICustomerService customerService, IAccountService accountService)
+            ICustomerService customerService, IAccountService accountService, IValidationService validationService)
         {
             _dbContext = dbContext;
             _transactionService = transactionService;
             _customerService = customerService;
             _accountService = accountService;
+            _validationService = validationService;
         }
 
         public IActionResult ChooseCustomer()
@@ -184,26 +188,13 @@ namespace BankAdminApp.Controllers
         {
             var amtDecimal = Convert.ToDecimal(amount);
 
-            if (BalanceIsInsufficient(amtDecimal, accountId, type))
+            if (_validationService.BalanceIsInsufficient(amtDecimal, accountId, type))
                 return Json("Insufficient funds in account");
             
-            if (!Has2DecimalPlacesOrLess(amtDecimal))
+            if (!_validationService.Has2DecimalPlacesOrLess(amtDecimal))
                 return Json("Amount cannot have more than two decimal places");
 
             return Json(true);
-        }
-
-        private bool Has2DecimalPlacesOrLess(decimal amount)
-        {
-            decimal value = amount * 100;
-            return value == Math.Floor(value);
-        }
-
-        private bool BalanceIsInsufficient(decimal amount, int accountId, string type)
-        {
-            var account = _dbContext.Accounts.First(r => r.AccountId == accountId);
-
-            return (type == "Debit" && account.Balance < amount);
         }
 
         [HttpGet]

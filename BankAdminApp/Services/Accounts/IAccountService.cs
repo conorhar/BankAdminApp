@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BankAdminApp.Data;
+using SharedThings.Models;
 
 namespace BankAdminApp.Services.Accounts
 {
@@ -10,5 +10,6 @@ namespace BankAdminApp.Services.Accounts
         string GetCustomerFullName(int accountId);
         string GetCustomerFirstName(int accountId);
         string GetCustomerLastName(int accountId);
+        decimal GetBalance(int accountId);
     }
 }

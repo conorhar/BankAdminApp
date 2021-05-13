@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BankAdminApp.Data;
+using SharedThings.Models;
 using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

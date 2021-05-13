@@ -1,4 +1,4 @@
-﻿using BankAdminApp.Models;
+﻿using SharedThings.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BankAdminApp.Data;
 using BankAdminApp.ViewModels;
+using SharedThings;
 
 namespace BankAdminApp.Controllers
 {

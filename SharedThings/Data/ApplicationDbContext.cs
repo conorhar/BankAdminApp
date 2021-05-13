@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SharedThings.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BankAdminApp.Data
+
+
+namespace SharedThings
 {
     public partial class ApplicationDbContext : IdentityDbContext
     {
@@ -244,5 +247,3 @@ namespace BankAdminApp.Data
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
-
-    

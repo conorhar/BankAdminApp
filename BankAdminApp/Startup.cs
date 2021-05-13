@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using BankAdminApp.Services.Accounts;
 using BankAdminApp.Services.Customers;
 using BankAdminApp.Services.Transactions;
+using BankAdminApp.Services.Validation;
+using SharedThings;
 
 namespace BankAdminApp
 {
@@ -33,6 +35,7 @@ namespace BankAdminApp
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ITransactionService, TransactionService>();
+            services.AddTransient<IValidationService, ValidationService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -40,7 +43,9 @@ namespace BankAdminApp
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            
             services.AddControllersWithViews();
         }
 

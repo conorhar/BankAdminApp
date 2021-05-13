@@ -1,6 +1,6 @@
 using System;
 
-namespace BankAdminApp.Models
+namespace SharedThings.Models
 {
     public class ErrorViewModel
     {

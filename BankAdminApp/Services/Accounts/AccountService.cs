@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using BankAdminApp.Data;
 using BankAdminApp.Services.Customers;
+using SharedThings;
+using SharedThings.Models;
 
 namespace BankAdminApp.Services.Accounts
 {
@@ -56,6 +58,11 @@ namespace BankAdminApp.Services.Accounts
             var customerId = _dbContext.Dispositions.First(r => r.AccountId == accountId).CustomerId;
 
             return _dbContext.Customers.First(r => r.CustomerId == customerId).Surname;
+        }
+
+        public decimal GetBalance(int accountId)
+        {
+            return _dbContext.Accounts.First(r => r.AccountId == accountId).Balance;
         }
     }
 }
