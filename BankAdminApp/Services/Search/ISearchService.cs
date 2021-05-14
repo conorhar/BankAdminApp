@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Azure;
 using Azure.Search.Documents.Models;
 using BankAdminApp.Models;
 using SharedThings.Models;
@@ -8,6 +9,6 @@ namespace BankAdminApp.Services.Search
 {
     public interface ISearchService
     {
-        CustomerSearchModel GetResults(string sortField, string sortOrder, string q, int page, int pageSize);
+        Response<SearchResults<CustomerInAzure>> GetResults(string sortField, string sortOrder, string q, int page, int pageSize);
     }
 }

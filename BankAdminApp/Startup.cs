@@ -41,7 +41,10 @@ namespace BankAdminApp
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    op=>op.MigrationsAssembly("SharedThings")
+                    ));
+            
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

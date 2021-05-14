@@ -24,7 +24,7 @@ namespace BankAdminApp.Services.Search
             _dbContext = dbContext;
         }
 
-        public CustomerSearchModel GetResults(string sortField, string sortOrder, string q, int page, int pageSize)
+        public Response<SearchResults<CustomerInAzure>> GetResults(string sortField, string sortOrder, string q, int page, int pageSize)
         {
             var searchClient = new SearchClient(new Uri(searchUrl),
                 indexName, new AzureKeyCredential(key));
@@ -41,15 +41,17 @@ namespace BankAdminApp.Services.Search
 
             var searchResult = searchClient.Search<CustomerInAzure>(q, searchOptions);
             
-            var pageableResult = searchResult.Value.GetResults();
-            var customerSearchModel = new CustomerSearchModel{ TotalCount = Convert.ToInt32(searchResult.Value.TotalCount) };
+            //var pageableResult = searchResult.Value.GetResults();
+            //var customerSearchModel = new CustomerSearchModel{ TotalCount = Convert.ToInt32(searchResult.Value.TotalCount) };
             
-            foreach (var result in pageableResult)
-            {
-                customerSearchModel.Customers.Add(_dbContext.Customers.First(r => r.CustomerId == Convert.ToInt32(result.Document.Id)));   
-            }
+            //foreach (var result in pageableResult)
+            //{
+            //    customerSearchModel.Customers.Add(_dbContext.Customers.First(r => r.CustomerId == Convert.ToInt32(result.Document.Id)));   
+            //}
 
-            return customerSearchModel;
+            //return customerSearchModel;
+            
+            return searchResult;
         }
     }
 }

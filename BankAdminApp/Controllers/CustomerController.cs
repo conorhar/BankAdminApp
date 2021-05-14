@@ -35,23 +35,25 @@ namespace BankAdminApp.Controllers
 
             int pageSize = 50;
             
-            var customerSearchModel = _searchService.GetResults(sortField, sortOrder, q, page, pageSize);
-            
+            //var customerSearchModel = _searchService.GetResults(sortField, sortOrder, q, page, pageSize);
+            var result = _searchService.GetResults(sortField, sortOrder, q, page, pageSize);
+
             var viewModel = new CustomerIndexViewModel
             {
-                CustomerItems = customerSearchModel.Customers.Select(r => new CustomerIndexViewModel.CustomerItem
+                CustomerItems = result.Value.GetResults().Select(r => new CustomerIndexViewModel.CustomerItem
                 {
-                    Id = r.CustomerId,
-                    FirstName = r.Givenname,
-                    Surname = r.Surname,
-                    Address = r.Streetaddress,
-                    City = r.City,
-                    Birthday = Convert.ToDateTime(r.Birthday).ToString("yyyy-MM-dd")
+                    Id = Convert.ToInt32(r.Document.Id),
+                    FirstName = r.Document.FirstName,
+                    Surname = r.Document.Surname,
+                    Address = r.Document.Address,
+                    City = r.Document.City,
+                    Birthday = Convert.ToDateTime(r.Document.Birthday).ToString("yyyy-MM-dd")
                 }).ToList()
             };
 
             //int totalAmountInCollection = _customerService.GetTotalAmount(q);
-            int totalAmountInCollection = customerSearchModel.TotalCount;
+            //int totalAmountInCollection = customerSearchModel.TotalCount;
+            int totalAmountInCollection = Convert.ToInt32(result.Value.TotalCount);
             int totalPages = (int)Math.Ceiling((double)totalAmountInCollection / pageSize);
 
             var pager = new Pager(totalAmountInCollection, page, pageSize);
