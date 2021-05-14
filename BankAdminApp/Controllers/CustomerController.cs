@@ -2,6 +2,7 @@
 using System.Linq;
 using BankAdminApp.Data;
 using BankAdminApp.Services.Customers;
+using BankAdminApp.Services.Search;
 using BankAdminApp.ViewModels;
 using JW;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,13 @@ namespace BankAdminApp.Controllers
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ICustomerService _customerService;
+        private readonly ISearchService _searchService;
 
-        public CustomerController(ApplicationDbContext dbContext, ICustomerService customerService)
+        public CustomerController(ApplicationDbContext dbContext, ICustomerService customerService, ISearchService searchService)
         {
             _dbContext = dbContext;
             _customerService = customerService;
+            _searchService = searchService;
         }
 
         public IActionResult Index(string q, string sortField, string sortOrder, int page = 1)
@@ -31,12 +34,12 @@ namespace BankAdminApp.Controllers
             if (string.IsNullOrEmpty(sortOrder)) sortOrder = "asc";
 
             int pageSize = 50;
-
-            var query = _customerService.BuildQuery(sortField, sortOrder, q, page, pageSize);
+            
+            var customerSearchModel = _searchService.GetResults(sortField, sortOrder, q, page, pageSize);
             
             var viewModel = new CustomerIndexViewModel
             {
-                CustomerItems = query.Select(r => new CustomerIndexViewModel.CustomerItem
+                CustomerItems = customerSearchModel.Customers.Select(r => new CustomerIndexViewModel.CustomerItem
                 {
                     Id = r.CustomerId,
                     FirstName = r.Givenname,
@@ -47,7 +50,8 @@ namespace BankAdminApp.Controllers
                 }).ToList()
             };
 
-            int totalAmountInCollection = _customerService.GetTotalAmount(q);
+            //int totalAmountInCollection = _customerService.GetTotalAmount(q);
+            int totalAmountInCollection = customerSearchModel.TotalCount;
             int totalPages = (int)Math.Ceiling((double)totalAmountInCollection / pageSize);
 
             var pager = new Pager(totalAmountInCollection, page, pageSize);

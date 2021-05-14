@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BankAdminApp.Services.Accounts;
 using BankAdminApp.Services.Customers;
+using BankAdminApp.Services.Search;
 using BankAdminApp.Services.Transactions;
 using BankAdminApp.Services.Validation;
 using SharedThings;
@@ -36,6 +37,7 @@ namespace BankAdminApp
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ITransactionService, TransactionService>();
             services.AddTransient<IValidationService, ValidationService>();
+            services.AddTransient<ISearchService, SearchService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

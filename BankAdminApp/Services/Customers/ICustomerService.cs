@@ -13,7 +13,8 @@ namespace BankAdminApp.Services.Customers
         string GetNationalIdOutput(Customer c);
         List<Account> GetAccounts(int customerId);
         string GetAccountOwnershipInfo(int customerId, int accountId);
-        IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q, int page, int pageSize);
-        int GetTotalAmount(string q);
+        
+        //IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q, int page, int pageSize);
+        //int GetTotalAmount(string q);
     }
 }
