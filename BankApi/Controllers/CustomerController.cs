@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BankApi.ViewModels;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SharedThings;
 using SharedThings.Models;
@@ -9,6 +10,7 @@ using SharedThings.Services.Customers;
 
 namespace BankApi.Controllers
 {
+    [EnableCors("AllowAll")]
     [ApiController]
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
