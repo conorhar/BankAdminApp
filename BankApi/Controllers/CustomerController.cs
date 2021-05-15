@@ -24,7 +24,7 @@ namespace BankApi.Controllers
 
         [Route("{id}")]
         [HttpGet]
-        public ActionResult<Customer> Details(int id)
+        public ActionResult<CustomerDetailsViewModel> Details(int id)
         {
             var customer = _dbContext.Customers.FirstOrDefault(e => e.CustomerId == id);
             if (customer == null) return NotFound();

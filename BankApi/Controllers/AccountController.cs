@@ -21,7 +21,7 @@ namespace BankApi.Controllers
 
         [Route("id={id}&offset={offset}&limit={limit}")]
         [HttpGet]
-        public ActionResult<IEnumerable<Transaction>> GetTransactions(int id, int offset, int limit)
+        public ActionResult<AccountGetTransactionsViewModel> GetTransactions(int id, int offset, int limit)
         {
             var account = _dbContext.Accounts.Include(r => r.Transactions).FirstOrDefault(r => r.AccountId == id);
             if (account == null) return NotFound();
