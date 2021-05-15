@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BankAdminApp.Data;
-using SharedThings;
 using SharedThings.Models;
 
-namespace BankAdminApp.Services.Customers
+namespace SharedThings.Services.Customers
 {
     public class CustomerService : ICustomerService
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using BankAdminApp.Data;
-using BankAdminApp.Services.Customers;
 using BankAdminApp.Services.Search;
 using BankAdminApp.ViewModels;
 using JW;
 using Microsoft.AspNetCore.Mvc;
 using SharedThings;
+using SharedThings.Services.Customers;
 
 namespace BankAdminApp.Controllers
 {

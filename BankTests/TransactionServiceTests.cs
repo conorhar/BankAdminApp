@@ -1,7 +1,6 @@
 using System;
 using AutoFixture;
 using BankAdminApp.Services.Accounts;
-using BankAdminApp.Services.Customers;
 using BankAdminApp.Services.Transactions;
 using BankAdminApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SharedThings;
 using SharedThings.Models;
+using SharedThings.Services.Customers;
 
 namespace BankTests
 {

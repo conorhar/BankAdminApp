@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using BankAdminApp.Data;
-using BankAdminApp.Services.Customers;
 using SharedThings;
 using SharedThings.Models;
+using SharedThings.Services.Customers;
 
 namespace BankAdminApp.Services.Accounts
 {

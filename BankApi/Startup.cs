@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SharedThings;
+using SharedThings.Models;
+using SharedThings.Services.Customers;
 
 namespace BankApi
 {
@@ -33,6 +35,8 @@ namespace BankApi
                     Configuration.GetConnectionString("DefaultConnection"),
                     op => op.MigrationsAssembly("SharedThings")
                 ));
+
+            services.AddTransient<ICustomerService, CustomerService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using BankApi.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using SharedThings;
 using SharedThings.Models;
+using SharedThings.Services.Customers;
 
 namespace BankApi.Controllers
 {
@@ -11,26 +14,45 @@ namespace BankApi.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly ICustomerService _customerService;
 
-        public CustomerController(ApplicationDbContext dbContext)
+        public CustomerController(ApplicationDbContext dbContext, ICustomerService customerService)
         {
             _dbContext = dbContext;
-        }
-
-        [HttpGet]
-        public ActionResult<IEnumerable<Customer>> Get()
-        {
-            return Ok(_dbContext.Customers);
+            _customerService = customerService;
         }
 
         [Route("{id}")]
         [HttpGet]
-        public ActionResult<Customer> GetSingle(int id)
+        public ActionResult<Customer> Details(int id)
         {
             var customer = _dbContext.Customers.FirstOrDefault(e => e.CustomerId == id);
             if (customer == null) return NotFound();
-            
-            return Ok(customer);
+
+            var model = new CustomerDetailsViewModel
+            {
+                FullName = _customerService.GetFullName(customer),
+                Id = customer.CustomerId,
+                FullAddress = _customerService.GetFullAddress(customer),
+                Birthday = Convert.ToDateTime(customer.Birthday).ToString("yyyy-MM-dd"),
+                Gender = customer.Gender,
+                NationalId = _customerService.GetNationalIdOutput(customer),
+                FullTelephoneNumber = _customerService.GetFullTelephoneNumber(customer),
+                Email = customer.Emailaddress,
+
+                AccountItems = _customerService.GetAccounts(customer.CustomerId).Select(r => new CustomerDetailsViewModel.AccountItem
+                {
+                    AccountNumber = r.AccountId,
+                    Balance = r.Balance,
+                    CreationDate = r.Created.ToString("yyyy-MM-dd"),
+                    Frequency = r.Frequency,
+                    AccountOwnership = _customerService.GetAccountOwnershipInfo(customer.CustomerId, r.AccountId)
+                }).ToList()
+            };
+
+            model.TotalBalance = model.AccountItems.Sum(r => r.Balance);
+
+            return Ok(model);
         }
     }
 }
