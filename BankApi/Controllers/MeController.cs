@@ -1,34 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using BankApi.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SharedThings;
-using SharedThings.Models;
 using SharedThings.Services.Customers;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace BankApi.Controllers
 {
     [EnableCors("AllowAll")]
     [ApiController]
     [Route("api/[controller]")]
-    public class CustomerController : ControllerBase
+    [Authorize(AuthenticationSchemes =
+         JwtBearerDefaults.AuthenticationScheme)]
+    public class MeController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly ICustomerService _customerService;
 
-        public CustomerController(ApplicationDbContext dbContext, ICustomerService customerService)
+        public MeController(ApplicationDbContext dbContext, ICustomerService customerService)
         {
             _dbContext = dbContext;
             _customerService = customerService;
         }
-
-        [Route("{id}")]
+        
         [HttpGet]
-        public ActionResult<CustomerDetailsViewModel> Details(int id)
+        [SwaggerOperation(OperationId = "GetDetails")]
+        [Authorize(Roles = "Customer")]
+        public ActionResult<CustomerDetailsViewModel> GetDetails()
         {
-            var customer = _dbContext.Customers.FirstOrDefault(e => e.CustomerId == id);
+            var customerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var customer = _dbContext.Customers.FirstOrDefault(e => e.CustomerId == Convert.ToInt32(customerId));
             if (customer == null) return NotFound();
 
             var model = new CustomerDetailsViewModel

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BankAdminApp.Data;
+using BankAdminApp.Services.API;
 using BankAdminApp.Services.Search;
 using BankAdminApp.ViewModels;
 using JW;
@@ -15,12 +16,15 @@ namespace BankAdminApp.Controllers
         private readonly ApplicationDbContext _dbContext;
         private readonly ICustomerService _customerService;
         private readonly ISearchService _searchService;
+        private readonly IApiService _apiService;
 
-        public CustomerController(ApplicationDbContext dbContext, ICustomerService customerService, ISearchService searchService)
+        public CustomerController(ApplicationDbContext dbContext, ICustomerService customerService, ISearchService searchService,
+            IApiService apiService)
         {
             _dbContext = dbContext;
             _customerService = customerService;
             _searchService = searchService;
+            _apiService = apiService;
         }
 
         public IActionResult Index(string q, string sortField, string sortOrder, int page = 1)
@@ -97,6 +101,18 @@ namespace BankAdminApp.Controllers
             viewModel.TotalBalance = viewModel.AccountItems.Sum(r => r.Balance);
 
             return View(viewModel);
+        }
+
+        public IActionResult GetApiKey()
+        {
+            return View();
+        }
+
+        public string GetKeyAjax(int id)
+        {
+            var generatedToken = _apiService.GenerateJSONWebToken(id.ToString());
+
+            return generatedToken;
         }
     }
 }

@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "Get API key";
+}
+
+<div class="row">
+    <div class="col-md-8 ml-auto mr-auto">
+        <div class="card ">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">face</i>
+                </div>
+                <h4 class="card-title">Choose customer</h4>
+            </div>
+            <div class="card-body ">
+                <form>
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Search customers by name or id</label>
+                        <input type="text" class="form-control" id="customer-search" name="CustomerName">
+                        <input type="hidden" class="form-control" id="customer-id" name="CustomerId">
+                    </div>
+                    <div class="form-group">
+                        <label id="api-label" class="bmd-label-floating">API key for customer</label>
+                        <input type="text" class="form-control" id="api-input" disabled>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer ">
+                <div class="ml-auto">
+                    <button id="submit-btn" type="submit" class="btn btn-fill btn-rose">Get key</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $("#customer-search").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '/Transaction/AutoCompleteCustomer/',
+                            data: { "prefix": request.term },
+                            type: "POST",
+                            success: function (data) {
+                                response($.map(data, function (item) {
+                                    return item;
+                                }))
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        $("#customer-id").val(i.item.val);
+                    },
+                    minLength: 1
+                });
+            });
+
+            $("#submit-btn").click(function() {
+                formSubmit();
+            });
+
+            $('#customer-search').keypress(function (e) {
+                var key = e.which;
+                if(key === 13) {
+                    e.preventDefault();
+                    formSubmit();
+                }
+            });   
+
+            function formSubmit() {
+                var input = $("#customer-search").val();
+                var id = 0;
+
+                var regExp = /\(([^)]+)\)/;
+                var matches = regExp.exec(input);
+
+                if (matches != null) {
+                    id = matches[1].substr(4);
+                }
+
+                $.ajax({
+                    url: "/transaction/checkcustomerid?id=" + id,
+                    success: function(result) {
+                        if (result === 1) {
+                            GetKey(id);
+                        }
+                        else {
+                            swal({
+                                title: "Error",
+                                text: "Please choose a valid customer",
+                                buttonsStyling: false,
+                                confirmButtonClass: "btn btn-info"
+                            }).catch(swal.noop);
+                        }
+                    }
+                });
+            }
+
+            function GetKey(id) {
+                $.ajax({
+                    url: "/customer/getkeyajax?id=" + id,
+                    success: function (result) {
+                        $('#api-label').hide();
+                        $('#api-input').val(result);
+                    }
+                });
+            }
+        });
+    </script>
+}
+

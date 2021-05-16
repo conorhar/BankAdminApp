@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SharedThings;
 using SharedThings.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace BankApi.Controllers
 {
@@ -23,6 +24,7 @@ namespace BankApi.Controllers
 
         [Route("id={id}&offset={offset}&limit={limit}")]
         [HttpGet]
+        [SwaggerOperation(OperationId = "GetTransactions")]
         public ActionResult<AccountGetTransactionsViewModel> GetTransactions(int id, int offset, int limit)
         {
             var account = _dbContext.Accounts.Include(r => r.Transactions).FirstOrDefault(r => r.AccountId == id);

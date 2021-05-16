@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BankAdminApp.Services.Accounts;
+using BankAdminApp.Services.API;
 using BankAdminApp.Services.Search;
 using BankAdminApp.Services.Transactions;
 using BankAdminApp.Services.Validation;
@@ -38,6 +39,7 @@ namespace BankAdminApp
             services.AddTransient<ITransactionService, TransactionService>();
             services.AddTransient<IValidationService, ValidationService>();
             services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<IApiService, ApiService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

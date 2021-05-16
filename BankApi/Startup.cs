@@ -10,8 +10,11 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SharedThings;
 using SharedThings.Models;
 using SharedThings.Services.Customers;
@@ -20,6 +23,9 @@ namespace BankApi
 {
     public class Startup
     {
+        private string SecretKey = "312121312<znxmb4";
+        private string Issuer = "bankadminapp";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -41,7 +47,7 @@ namespace BankApi
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BankApi", Version = "v1" });
+                c.EnableAnnotations();
             });
 
             services.AddCors(options =>
@@ -55,6 +61,21 @@ namespace BankApi
                             .AllowAnyHeader();
                     });
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = false,
+                        ValidateIssuerSigningKey = false,
+                        ValidIssuer = Issuer,
+                        ValidAudience = Issuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey))
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +93,8 @@ namespace BankApi
             app.UseRouting();
 
             app.UseCors("AllowAll");
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
