@@ -1,4 +1,3 @@
-using BankAdminApp.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,6 +16,7 @@ using BankAdminApp.Services.Search;
 using BankAdminApp.Services.Transactions;
 using BankAdminApp.Services.Validation;
 using SharedThings;
+using SharedThings.Data;
 using SharedThings.Services.Accounts;
 using SharedThings.Services.Customers;
 

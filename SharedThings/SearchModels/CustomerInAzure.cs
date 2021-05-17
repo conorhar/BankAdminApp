@@ -8,6 +8,9 @@ namespace SharedThings.SearchModels
         [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
         public string Id { get; set; }
 
+        [SimpleField(IsSortable = true)]
+        public int SortableId { get; set; }
+
         [SearchableField(IsSortable = true)]
         public string FirstName { get; set; }
 

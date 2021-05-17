@@ -1,5 +1,4 @@
-﻿@using BankAdminApp.Data
-@using System.Collections.Specialized
+﻿@using System.Collections.Specialized
 @model BankAdminApp.ViewModels.CustomerIndexViewModel
 
 @{
@@ -44,10 +43,10 @@
                                 <thead class=" text-primary">
                                     <tr>
                                         <th>
-                                            <a asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" asp-route-sortField="Id"
-                                               asp-route-sortOrder="@(Model.SortField == "Id" ? Model.OppositeSortOrder : "")">
+                                            <a asp-controller="Customer" asp-action="Index" asp-route-q="@Model.q" asp-route-sortField="SortableId"
+                                               asp-route-sortOrder="@(Model.SortField == "SortableId" ? Model.OppositeSortOrder : "")">
                                                 ID
-                                                @if (Model.SortField == "Id")
+                                                @if (Model.SortField == "SortableId")
                                                 {
                                                     if (Model.SortOrder == "asc")
                                                     {

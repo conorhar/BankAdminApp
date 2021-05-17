@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using SharedThings;
 
-namespace BankAdminApp.Data
+namespace SharedThings.Data
 {
     public class DataInitializer
     {

@@ -2,8 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SharedThings;
+using SharedThings.Data;
 using SharedThings.Services.Accounts;
 using SharedThings.Services.Customers;
+using TransactionInspector.Services;
+using TransactionInspector.Services.EmailService;
+using TransactionInspector.Services.TransactionInspector;
 
 namespace TransactionInspector
 {
@@ -15,9 +19,10 @@ namespace TransactionInspector
         {
             var services = new ServiceCollection();
 
-            services.AddTransient<ITransactionInspector, TransactionInspector>();
+            services.AddTransient<ITransactionInspector, Services.TransactionInspector.TransactionInspector>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IEmailService, MailtrapEmailService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

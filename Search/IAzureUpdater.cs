@@ -5,6 +5,7 @@ using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using SharedThings;
+using SharedThings.Data;
 using SharedThings.SearchModels;
 
 namespace Search
@@ -40,6 +41,7 @@ namespace Search
                 var customerInAzure = new CustomerInAzure()
                 {
                     Id = customer.CustomerId.ToString(),
+                    SortableId = customer.CustomerId,
                     FirstName = customer.Givenname,
                     Surname = customer.Surname,
                     City = customer.City,

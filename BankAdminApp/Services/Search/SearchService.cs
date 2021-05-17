@@ -7,6 +7,7 @@ using Azure.Search.Documents.Models;
 using BankAdminApp.Models;
 using BankAdminApp.ViewModels;
 using SharedThings;
+using SharedThings.Data;
 using SharedThings.Models;
 using SharedThings.SearchModels;
 

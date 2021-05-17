@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SharedThings;
+using SharedThings.Data;
 using SharedThings.Models;
 using SharedThings.Services.Accounts;
 using SharedThings.Services.Customers;

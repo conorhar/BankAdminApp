@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using BankAdminApp.Data;
 using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using SharedThings;
+using SharedThings.Data;
 
 namespace BankAdminApp.Services.Validation
 {

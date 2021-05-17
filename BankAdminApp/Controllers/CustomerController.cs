@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using BankAdminApp.Data;
 using BankAdminApp.Services.API;
 using BankAdminApp.Services.Search;
 using BankAdminApp.ViewModels;
 using JW;
 using Microsoft.AspNetCore.Mvc;
 using SharedThings;
+using SharedThings.Data;
 using SharedThings.Services.Customers;
 
 namespace BankAdminApp.Controllers
@@ -34,7 +34,7 @@ namespace BankAdminApp.Controllers
                 return RedirectToAction("Details", new { id = n });
             }
 
-            if (string.IsNullOrEmpty(sortField)) sortField = "Id";
+            if (string.IsNullOrEmpty(sortField)) sortField = "SortableId";
             if (string.IsNullOrEmpty(sortOrder)) sortOrder = "asc";
 
             int pageSize = 50;
@@ -46,7 +46,7 @@ namespace BankAdminApp.Controllers
             {
                 CustomerItems = result.Value.GetResults().Select(r => new CustomerIndexViewModel.CustomerItem
                 {
-                    Id = Convert.ToInt32(r.Document.Id),
+                    Id = r.Document.SortableId,
                     FirstName = r.Document.FirstName,
                     Surname = r.Document.Surname,
                     Address = r.Document.Address,

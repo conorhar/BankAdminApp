@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SharedThings;
+using SharedThings.Data;
 using SharedThings.Services.Customers;
 using Swashbuckle.AspNetCore.Annotations;
 

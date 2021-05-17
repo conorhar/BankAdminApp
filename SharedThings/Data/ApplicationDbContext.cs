@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SharedThings.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-
-
-namespace SharedThings
+namespace SharedThings.Data
 {
     public partial class ApplicationDbContext : IdentityDbContext
     {
@@ -24,6 +19,7 @@ namespace SharedThings
         public virtual DbSet<PermenentOrder> PermenentOrders { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public DbSet<DailyReport> DailyReports { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

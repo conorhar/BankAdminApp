@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SharedThings;
+using SharedThings.Data;
 using SharedThings.Models;
 using Swashbuckle.AspNetCore.Annotations;
 

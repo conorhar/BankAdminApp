@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SharedThings;
+using SharedThings.Data;
 using SharedThings.Models;
 using SharedThings.Services.Customers;
 

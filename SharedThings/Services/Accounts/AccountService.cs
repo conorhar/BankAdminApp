@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using SharedThings.Data;
 using SharedThings.Models;
 using SharedThings.Services.Customers;
 
