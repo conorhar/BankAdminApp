@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BankAdminApp.Services.Accounts;
 using SharedThings.Models;
 using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SharedThings;
+using SharedThings.Services.Accounts;
 using SharedThings.Services.Customers;
 
 namespace BankAdminApp.Services.Transactions

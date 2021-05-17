@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankTests", "BankTests\Bank
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedThings", "SharedThings\SharedThings.csproj", "{8FCBCEDD-5B2C-4566-A972-5BEEAEB1F0EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankApi", "BankApi\BankApi.csproj", "{480B84A3-C040-4EC4-9BF8-AC0AAECB5A8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankApi", "BankApi\BankApi.csproj", "{480B84A3-C040-4EC4-9BF8-AC0AAECB5A8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionInspector", "TransactionInspector\TransactionInspector.csproj", "{1EAF3615-5735-420B-8E6F-BF8C479F3E78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{480B84A3-C040-4EC4-9BF8-AC0AAECB5A8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{480B84A3-C040-4EC4-9BF8-AC0AAECB5A8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{480B84A3-C040-4EC4-9BF8-AC0AAECB5A8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EAF3615-5735-420B-8E6F-BF8C479F3E78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EAF3615-5735-420B-8E6F-BF8C479F3E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EAF3615-5735-420B-8E6F-BF8C479F3E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EAF3615-5735-420B-8E6F-BF8C479F3E78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

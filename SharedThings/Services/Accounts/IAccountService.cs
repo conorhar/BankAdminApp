@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using SharedThings.Models;
 
-namespace BankAdminApp.Services.Accounts
+namespace SharedThings.Services.Accounts
 {
     public interface IAccountService
     {

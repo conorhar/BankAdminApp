@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using BankAdminApp.Data;
-using BankAdminApp.Services.Accounts;
 using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SharedThings;
+using SharedThings.Services.Accounts;
 
 namespace BankAdminApp.Controllers
 {

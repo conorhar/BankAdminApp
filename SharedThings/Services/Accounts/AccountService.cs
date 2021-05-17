@@ -1,10 +1,8 @@
 ﻿using System.Linq;
-using BankAdminApp.Data;
-using SharedThings;
 using SharedThings.Models;
 using SharedThings.Services.Customers;
 
-namespace BankAdminApp.Services.Accounts
+namespace SharedThings.Services.Accounts
 {
     public class AccountService : IAccountService
     {
@@ -41,7 +39,7 @@ namespace BankAdminApp.Services.Accounts
 
         public string GetCustomerFullName(int accountId)
         {
-            var customerId = _dbContext.Dispositions.First(r => r.AccountId == accountId).CustomerId;
+            var customerId = _dbContext.Dispositions.First(r => r.AccountId == accountId && r.Type == "OWNER").CustomerId;
 
             return _customerService.GetFullName(_dbContext.Customers.First(r => r.CustomerId == customerId));
         }

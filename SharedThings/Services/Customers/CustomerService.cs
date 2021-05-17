@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SharedThings.Models;
 
 namespace SharedThings.Services.Customers
@@ -45,7 +46,8 @@ namespace SharedThings.Services.Customers
 
             foreach (var d in dispositions)
             {
-                list.AddRange(_dbContext.Accounts.Where(r => r.AccountId == d.AccountId));
+                list.AddRange(_dbContext.Accounts.Include(r => r.Transactions)
+                    .Where(r => r.AccountId == d.AccountId));
             }
 
             return list;

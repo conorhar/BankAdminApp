@@ -12,12 +12,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BankAdminApp.Services.Accounts;
 using BankAdminApp.Services.API;
 using BankAdminApp.Services.Search;
 using BankAdminApp.Services.Transactions;
 using BankAdminApp.Services.Validation;
 using SharedThings;
+using SharedThings.Services.Accounts;
 using SharedThings.Services.Customers;
 
 namespace BankAdminApp

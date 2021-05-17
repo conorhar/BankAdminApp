@@ -4,13 +4,13 @@ using System.Linq;
 using System.Reflection.Metadata;
 using BankAdminApp.Data;
 using SharedThings.Models;
-using BankAdminApp.Services.Accounts;
 using BankAdminApp.Services.Transactions;
 using BankAdminApp.Services.Validation;
 using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SharedThings;
+using SharedThings.Services.Accounts;
 using SharedThings.Services.Customers;
 
 namespace BankAdminApp.Controllers
