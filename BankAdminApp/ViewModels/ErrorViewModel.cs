@@ -1,6 +1,4 @@
-using System;
-
-namespace SharedThings.Models
+namespace BankAdminApp.ViewModels
 {
     public class ErrorViewModel
     {
