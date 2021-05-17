@@ -19,6 +19,7 @@ using SharedThings;
 using SharedThings.Data;
 using SharedThings.Services.Accounts;
 using SharedThings.Services.Customers;
+using SharedThings.Services.Users;
 
 namespace BankAdminApp
 {
@@ -40,6 +41,7 @@ namespace BankAdminApp
             services.AddTransient<IValidationService, ValidationService>();
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IApiService, ApiService>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

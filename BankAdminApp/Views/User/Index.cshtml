@@ -1,7 +1,68 @@
-﻿@{
+﻿@model BankAdminApp.ViewModels.UserIndexViewModel
+
+@{
     ViewData["Title"] = "Manage users";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>To do</p>
-
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">groups</i>
+                    </div>
+                    <h4 class="card-title">All users</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-shopping">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"></th>
+                                    <th>Username</th>
+                                    <th class="th-description">Role</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="img-container">
+                                            <img src="~/img/faces/userindex.svg" style="max-width: 75px;" alt="avatar_image">
+                                        </div>
+                                    </td>
+                                    <td class="td-name">
+                                        <a>Username</a>
+                                        <br />
+                                        <small>goes here</small>
+                                    </td>
+                                    <td>
+                                        Role
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-round">Manage user</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

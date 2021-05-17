@@ -18,7 +18,6 @@ namespace SharedThings.Data
         public virtual DbSet<Loan> Loans { get; set; }
         public virtual DbSet<PermenentOrder> PermenentOrders { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public DbSet<DailyReport> DailyReports { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -215,26 +214,6 @@ namespace SharedThings.Data
                     .HasForeignKey(d => d.AccountId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Transactions_Accounts");
-            });
-
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.ToTable("User");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.Property(e => e.FirstName).HasMaxLength(40);
-
-                entity.Property(e => e.LastName).HasMaxLength(40);
-
-                entity.Property(e => e.LoginName)
-                    .IsRequired()
-                    .HasMaxLength(40);
-
-                entity.Property(e => e.PasswordHash)
-                    .IsRequired()
-                    .HasMaxLength(64)
-                    .IsFixedLength(true);
             });
 
             OnModelCreatingPartial(modelBuilder);
