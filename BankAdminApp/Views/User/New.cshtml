@@ -1,4 +1,4 @@
-﻿@model SharedThings.ViewModels.UserEditViewModel
+﻿@model SharedThings.ViewModels.UserNewViewModel
 
 @{
     ViewData["Title"] = "Manage users";
@@ -11,10 +11,10 @@
                 <div class="card-icon">
                     <i class="material-icons">account_circle</i>
                 </div>
-                <h4 class="card-title">Manage user @Model.UserName</h4>
+                <h4 class="card-title">New user</h4>
             </div>
             <div class="card-body ">
-                <form id="form" method="post" asp-controller="User" asp-action="Edit" class="form-horizontal">
+                <form id="form" method="post" asp-controller="User" asp-action="New" class="form-horizontal">
                     <div class="row">
                         <label asp-for="UserName" class="col-md-3 col-form-label">Username (valid email)</label>
                         <div class="col-md-9">
@@ -33,9 +33,24 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <input asp-for="Id" type="hidden" />
-
+                    <div class="row">
+                        <label asp-for="Password" class="col-md-3 col-form-label">Password</label>
+                        <div class="col-md-9">
+                            <div class="form-group has-default">
+                                <input asp-for="Password" class="form-control">
+                                <span asp-validation-for="Password" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="PasswordConfirm" class="col-md-3 col-form-label">Confirm password</label>
+                        <div class="col-md-9">
+                            <div class="form-group has-default">
+                                <input asp-for="PasswordConfirm" class="form-control">
+                                <span asp-validation-for="PasswordConfirm" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="card-footer ">

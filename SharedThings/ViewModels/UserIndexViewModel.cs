@@ -12,5 +12,6 @@ namespace SharedThings.ViewModels
         }
 
         public List<UserItem> Users { get; set; }
+        public string Username { get; set; }
     }
 }

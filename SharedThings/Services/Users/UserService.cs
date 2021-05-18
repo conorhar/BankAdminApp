@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SharedThings.Data;
 using SharedThings.ViewModels;
@@ -32,14 +33,14 @@ namespace SharedThings.Services.Users
             return result;
         }
 
-        public List<UserEditViewModel.RoleReferenceItem> GetRoleReference()
+        public List<RoleReferenceItem> GetRoleReference()
         {
             var dbRoles = _dbContext.Roles.ToList();
-            var referenceList = new List<UserEditViewModel.RoleReferenceItem>();
+            var referenceList = new List<RoleReferenceItem>();
 
             for (int i = 0; i < dbRoles.Count(); i++)
             {
-                referenceList.Add(new UserEditViewModel.RoleReferenceItem
+                referenceList.Add(new RoleReferenceItem
                 {
                     SelectBoxId = (i + 1),
                     DatabaseId = dbRoles[i].Id
@@ -65,6 +66,31 @@ namespace SharedThings.Services.Users
                 });
             }
             return list;
+        }
+
+        public string GetNewRoleName(UserEditViewModel viewModel)
+        {
+            var reference = viewModel.ReferenceList.FirstOrDefault(r => r.SelectBoxId == viewModel.SelectedRoleId);
+            string newRoleId = "";
+            if (reference != null)
+            {
+                newRoleId = viewModel.ReferenceList.First(r => r.SelectBoxId == viewModel.SelectedRoleId).DatabaseId;
+            }
+
+            string newRoleName = newRoleId == "" ? "No role assigned" : _dbContext.Roles.First(r => r.Id == newRoleId).Name;
+
+            return newRoleName;
+        }
+
+        public void AssignNewUserToRole(UserNewViewModel viewModel, IdentityUser identityUser)
+        {
+            var dbRole = viewModel.ReferenceList.FirstOrDefault(r => r.SelectBoxId == viewModel.SelectedRoleId);
+
+            if (dbRole != null)
+            {
+                var role = _dbContext.Roles.First(r => r.Id == dbRole.DatabaseId);
+                var roleResult = _userManager.AddToRoleAsync(identityUser, role.Name).Result;
+            }
         }
     }
 }
