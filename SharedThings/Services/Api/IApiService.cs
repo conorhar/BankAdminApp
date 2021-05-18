@@ -1,4 +1,4 @@
-﻿namespace BankAdminApp.Services.API
+﻿namespace SharedThings.Services.Api
 {
     public interface IApiService
     {

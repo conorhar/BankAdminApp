@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using BankAdminApp.ViewModels;
 using SharedThings;
 using SharedThings.Data;
+using SharedThings.ViewModels;
 
 namespace BankAdminApp.Controllers
 {

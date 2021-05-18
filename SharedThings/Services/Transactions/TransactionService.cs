@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SharedThings.Models;
-using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SharedThings;
 using SharedThings.Data;
+using SharedThings.Models;
 using SharedThings.Services.Accounts;
 using SharedThings.Services.Customers;
+using SharedThings.ViewModels;
 
-namespace BankAdminApp.Services.Transactions
+namespace SharedThings.Services.Transactions
 {
     public class TransactionService : ITransactionService
     {

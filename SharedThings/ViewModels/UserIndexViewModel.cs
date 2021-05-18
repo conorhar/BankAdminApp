@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BankAdminApp.ViewModels
+namespace SharedThings.ViewModels
 {
     public class UserIndexViewModel
     {

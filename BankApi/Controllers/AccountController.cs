@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BankApi.ViewModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SharedThings;
 using SharedThings.Data;
 using SharedThings.Models;
+using SharedThings.ViewModels;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace BankApi.Controllers
@@ -26,7 +26,7 @@ namespace BankApi.Controllers
         [Route("id={id}&offset={offset}&limit={limit}")]
         [HttpGet]
         [SwaggerOperation(OperationId = "GetTransactions")]
-        public ActionResult<AccountGetTransactionsViewModel> GetTransactions(int id, int offset, int limit)
+        public ActionResult<AccountGetTransactionsApiViewModel> GetTransactions(int id, int offset, int limit)
         {
             var account = _dbContext.Accounts.Include(r => r.Transactions).FirstOrDefault(r => r.AccountId == id);
             if (account == null) return NotFound();
@@ -38,9 +38,9 @@ namespace BankApi.Controllers
             
             var result = transactions.Skip(offset).Take(limit);
 
-            var model = new AccountGetTransactionsViewModel
+            var model = new AccountGetTransactionsApiViewModel
             {
-                TransactionItems = result.Select(r => new AccountGetTransactionsViewModel.TransactionItem
+                TransactionItems = result.Select(r => new AccountGetTransactionsApiViewModel.TransactionItem
                 {
                     TransactionId = r.TransactionId,
                     AccountId = r.AccountId,

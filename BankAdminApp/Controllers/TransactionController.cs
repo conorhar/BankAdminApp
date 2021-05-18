@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
 using SharedThings.Models;
-using BankAdminApp.Services.Transactions;
-using BankAdminApp.Services.Validation;
-using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SharedThings;
 using SharedThings.Data;
 using SharedThings.Services.Accounts;
 using SharedThings.Services.Customers;
+using SharedThings.Services.Transactions;
+using SharedThings.Services.Validation;
+using SharedThings.ViewModels;
 
 namespace BankAdminApp.Controllers
 {

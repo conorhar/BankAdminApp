@@ -1,15 +1,14 @@
 using System;
 using AutoFixture;
-using BankAdminApp.Services.Transactions;
-using BankAdminApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SharedThings;
 using SharedThings.Data;
 using SharedThings.Models;
 using SharedThings.Services.Accounts;
 using SharedThings.Services.Customers;
+using SharedThings.Services.Transactions;
+using SharedThings.ViewModels;
 
 namespace BankTests
 {

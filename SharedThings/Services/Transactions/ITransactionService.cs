@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using SharedThings.Models;
-using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SharedThings.Models;
+using SharedThings.ViewModels;
 
-namespace BankAdminApp.Services.Transactions
+namespace SharedThings.Services.Transactions
 {
     public interface ITransactionService
     {

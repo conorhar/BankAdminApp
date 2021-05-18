@@ -1,4 +1,4 @@
-﻿@model BankAdminApp.ViewModels.UserIndexViewModel
+﻿@model SharedThings.ViewModels.UserIndexViewModel
 
 @{
     ViewData["Title"] = "Manage users";
@@ -33,36 +33,42 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="img-container">
-                                            <img src="~/img/faces/userindex.svg" style="max-width: 75px;" alt="avatar_image">
-                                        </div>
-                                    </td>
-                                    <td class="td-name">
-                                        <a>Username</a>
-                                        <br />
-                                        <small>goes here</small>
-                                    </td>
-                                    <td>
-                                        Role
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <button class="btn btn-primary btn-round">Manage user</button>
-                                    </td>
-                                </tr>
+
+                                @foreach (var user in Model.Users)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="img-container">
+                                                <img src="~/img/faces/userindex.svg" style="max-width: 40px;" alt="avatar_image">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @user.UserName
+                                        </td>
+                                        <td>
+                                            @user.Role
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <a asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" style="color: white;" class="btn btn-primary btn-round">
+                                                Manage user
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <a style="color: white;" class="btn btn-primary btn-round">New user</a>
         </div>
     </div>
 </div>

@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
-using BankAdminApp.Models;
-using BankAdminApp.ViewModels;
-using SharedThings;
 using SharedThings.Data;
-using SharedThings.Models;
 using SharedThings.SearchModels;
 
-namespace BankAdminApp.Services.Search
+namespace SharedThings.Services.Search
 {
     public class SearchService : ISearchService
     {

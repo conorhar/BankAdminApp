@@ -1,4 +1,4 @@
-﻿namespace BankAdminApp.ViewModels
+﻿namespace SharedThings.ViewModels
 {
     public class TransactionConfirmViewModel
     {

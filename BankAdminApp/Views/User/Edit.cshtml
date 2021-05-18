@@ -1,0 +1,46 @@
+﻿@model SharedThings.ViewModels.UserEditViewModel
+
+@{
+    ViewData["Title"] = "Manage users";
+}
+
+<div class="row">
+    <div class="col-md-8 ml-auto mr-auto">
+        <div class="card ">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">account_circle</i>
+                </div>
+                <h4 class="card-title">Manage user @Model.UserName</h4>
+            </div>
+            <div class="card-body ">
+                <form id="form" method="post" asp-controller="User" asp-action="Edit" class="form-horizontal">
+                    <div class="row">
+                        <label asp-for="UserName" class="col-md-3 col-form-label">Username</label>
+                        <div class="col-md-9">
+                            <div class="form-group has-default">
+                                <input asp-for="UserName" class="form-control">
+                                <span asp-validation-for="UserName" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="SelectedRoleId" class="col-md-3 col-form-label">Role</label>
+                        <div class="col-lg-5 col-md-6 col-sm-3">
+                            <div class="form-group">
+                                <select asp-for="SelectedRoleId" asp-items="@Model.AllRoles" class="form-control selectpicker" data-size="7" data-style="btn btn-primary btn-round" title="Single Select"></select>
+                                <span style="display: block;" asp-validation-for="SelectedRoleId" class="field-validation-error ml-3"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer ">
+                <div class="ml-auto">
+                    <button form="form" type="submit" class="btn btn-fill btn-rose">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

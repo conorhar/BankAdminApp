@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
-using BankAdminApp.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using SharedThings;
 using SharedThings.Data;
 
-namespace BankAdminApp.Services.Validation
+namespace SharedThings.Services.Validation
 {
     public class ValidationService : IValidationService
     {

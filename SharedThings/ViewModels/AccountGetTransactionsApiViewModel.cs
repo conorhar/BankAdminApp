@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace BankApi.ViewModels
+namespace SharedThings.ViewModels
 {
-    public class AccountGetTransactionsViewModel
+    public class AccountGetTransactionsApiViewModel
     {
         public List<TransactionItem> TransactionItems { get; set; }
 

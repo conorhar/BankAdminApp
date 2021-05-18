@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
-using BankAdminApp.Services.API;
-using BankAdminApp.Services.Search;
-using BankAdminApp.ViewModels;
 using JW;
 using Microsoft.AspNetCore.Mvc;
-using SharedThings;
 using SharedThings.Data;
+using SharedThings.Services.Search;
+using SharedThings.ViewModels;
+using SharedThings.Services.Api;
 using SharedThings.Services.Customers;
 
 namespace BankAdminApp.Controllers

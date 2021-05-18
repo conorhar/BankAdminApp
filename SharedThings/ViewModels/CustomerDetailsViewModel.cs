@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BankApi.ViewModels
+namespace SharedThings.ViewModels
 {
     public class CustomerDetailsViewModel
     {
@@ -13,7 +13,7 @@ namespace BankApi.ViewModels
         public string FullTelephoneNumber { get; set; }
         public string Email { get; set; }
         public decimal TotalBalance { get; set; }
-
+        
         public List<AccountItem> AccountItems { get; set; }
 
         public class AccountItem

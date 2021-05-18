@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
-using BankApi.ViewModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using SharedThings;
 using SharedThings.Data;
 using SharedThings.Services.Customers;
+using SharedThings.ViewModels;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace BankApi.Controllers
@@ -39,7 +39,7 @@ namespace BankApi.Controllers
             var customer = _dbContext.Customers.FirstOrDefault(e => e.CustomerId == Convert.ToInt32(customerId));
             if (customer == null) return NotFound();
 
-            var model = new CustomerDetailsViewModel
+            var model = new SharedThings.ViewModels.CustomerDetailsViewModel
             {
                 FullName = _customerService.GetFullName(customer),
                 Id = customer.CustomerId,

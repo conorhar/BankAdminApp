@@ -1,6 +1,4 @@
-﻿using System.Security.AccessControl;
-
-namespace BankAdminApp.ViewModels
+﻿namespace SharedThings.ViewModels
 {
     public class HomeIndexViewModel
     {

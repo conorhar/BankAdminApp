@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using BankAdminApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SharedThings.Data;
 using SharedThings.Services.Users;
+using SharedThings.ViewModels;
 
 namespace BankAdminApp.Controllers
 {
@@ -37,6 +37,24 @@ namespace BankAdminApp.Controllers
                 user.Role = _userService.FindRoleName(user.Id);
             }
             
+            return View(viewModel);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Edit(string id)
+        {
+            var viewModel = new UserEditViewModel();
+
+            var dbUser = _dbContext.Users.First(r => r.Id == id);
+
+            viewModel.ReferenceList = _userService.GetRoleReference();
+
+            viewModel.Id = dbUser.Id;
+            viewModel.UserName = dbUser.UserName;
+            viewModel.AllRoles = _userService.GetRolesListItems();
+            var role = _dbContext.Roles.FirstOrDefault(r => r.Name == _userService.FindRoleName(id));
+            viewModel.SelectedRoleId = viewModel.ReferenceList.First(r => r.DatabaseId == role.Id).SelectBoxId;
+
             return View(viewModel);
         }
     }

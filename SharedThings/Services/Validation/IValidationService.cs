@@ -1,7 +1,4 @@
-﻿using BankAdminApp.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-
-namespace BankAdminApp.Services.Validation
+﻿namespace SharedThings.Services.Validation
 {
     public interface IValidationService
     {

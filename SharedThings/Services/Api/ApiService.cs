@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BankAdminApp.Services.API
+namespace SharedThings.Services.Api
 {
     public class ApiService : IApiService
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace BankAdminApp.ViewModels
+namespace SharedThings.ViewModels
 {
     public class TransactionChooseAmountViewModel
     {
