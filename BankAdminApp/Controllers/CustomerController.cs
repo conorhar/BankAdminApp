@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using JW;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedThings.Data;
 using SharedThings.Services.Search;
@@ -26,6 +27,7 @@ namespace BankAdminApp.Controllers
             _apiService = apiService;
         }
 
+        [Authorize(Roles = "Admin, Cashier")]
         public IActionResult Index(string q, string sortField, string sortOrder, int page = 1)
         {
             if (int.TryParse(q, out int n) && _dbContext.Customers.Any(r => r.CustomerId == n))
@@ -72,6 +74,7 @@ namespace BankAdminApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin, Cashier")]
         public IActionResult Details(int id)
         {
             var dbCustomer = _dbContext.Customers.First(r => r.CustomerId == id);
@@ -102,6 +105,21 @@ namespace BankAdminApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin, Cashier")]
+        public IActionResult New()
+        {
+            var viewModel = new CustomerNewViewModel();
+
+            return View(viewModel);
+        }
+
+        [Authorize(Roles = "Admin, Cashier")]
+        public IActionResult ChooseCustomer()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Authorize(Roles = "Admin, Cashier")]
         public IActionResult GetApiKey()
         {
             return View();

@@ -1,0 +1,135 @@
+﻿@model SharedThings.ViewModels.CustomerNewViewModel
+
+@{
+    ViewData["Title"] = "Manage customers";
+}
+
+<div class="row">
+    <div class="col-md-8 ml-auto mr-auto">
+        <div class="card ">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">account_circle</i>
+                </div>
+                <h4 class="card-title">New user</h4>
+            </div>
+            <div class="card-body ">
+                <form id="form" method="post" asp-controller="Customer" asp-action="New" class="form-horizontal">
+                    <div class="row">
+                        <label asp-for="FirstName" class="col-md-3 col-form-label">First name</label>
+                        <div class="col-md-9">
+                            <div class="form-group has-default">
+                                <input asp-for="FirstName" class="form-control">
+                                <span asp-validation-for="FirstName" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="Surname" class="col-md-3 col-form-label">Surname</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input asp-for="Surname" class="form-control">
+                                <span asp-validation-for="Surname" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="SelectedGenderId" class="col-md-3 col-form-label">Gender</label>
+                        <div class="col-lg-5 col-md-6 col-sm-3">
+                            <div class="form-group">
+                                <select asp-for="SelectedGenderId" asp-items="@Model.AllGenders" class="selectpicker" data-size="7" data-style="select-with-transition" multiple title="Single Select"></select>
+                                <span style="display: block;" asp-validation-for="SelectedGenderId" class="field-validation-error ml-3"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="StreetAddress" class="col-md-3 col-form-label">Street address</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input asp-for="StreetAddress" class="form-control">
+                                <span asp-validation-for="StreetAddress" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="City" class="col-md-3 col-form-label">City</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input asp-for="City" class="form-control">
+                                <span asp-validation-for="City" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="Zipcode" class="col-md-3 col-form-label">Postal code</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input asp-for="Zipcode" class="form-control">
+                                <span asp-validation-for="Zipcode" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="SelectedCountryId" class="col-md-3 col-form-label">Country</label>
+                        <div class="col-lg-5 col-md-6 col-sm-3">
+                            <div class="form-group">
+                                <select asp-for="SelectedCountryId" asp-items="@Model.AllCountries" class="selectpicker" data-size="7" data-style="select-with-transition" multiple title="Single Select"></select>
+                                <span style="display: block;" asp-validation-for="SelectedCountryId" class="field-validation-error ml-3"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="Birthday" class="col-md-3 col-form-label">Date of birth</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input asp-for="Birthday" min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" value="1990-01-01" class="form-control">
+                                <span asp-validation-for="Birthday" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="NationalId" class="col-md-3 col-form-label">National Id</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input asp-for="NationalId" class="form-control">
+                                <span asp-validation-for="NationalId" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="TelephoneCountryCode" class="col-md-3 col-form-label">Phone country code</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input asp-for="TelephoneCountryCode" class="form-control">
+                                <span asp-validation-for="TelephoneCountryCode" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="TelephoneNumber" class="col-md-3 col-form-label">Phone number</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input asp-for="TelephoneNumber" class="form-control">
+                                <span asp-validation-for="TelephoneNumber" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label asp-for="EmailAddress" class="col-md-3 col-form-label">Email address</label>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input asp-for="EmailAddress" class="form-control">
+                                <span asp-validation-for="EmailAddress" class="field-validation-error"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer ">
+                <div class="ml-auto">
+                    <button form="form" type="submit" class="btn btn-fill btn-rose">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

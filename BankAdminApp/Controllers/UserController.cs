@@ -171,8 +171,16 @@ namespace BankAdminApp.Controllers
             var oldUser = _userManager.FindByIdAsync(id).Result;
             var userFromNewInput = _userManager.FindByEmailAsync(username).Result;
 
-            if (userFromNewInput == null || oldUser.UserName == username)
-                return Json(true);
+            if (oldUser != null)
+            {
+                if (userFromNewInput == null || oldUser.UserName == username)
+                    return Json(true);
+            }
+            else
+            {
+                if (userFromNewInput == null)
+                    return Json(true);
+            }
             
             return Json("Username already exists");
         }

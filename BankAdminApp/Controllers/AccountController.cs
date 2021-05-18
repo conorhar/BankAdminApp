@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SharedThings;
@@ -20,6 +21,7 @@ namespace BankAdminApp.Controllers
             _accountService = accountService;
         }
 
+        [Authorize(Roles = "Admin, Cashier")]
         public IActionResult Details(int id)
         {
             var dbTransactions = _accountService.GetTransactionsFrom(id, 0);
@@ -51,6 +53,7 @@ namespace BankAdminApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin, Cashier")]
         public IActionResult GetTransactionsFrom(int id, int pos)
         {
             var dbTransactions = _accountService.GetTransactionsFrom(id, pos);

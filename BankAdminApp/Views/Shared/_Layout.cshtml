@@ -133,17 +133,46 @@ The above copyright notice and this permission notice shall be included in all c
                         </div>
                     </li>
                 }
+            
+                @if (_signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Cashier")))
+                {
+                    <li class="nav-item ">
+                        <a class="nav-link" data-toggle="collapse" href="#pagesExamples">
+                            <i class="material-icons">groups</i>
+                            <p>
+                                Customers
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="pagesExamples">
+                            <ul class="nav">
+                                <li class="nav-item ">
+                                    <a class="nav-link" asp-controller="Customer" asp-action="Index">
+                                        <span class="sidebar-mini"> CL </span>
+                                        <span class="sidebar-normal"> Customer List </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" asp-controller="Customer" asp-action="ChooseCustomer">
+                                        <span class="sidebar-mini"> EC </span>
+                                        <span class="sidebar-normal"> Edit Customer </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" asp-controller="Customer" asp-action="New">
+                                        <span class="sidebar-mini"> NC </span>
+                                        <span class="sidebar-normal"> New Customer </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                }           
 
-                <li class="nav-item ">
-                    <a class="nav-link" asp-controller="Customer" asp-action="Index">
-                        <i class="material-icons">supervised_user_circle</i>
-                        <p> Customers </p>
-                    </a>
-                </li>
                 <li class="nav-item ">
                     <a class="nav-link" asp-controller="Transaction" asp-action="ChooseCustomer">
                         <i class="material-icons">point_of_sale</i>
-                        <p> New transaction </p>
+                        <p> New Transaction </p>
                     </a>
                 </li>
                 <li class="nav-item ">

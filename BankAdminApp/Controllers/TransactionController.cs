@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Authorization;
 using SharedThings.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -33,11 +34,13 @@ namespace BankAdminApp.Controllers
             _validationService = validationService;
         }
 
+        [Authorize(Roles = "Admin, Cashier")]
         public IActionResult ChooseCustomer()
         {
             return View();
         }
-        
+
+        [Authorize(Roles = "Admin, Cashier")]
         public IActionResult ChooseAccountAndOperation(string customerId)
         {
             var dbCustomer = _dbContext.Customers.First(r => r.CustomerId == Convert.ToInt32(customerId));
@@ -53,6 +56,7 @@ namespace BankAdminApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin, Cashier")]
         [HttpPost]
         public IActionResult ChooseAccountAndOperation(TransactionChooseAccountAndOperationViewModel viewModel)
         {
@@ -78,6 +82,7 @@ namespace BankAdminApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin, Cashier")]
         [HttpPost]
         public IActionResult ChooseAmount(TransactionChooseAmountViewModel viewModel)
         {
@@ -105,6 +110,7 @@ namespace BankAdminApp.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin, Cashier")]
         [HttpPost]
         public IActionResult Confirm(TransactionConfirmViewModel viewModel)
         {
