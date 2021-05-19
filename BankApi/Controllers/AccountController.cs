@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +16,8 @@ namespace BankApi.Controllers
     [EnableCors("AllowAll")]
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes =
+        JwtBearerDefaults.AuthenticationScheme)]
     public class AccountController : ControllerBase
     {
         private readonly ApplicationDbContext _dbContext;
@@ -26,6 +30,7 @@ namespace BankApi.Controllers
         [Route("id={id}&offset={offset}&limit={limit}")]
         [HttpGet]
         [SwaggerOperation(OperationId = "GetTransactions")]
+        [Authorize(Roles = "Customer")]
         public ActionResult<AccountGetTransactionsApiViewModel> GetTransactions(int id, int offset, int limit)
         {
             var account = _dbContext.Accounts.Include(r => r.Transactions).FirstOrDefault(r => r.AccountId == id);
