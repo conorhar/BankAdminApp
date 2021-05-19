@@ -43,6 +43,8 @@ namespace BankAdminApp
             services.AddTransient<IApiService, ApiService>();
             services.AddTransient<IUserService, UserService>();
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),
                     op=>op.MigrationsAssembly("SharedThings")

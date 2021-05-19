@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
 using JW;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedThings.Data;
+using SharedThings.Models;
 using SharedThings.Services.Search;
 using SharedThings.ViewModels;
 using SharedThings.Services.Api;
@@ -121,7 +123,41 @@ namespace BankAdminApp.Controllers
         [HttpPost]
         public IActionResult New(CustomerNewViewModel viewModel)
         {
+            if (ModelState.IsValid)
+            {
+                var customer = new Customer
+                {
+                    Gender = _customerService.GetGendersListItems()
+                        .First(r => r.Value == viewModel.SelectedGenderId.ToString()).Text,
+                    Givenname = viewModel.FirstName,
+                    Surname = viewModel.Surname,
+                    Streetaddress = viewModel.StreetAddress,
+                    City = viewModel.City,
+                    Zipcode = viewModel.Zipcode,
+                    Country = _customerService.GetCountriesListItems()
+                        .First(r => r.Value == viewModel.SelectedCountryId.ToString()).Text,
+                    Birthday = viewModel.Birthday,
+                    Telephonecountrycode = viewModel.TelephoneCountryCode,
+                    Telephonenumber = viewModel.TelephoneNumber,
+                    Emailaddress = viewModel.EmailAddress
+                };
 
+                customer.CountryCode = _customerService.GetCountryCode(customer.Country);
+                customer.NationalId = viewModel.NationalId ?? "";
+
+                var account = _customerService.CreateAccount(customer);
+
+                _dbContext.Customers.Add(customer);
+                _dbContext.Accounts.Add(account);
+                
+                _dbContext.SaveChanges();
+                _searchService.AddOrUpdateSearchIndex(customer);
+
+                return RedirectToAction("Details", new {id = customer.CustomerId});
+            }
+
+            viewModel.AllGenders = _customerService.GetGendersListItems();
+            viewModel.AllCountries = _customerService.GetCountriesListItems();
             return View(viewModel);
         }
 
@@ -167,6 +203,44 @@ namespace BankAdminApp.Controllers
                     return Json("Required format '123456-7890'");
             }
             
+            return Json(true);
+        }
+
+        [HttpGet]
+        public IActionResult ValidatePhoneCode(string telephoneCountryCode)
+        {
+            if (!int.TryParse(telephoneCountryCode, out int n))
+                return Json("Must be numeric");
+
+            return Json(true);
+        }
+
+        [HttpGet]
+        public IActionResult ValidatePhoneNumber(string telephoneNumber)
+        {
+            var withoutSpaces = telephoneNumber.Replace(" ", "");
+            withoutSpaces = withoutSpaces.Replace("-", "");
+
+            if (!int.TryParse(withoutSpaces, out int n))
+                return Json("Must be numeric");
+
+            if (withoutSpaces.Length < 9)
+                return Json("Minimum 9 numbers");
+
+            return Json(true);
+        }
+
+        [HttpGet]
+        public IActionResult ValidateZipcode(string zipcode)
+        {
+            var withoutSpaces = zipcode.Replace(" ", "");
+
+            if (!int.TryParse(withoutSpaces, out int n))
+                return Json("Must be numeric");
+
+            if (withoutSpaces.Length < 4)
+                return Json("Minimum 4 numbers");
+
             return Json(true);
         }
     }

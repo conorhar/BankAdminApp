@@ -28,6 +28,7 @@ namespace SharedThings.ViewModels
         [Required(ErrorMessage = "Please enter city")]
         public string City { get; set; }
 
+        [Remote("ValidateZipcode", "Customer")]
         [MaxLength(6)]
         [Required(ErrorMessage = "Please enter zipcode")]
         [DataType(DataType.PostalCode)]
@@ -44,11 +45,14 @@ namespace SharedThings.ViewModels
         [MaxLength(12)]
         public string NationalId { get; set; }
 
+        [Remote("ValidatePhoneCode", "Customer")]
+        [MinLength(2, ErrorMessage = "Minimum two numbers")]
         [MaxLength(3)]
         [Required(ErrorMessage = "Please enter country code")]
         [DataType(DataType.PhoneNumber)]
         public string TelephoneCountryCode { get; set; }
 
+        [Remote("ValidatePhoneNumber", "Customer")]
         [MaxLength(12)]
         [Required(ErrorMessage = "Please enter phone number")]
         [DataType(DataType.PhoneNumber)]

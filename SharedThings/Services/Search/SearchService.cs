@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using SharedThings.Data;
+using SharedThings.Models;
 using SharedThings.SearchModels;
 
 namespace SharedThings.Services.Search
@@ -36,17 +38,27 @@ namespace SharedThings.Services.Search
 
             var searchResult = searchClient.Search<CustomerInAzure>(q, searchOptions);
             
-            //var pageableResult = searchResult.Value.GetResults();
-            //var customerSearchModel = new CustomerSearchModel{ TotalCount = Convert.ToInt32(searchResult.Value.TotalCount) };
-            
-            //foreach (var result in pageableResult)
-            //{
-            //    customerSearchModel.Customers.Add(_dbContext.Customers.First(r => r.CustomerId == Convert.ToInt32(result.Document.Id)));   
-            //}
-
-            //return customerSearchModel;
-            
             return searchResult;
+        }
+
+        public void AddOrUpdateSearchIndex(Customer customer)
+        {
+            var searchClient = new SearchClient(new Uri(searchUrl), indexName, new AzureKeyCredential(key));
+            var batch = new IndexDocumentsBatch<CustomerInAzure>();
+
+            var customerInAzure = new CustomerInAzure
+            {
+                Id = customer.CustomerId.ToString(),
+                SortableId = customer.CustomerId,
+                FirstName = customer.Givenname,
+                Surname = customer.Surname,
+                City = customer.City,
+                Address = customer.Streetaddress,
+                Birthday = customer.Birthday
+            };
+
+            batch.Actions.Add(new IndexDocumentsAction<CustomerInAzure>(IndexActionType.MergeOrUpload, customerInAzure));
+            IndexDocumentsResult result = searchClient.IndexDocuments(batch);
         }
     }
 }

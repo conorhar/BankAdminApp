@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -87,6 +88,46 @@ namespace SharedThings.Services.Customers
 
             return list;
         }
+
+        public string GetCountryCode(string country)
+        {
+            switch (country)
+            {
+                case "Denmark":
+                    return "DK";
+                case "Finland":
+                    return "FI";
+                case "Norway":
+                    return "NO";
+                case "Sweden":
+                    return "SE";
+            }
+
+            return null;
+        }
+
+        public Account CreateAccount(Customer customer)
+        {
+            var account = new Account
+            {
+                Frequency = "Monthly",
+                Created = DateTime.Now.Date,
+                Balance = 0
+            };
+
+            var disposition = new Disposition
+            {
+                Account = account,
+                Customer = customer,
+                Type = "OWNER"
+            };
+
+            customer.Dispositions.Add(disposition);
+            account.Dispositions.Add(disposition);
+
+            return account;
+        }
+
 
         //public IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q, int page, int pageSize)
         //{
