@@ -37,8 +37,8 @@
                         <label asp-for="SelectedGenderId" class="col-md-3 col-form-label">Gender</label>
                         <div class="col-lg-5 col-md-6 col-sm-3">
                             <div class="form-group">
-                                <select asp-for="SelectedGenderId" asp-items="@Model.AllGenders" class="selectpicker" data-size="7" data-style="select-with-transition" multiple title="Single Select"></select>
-                                <span style="display: block;" asp-validation-for="SelectedGenderId" class="field-validation-error ml-3"></span>
+                                <select asp-for="SelectedGenderId" asp-items="@Model.AllGenders" class="selectpicker" data-size="7" data-style="select-with-transition" title="Single Select"></select>
+                                <span style="display: block;" asp-validation-for="SelectedGenderId" class="field-validation-error"></span>
                             </div>
                         </div>
                     </div>
@@ -73,8 +73,8 @@
                         <label asp-for="SelectedCountryId" class="col-md-3 col-form-label">Country</label>
                         <div class="col-lg-5 col-md-6 col-sm-3">
                             <div class="form-group">
-                                <select asp-for="SelectedCountryId" asp-items="@Model.AllCountries" class="selectpicker" data-size="7" data-style="select-with-transition" multiple title="Single Select"></select>
-                                <span style="display: block;" asp-validation-for="SelectedCountryId" class="field-validation-error ml-3"></span>
+                                <select asp-for="SelectedCountryId" asp-items="@Model.AllCountries" class="selectpicker" data-size="7" data-style="select-with-transition" title="Single Select"></select>
+                                <span style="display: block;" asp-validation-for="SelectedCountryId" class="field-validation-error"></span>
                             </div>
                         </div>
                     </div>

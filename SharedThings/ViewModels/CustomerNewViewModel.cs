@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SharedThings.ViewModels
@@ -39,6 +40,7 @@ namespace SharedThings.ViewModels
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
 
+        [Remote("ValidateNationalId", "Customer")]
         [MaxLength(12)]
         public string NationalId { get; set; }
 

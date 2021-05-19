@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SharedThings.Models;
 
 namespace SharedThings.Services.Customers
@@ -11,8 +12,7 @@ namespace SharedThings.Services.Customers
         string GetNationalIdOutput(Customer c);
         List<Account> GetAccounts(int customerId);
         string GetAccountOwnershipInfo(int customerId, int accountId);
-        
-        //IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q, int page, int pageSize);
-        //int GetTotalAmount(string q);
+        List<SelectListItem> GetGendersListItems();
+        List<SelectListItem> GetCountriesListItems();
     }
 }

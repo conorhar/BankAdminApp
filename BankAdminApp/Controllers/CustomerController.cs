@@ -108,7 +108,19 @@ namespace BankAdminApp.Controllers
         [Authorize(Roles = "Admin, Cashier")]
         public IActionResult New()
         {
-            var viewModel = new CustomerNewViewModel();
+            var viewModel = new CustomerNewViewModel
+            {
+                AllGenders = _customerService.GetGendersListItems(),
+                AllCountries = _customerService.GetCountriesListItems()
+            };
+
+            return View(viewModel);
+        }
+
+        [Authorize(Roles = "Admin, Cashier")]
+        [HttpPost]
+        public IActionResult New(CustomerNewViewModel viewModel)
+        {
 
             return View(viewModel);
         }
@@ -130,6 +142,32 @@ namespace BankAdminApp.Controllers
             var generatedToken = _apiService.GenerateJSONWebToken(id.ToString());
 
             return generatedToken;
+        }
+
+        [HttpGet]
+        public IActionResult ValidateNationalId(string nationalId)
+        {
+            if (nationalId != null)
+            {
+                if (int.TryParse(nationalId, out int n) && nationalId.Length is < 10 or > 12)
+                    return Json("Must be between 10-12 characters");
+
+                if (nationalId.Count(Char.IsLetter) > 1)
+                    return Json("Cannot contain more than one letter");
+                
+                if (nationalId.Count(Char.IsLetter) == 1 && !Char.IsLetter(nationalId[^1]))
+                    return Json("Letter only allowed as last character");
+
+                char ch = '-';
+                var dashCount = nationalId.Count(r => (r == ch));
+                if (dashCount > 1)
+                    return Json("Character '-' is only allowed once");
+
+                if (dashCount == 1 && nationalId.IndexOf("-", StringComparison.Ordinal) != 6)
+                    return Json("Required format '123456-7890'");
+            }
+            
+            return Json(true);
         }
     }
 }

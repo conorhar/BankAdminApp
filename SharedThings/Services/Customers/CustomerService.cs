@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SharedThings.Data;
 using SharedThings.Models;
@@ -59,6 +60,32 @@ namespace SharedThings.Services.Customers
             var disposition = _dbContext.Dispositions.First(r => r.AccountId == accountId && r.CustomerId == customerId);
 
             return disposition.Type;
+        }
+
+        public List<SelectListItem> GetGendersListItems()
+        {
+            var list = new List<SelectListItem>
+            {
+                new SelectListItem {Value = "0", Text = "Choose an option"},
+                new SelectListItem {Value = "1", Text = "female"},
+                new SelectListItem {Value = "2", Text = "male"},
+                new SelectListItem {Value = "3", Text = "other"}
+            };
+
+            return list;
+        }
+
+        public List<SelectListItem> GetCountriesListItems()
+        {
+            var countries = _dbContext.Customers.Select(r => r.Country).Distinct().ToList();
+            var list = new List<SelectListItem> {new SelectListItem {Value = "0", Text = "Choose a country"}};
+
+            for (int i = 0; i < countries.Count; i++)
+            {
+                list.Add(new SelectListItem {Value = (i + 1).ToString(), Text = countries[i]});
+            }
+
+            return list;
         }
 
         //public IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q, int page, int pageSize)
