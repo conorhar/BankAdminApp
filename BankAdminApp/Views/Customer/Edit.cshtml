@@ -1,4 +1,4 @@
-﻿@model SharedThings.ViewModels.CustomerNewViewModel
+﻿@model SharedThings.ViewModels.CustomerEditViewModel
 
 @{
     ViewData["Title"] = "Manage customers";
@@ -11,10 +11,10 @@
                 <div class="card-icon">
                     <i class="material-icons">account_circle</i>
                 </div>
-                <h4 class="card-title">New customer</h4>
+                <h4 class="card-title">Edit customer @Model.Id</h4>
             </div>
             <div class="card-body ">
-                <form id="form" method="post" asp-controller="Customer" asp-action="New" class="form-horizontal">
+                <form id="form" method="post" asp-controller="Customer" asp-action="Edit" class="form-horizontal">
                     <div class="row">
                         <label asp-for="FirstName" class="col-md-3 col-form-label">First name</label>
                         <div class="col-md-9">
@@ -82,7 +82,7 @@
                         <label asp-for="Birthday" class="col-md-3 col-form-label">Date of birth</label>
                         <div class="col-md-9">
                             <div class="form-group">
-                                <input asp-for="Birthday" min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" value="1990-01-01" class="form-control">
+                                <input asp-for="Birthday" min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control">
                                 <span asp-validation-for="Birthday" class="field-validation-error"></span>
                             </div>
                         </div>
@@ -123,6 +123,7 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" asp-for="Id"/>
                 </form>
             </div>
             <div class="card-footer ">

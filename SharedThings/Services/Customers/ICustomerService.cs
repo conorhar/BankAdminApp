@@ -12,8 +12,8 @@ namespace SharedThings.Services.Customers
         string GetNationalIdOutput(Customer c);
         List<Account> GetAccounts(int customerId);
         string GetAccountOwnershipInfo(int customerId, int accountId);
-        List<SelectListItem> GetGendersListItems();
-        List<SelectListItem> GetCountriesListItems();
+        List<SelectListItem> GetGendersListItems(string newOrEdit = null);
+        List<SelectListItem> GetCountriesListItems(string newOrEdit = null);
         string GetCountryCode(string customerCountry);
         Account CreateAccount(Customer customer);
     }

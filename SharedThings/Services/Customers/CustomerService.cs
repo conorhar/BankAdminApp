@@ -63,23 +63,27 @@ namespace SharedThings.Services.Customers
             return disposition.Type;
         }
 
-        public List<SelectListItem> GetGendersListItems()
+        public List<SelectListItem> GetGendersListItems(string newOrEdit)
         {
-            var list = new List<SelectListItem>
-            {
-                new SelectListItem {Value = "0", Text = "Choose an option"},
-                new SelectListItem {Value = "1", Text = "female"},
-                new SelectListItem {Value = "2", Text = "male"},
-                new SelectListItem {Value = "3", Text = "other"}
-            };
+            var list = new List<SelectListItem>();
+            
+            if (newOrEdit == null)
+                list.Add(new SelectListItem { Value = "0", Text = "Choose an option" });
+            
+            list.Add(new SelectListItem {Value = "1", Text = "female"});
+            list.Add(new SelectListItem {Value = "2", Text = "male"});
+            list.Add(new SelectListItem {Value = "3", Text = "other"});
 
             return list;
         }
 
-        public List<SelectListItem> GetCountriesListItems()
+        public List<SelectListItem> GetCountriesListItems(string newOrEdit)
         {
             var countries = _dbContext.Customers.Select(r => r.Country).Distinct().ToList();
-            var list = new List<SelectListItem> {new SelectListItem {Value = "0", Text = "Choose a country"}};
+            var list = new List<SelectListItem>();
+
+            if (newOrEdit == null)
+                 list.Add(new SelectListItem {Value = "0", Text = "Choose a country"});
 
             for (int i = 0; i < countries.Count; i++)
             {

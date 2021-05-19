@@ -57,9 +57,7 @@ namespace BankAdminApp.Controllers
                     Birthday = Convert.ToDateTime(r.Document.Birthday).ToString("yyyy-MM-dd")
                 }).ToList()
             };
-
-            //int totalAmountInCollection = _customerService.GetTotalAmount(q);
-            //int totalAmountInCollection = customerSearchModel.TotalCount;
+            
             int totalAmountInCollection = Convert.ToInt32(result.Value.TotalCount);
             int totalPages = (int)Math.Ceiling((double)totalAmountInCollection / pageSize);
 
@@ -164,7 +162,68 @@ namespace BankAdminApp.Controllers
         [Authorize(Roles = "Admin, Cashier")]
         public IActionResult ChooseCustomer()
         {
-            throw new NotImplementedException();
+            return View();
+        }
+
+        [Authorize(Roles = "Admin, Cashier")]
+        public IActionResult Edit(string customerId)
+        {
+            var dbCustomer = _dbContext.Customers.First(r => r.CustomerId.ToString() == customerId);
+
+            var viewModel = new CustomerEditViewModel
+            {
+                Id = dbCustomer.CustomerId,
+                AllGenders = _customerService.GetGendersListItems("edit"),
+                SelectedGenderId = Convert.ToInt32(_customerService.GetGendersListItems().First(r => r.Text == dbCustomer.Gender).Value),
+                FirstName = dbCustomer.Givenname,
+                Surname = dbCustomer.Surname,
+                StreetAddress = dbCustomer.Streetaddress,
+                City = dbCustomer.City,
+                Zipcode = dbCustomer.Zipcode,
+                AllCountries = _customerService.GetCountriesListItems("edit"),
+                SelectedCountryId = Convert.ToInt32(_customerService.GetCountriesListItems().First(r => r.Text == dbCustomer.Country).Value),
+                Birthday = Convert.ToDateTime(dbCustomer.Birthday),
+                NationalId = dbCustomer.NationalId,
+                TelephoneCountryCode = dbCustomer.Telephonecountrycode,
+                TelephoneNumber = dbCustomer.Telephonenumber,
+                EmailAddress = dbCustomer.Emailaddress
+            };
+
+            return View(viewModel);
+        }
+
+        [Authorize(Roles = "Admin, Cashier")]
+        [HttpPost]
+        public IActionResult Edit(CustomerEditViewModel viewModel)
+        {
+            var dbCustomer = _dbContext.Customers.First(r => r.CustomerId == viewModel.Id);
+
+            if (ModelState.IsValid)
+            {
+                dbCustomer.Gender = _customerService.GetGendersListItems()
+                    .First(r => r.Value == viewModel.SelectedGenderId.ToString()).Text;
+                dbCustomer.Givenname = viewModel.FirstName;
+                dbCustomer.Surname = viewModel.Surname;
+                dbCustomer.Streetaddress = viewModel.StreetAddress;
+                dbCustomer.City = viewModel.City;
+                dbCustomer.Zipcode = viewModel.Zipcode;
+                dbCustomer.Country = _customerService.GetCountriesListItems()
+                    .First(r => r.Value == viewModel.SelectedCountryId.ToString()).Text;
+                dbCustomer.CountryCode = _customerService.GetCountryCode(dbCustomer.Country);
+                dbCustomer.Birthday = viewModel.Birthday;
+                dbCustomer.NationalId = viewModel.NationalId;
+                dbCustomer.Telephonecountrycode = viewModel.TelephoneCountryCode;
+                dbCustomer.Telephonenumber = viewModel.TelephoneNumber;
+                dbCustomer.Emailaddress = viewModel.EmailAddress;
+
+                _dbContext.SaveChanges();
+                _searchService.AddOrUpdateSearchIndex(dbCustomer);
+                return RedirectToAction("Details", new { id = dbCustomer.CustomerId });
+            }
+
+            viewModel.AllGenders = _customerService.GetGendersListItems("edit");
+            viewModel.AllCountries = _customerService.GetCountriesListItems("edit");
+            return View(viewModel);
         }
 
         [Authorize(Roles = "Admin, Cashier")]
