@@ -1,0 +1,54 @@
+﻿@model SharedThings.ViewModels.CountryTopTenViewModel
+
+@{
+    ViewData["Title"] = "Statistics";
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-12 ml-auto mr-auto">
+        <div class="card">
+            <div class="card-header card-header-text card-header-warning">
+                <div class="card-text">
+                    <h4 class="card-title">Top Ten Customers</h4>
+                    <span class="card-category">@Model.Country</span>
+                    <span style="float: right;">
+                        <img src="~/img/flags/icon_@(Model.Country).png" />
+                    </span>
+                </div>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-warning">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Balance</th>
+                    </thead>
+                    <tbody>
+                    
+                        @foreach (var c in Model.CustomerItems)
+                        {
+                            <tr class="clickable-row" style="cursor: pointer;" onclick="toCustomerPage(@c.Id);">
+                                <td>@c.Id</td>
+                                <td>@c.FullName</td>
+                                <td>@c.City</td>
+                                <td>@c.TotalBalance</td>
+                            </tr>
+                        }
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        function toCustomerPage(id) {
+            window.location.href = '/customer/details?id=' + id;
+        }
+    </script>
+}
+

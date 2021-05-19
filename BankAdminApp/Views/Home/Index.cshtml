@@ -11,7 +11,7 @@
                 <div class="card-icon">
                     <i class="material-icons">groups</i>
                 </div>
-                <p class="card-category">Customers</p>
+                <p class="card-category">Total Customers</p>
                 <h3 class="card-title">@Model.TotalCustomers</h3>
             </div>
             <div class="card-footer"></div>
@@ -23,7 +23,7 @@
                 <div class="card-icon">
                     <i class="material-icons">account_balance</i>
                 </div>
-                <p class="card-category">Accounts</p>
+                <p class="card-category">Total Accounts</p>
                 <h3 class="card-title">@Model.TotalAccounts</h3>
             </div>
             <div class="card-footer"></div>
@@ -49,9 +49,9 @@
                 <div class="card-icon">
                     <i class="material-icons"></i>
                 </div>
-                <h4 class="card-title">Global Sales by Top Locations</h4>
+                <h4 class="card-title">Statistics By Country</h4>
             </div>
-            <div class="card-body ">
+            <div class="card-body table-hover">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="table-responsive table-sales">
@@ -66,93 +66,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="flag">
-                                                <img src="~/img/flags/US.png" />
-                                            </div>
-                                        </td>
-                                        <td>USA</td>
-                                        <td class="text-right">
-                                            2.920
-                                        </td>
-                                        <td class="text-right">
-                                            53.23%
-                                        </td>
-                                        <td class="text-right">
-                                            1000000
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="flag">
-                                                <img src="~/img/flags/DE.png" />
-                                            </div>
-                                        </td>
-                                        <td>Germany</td>
-                                        <td class="text-right">
-                                            1.300
-                                        </td>
-                                        <td class="text-right">
-                                            20.43%
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="flag">
-                                                <img src="~/img/flags/AU.png" />
-                                            </div>
-                                        </td>
-                                        <td>Australia</td>
-                                        <td class="text-right">
-                                            760
-                                        </td>
-                                        <td class="text-right">
-                                            10.35%
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="flag">
-                                                <img src="~/img/flags/GB.png" />
-                                            </div>
-                                        </td>
-                                        <td>United Kingdom</td>
-                                        <td class="text-right">
-                                            690
-                                        </td>
-                                        <td class="text-right">
-                                            7.87%
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="flag">
-                                                <img src="~/img/flags/RO.png" />
-                                            </div>
-                                        </td>
-                                        <td>Romania</td>
-                                        <td class="text-right">
-                                            600
-                                        </td>
-                                        <td class="text-right">
-                                            5.94%
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="flag">
-                                                <img src="~/img/flags/BR.png" />
-                                            </div>
-                                        </td>
-                                        <td>Brasil</td>
-                                        <td class="text-right">
-                                            550
-                                        </td>
-                                        <td class="text-right">
-                                            4.34%
-                                        </td>
-                                    </tr>
+                                
+                                    @foreach (var c in Model.CountryItems)
+                                    {
+                                        <tr class="clickable-row" style="cursor: pointer;" onclick="toCountryPage('@c.Country');">
+                                            <td>
+                                                <div class="flag">
+                                                    <img src="~/img/flags/icon_@(c.Country).png"/>
+                                                </div>
+                                            </td>
+                                            <td>@c.Country</td>
+                                            <td class="text-right">
+                                                @c.TotalCustomers
+                                            </td>
+                                            <td class="text-right">
+                                                @c.TotalAccounts
+                                            </td>
+                                            <td class="text-right">
+                                                @c.TotalBalance
+                                            </td>
+                                        </tr>
+                                    }
+
                                 </tbody>
                             </table>
                         </div>
@@ -190,14 +125,18 @@
 @section Scripts
 {
     <script>
-        $(document).ready(function() {
+        function toCountryPage(country) {
+            window.location.href = '/country/topten?country=' + country;
+        }
 
+        $(document).ready(function () {
+            
             setTimeout(function() {
-                if (@Model.AccountId !== 0) {
-                    $("#successModal").modal('show');
-                }
-            },
-            500);
+                    if (@Model.AccountId !== 0) {
+                        $("#successModal").modal('show');
+                    }
+                },
+                500);
         })
     </script>
 }

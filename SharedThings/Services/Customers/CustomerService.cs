@@ -131,8 +131,7 @@ namespace SharedThings.Services.Customers
 
             return account;
         }
-
-
+        
         //public IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q, int page, int pageSize)
         //{
         //    var query = GetResults(q);
