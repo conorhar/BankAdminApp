@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedThings", "SharedThing
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankApi", "BankApi\BankApi.csproj", "{480B84A3-C040-4EC4-9BF8-AC0AAECB5A8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionInspector", "TransactionInspector\TransactionInspector.csproj", "{1EAF3615-5735-420B-8E6F-BF8C479F3E78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionInspector", "TransactionInspector\TransactionInspector.csproj", "{1EAF3615-5735-420B-8E6F-BF8C479F3E78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAdminApp.Tests", "BankAdminApp.Tests\BankAdminApp.Tests.csproj", "{260F1733-233C-43A9-9DA1-F41CFC129C85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{1EAF3615-5735-420B-8E6F-BF8C479F3E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EAF3615-5735-420B-8E6F-BF8C479F3E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EAF3615-5735-420B-8E6F-BF8C479F3E78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{260F1733-233C-43A9-9DA1-F41CFC129C85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260F1733-233C-43A9-9DA1-F41CFC129C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260F1733-233C-43A9-9DA1-F41CFC129C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260F1733-233C-43A9-9DA1-F41CFC129C85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

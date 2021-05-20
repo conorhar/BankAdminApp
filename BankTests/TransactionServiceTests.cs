@@ -41,20 +41,20 @@ namespace BankTests
             return dbContext;
         }
         
-        [TestMethod]
-        public void Transaction_amount_should_never_be_negative()
-        {
-            var model = new TransactionConfirmViewModel
-            {
-                AccountId = 1,
-                Operation = "Operation",
-                Amount = 100,
-                Type = "Type"
-            };
+        //[TestMethod]
+        //public void Transaction_amount_should_never_be_negative()
+        //{
+        //    var model = new TransactionConfirmViewModel
+        //    {
+        //        AccountId = 1,
+        //        Operation = "Operation",
+        //        Amount = 100,
+        //        Type = "Type"
+        //    };
 
-            var transaction = sut.CreateTransaction(model);
+        //    var transaction = sut.CreateTransaction(model);
 
-            Assert.AreEqual(100, transaction.Amount);
-        }
+        //    Assert.AreEqual(100, transaction.Amount);
+        //}
     }
 }

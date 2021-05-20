@@ -14,7 +14,7 @@ namespace SharedThings.ViewModels
         public string Operation { get; set; }
 
         [Required(ErrorMessage = "Please enter an amount")]
-        [Range(0.01, Double.MaxValue, ErrorMessage = "Minimum transaction is 0,01")]
+        [Range(0.01, 100000000, ErrorMessage = "Minimum transaction is 0,01")]
         [Remote("ValidateAmount", "Transaction", AdditionalFields = "AccountId, Type")]
         public decimal Amount { get; set; }
 
