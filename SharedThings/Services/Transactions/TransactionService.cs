@@ -68,7 +68,7 @@ namespace SharedThings.Services.Transactions
                 Date = DateTime.Now.Date,
                 Type = viewModel.Type,
                 Operation = viewModel.Operation,
-                Amount = viewModel.Amount,
+                Amount = (viewModel.Type == "Credit" ? viewModel.Amount : -viewModel.Amount),
                 Symbol = ""
             };
 

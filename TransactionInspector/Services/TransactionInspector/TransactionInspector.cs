@@ -69,7 +69,8 @@ namespace TransactionInspector.Services.TransactionInspector
                     if (_customerService.GetAccountOwnershipInfo(c.CustomerId, a.AccountId) != "OWNER") continue;
 
                     var transactionsLast72Hours = a.Transactions.Where(r => (DateTime.Now - r.Date).TotalHours <= 72);
-                    if (transactionsLast72Hours.Sum(r => r.Amount) > 23000)
+                    var amountsLast72hours = transactionsLast72Hours.Select(r => Math.Abs(r.Amount));
+                    if (amountsLast72hours.Sum() > 23000)
                     {
                         report.SuspiciousTransactionGroups.Add(
                             transactionsLast72Hours.Select(r => new Report.ReportItem
@@ -84,7 +85,7 @@ namespace TransactionInspector.Services.TransactionInspector
                     var transactionsLast24Hours = a.Transactions.Where(r => (DateTime.Now - r.Date).TotalHours <= 24);
                     foreach (var t in transactionsLast24Hours)
                     {
-                        if (t.Amount <= 15000) continue;
+                        if (Math.Abs(t.Amount) <= 15000) continue;
 
                         var reportItem = new Report.ReportItem
                         {

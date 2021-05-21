@@ -65,7 +65,7 @@ namespace TransactionInspector.Services.EmailService
                     sb.AppendLine();
                 }
             }
-            else
+            if (!report.SuspiciousTransactions.Any() && report.SuspiciousTransactionGroups.Any())
             {
                 sb.AppendLine("NO TRANSACTIONS OVER 15000 SEK WITHIN LAST 24 HOURS");
                 sb.AppendLine();
@@ -84,11 +84,11 @@ namespace TransactionInspector.Services.EmailService
                         sb.Append("Transaction number: " + transaction.TransactionId + " - ");
                         sb.AppendLine("Amount: " + transaction.Amount.ToString("F"));
                     }
-                    sb.AppendLine("Total transaction amount: " + list.Sum(r => r.Amount));
+                    sb.AppendLine("Total transaction amount: " + list.Sum(r => Math.Abs(r.Amount)));
                     sb.AppendLine();
                 }
             }
-            else
+            if (report.SuspiciousTransactions.Any() && !report.SuspiciousTransactionGroups.Any())
                 sb.AppendLine("NO CUSTOMERS HAVE MADE TRANSACTIONS EXCEEDING 23000 SEK WITHIN LAST 72 HOURS");
 
             if (!report.SuspiciousTransactions.Any() && !report.SuspiciousTransactionGroups.Any())
