@@ -46,18 +46,36 @@ namespace BankAdminApp.Tests
         [TestMethod]
         public void CheckCorrectValuesAreAssignedInCustomerDetails()
         {
-            var customer = fixture.Create<Customer>();
-
+            var customer = fixture.Build<Customer>().Without(r => r.Dispositions).Create<Customer>();
+            var account = fixture.Build<Account>().Without(r => r.Dispositions).Create<Account>();
+            var disposition = new Disposition
+            {
+                Account = account,
+                Customer = customer,
+                Type = "OWNER"
+            };
+            customer.Dispositions.Add(disposition);
             ctx.Customers.Add(customer);
+            ctx.Accounts.AddRange(account);
             ctx.SaveChanges();
 
-            customerServiceMock.Setup(e => e.GetFullAddress(customer)).Returns(customer.Streetaddress);
-            customerServiceMock.Setup(e => e.GetFullName(customer)).Returns(customer.Givenname);
-            customerServiceMock.Setup(e => e.GetFullTelephoneNumber(customer)).Returns(customer.Telephonenumber);
-            customerServiceMock.Setup(e => e.GetNationalIdOutput(customer)).Returns(customer.NationalId);
-            customerServiceMock.Setup(e => e.GetAccounts(customer.CustomerId)).Returns(new List<Account>{new Account{AccountId = 5}});
+            customerServiceMock.Setup(e => e.GetFullAddress(It.IsAny<Customer>())).Returns("Full address");
+            customerServiceMock.Setup(e => e.GetFullName(It.IsAny<Customer>())).Returns("Full name");
+            customerServiceMock.Setup(e => e.GetFullTelephoneNumber(It.IsAny<Customer>())).Returns("Telephone number");
+            customerServiceMock.Setup(e => e.GetNationalIdOutput(It.IsAny<Customer>())).Returns("National id");
+            customerServiceMock.Setup(e => e.GetAccounts(customer.CustomerId)).Returns(GetAccounts(customer));
             customerServiceMock.Setup(e => e.GetAccountOwnershipInfo(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns("OWNER");
+
+            var fakeAccounts = GetAccounts(customer);
+            var fakeAccountsItems = fakeAccounts.Select(r => new CustomerDetailsViewModel.AccountItem
+            {
+                AccountNumber = r.AccountId,
+                AccountOwnership = "OWNER",
+                Balance = r.Balance,
+                CreationDate = Convert.ToDateTime(r.Created).ToString("yyyy-MM-dd"),
+                Frequency = r.Frequency
+            });
 
             var result = sut.Details(customer.CustomerId);
 
@@ -66,26 +84,26 @@ namespace BankAdminApp.Tests
 
             Assert.AreEqual(Convert.ToDateTime(customer.Birthday).ToString("yyyy-MM-dd"), model.Birthday);
             Assert.AreEqual(customer.Emailaddress, model.Email);
-            Assert.AreEqual(customer.Streetaddress, model.FullAddress);
-            Assert.AreEqual(customer.Givenname, model.FullName);
-            Assert.AreEqual(customer.Telephonenumber, model.FullTelephoneNumber);
+            Assert.AreEqual("Full address", model.FullAddress);
+            Assert.AreEqual("Full name", model.FullName);
+            Assert.AreEqual("Telephone number", model.FullTelephoneNumber);
             Assert.AreEqual(customer.Gender, model.Gender);
             Assert.AreEqual(customer.CustomerId, model.Id);
-            Assert.AreEqual(customer.NationalId, model.NationalId);
+            Assert.AreEqual("National id", model.NationalId);
 
-            foreach (var a in model.AccountItems)
-            {
-                Assert.AreEqual(a.AccountNumber, 5);
-                Assert.AreEqual(a.AccountOwnership, "OWNER");
-                Assert.AreEqual(a.Balance, 0);
-                Assert.AreEqual(a.Frequency, null);
-                Assert.AreEqual(a.CreationDate, "0001-01-01");
-            }
+            var expected = fakeAccountsItems.First();
+            var actual = model.AccountItems.First();
+
+            Assert.AreEqual(expected.AccountNumber, actual.AccountNumber);
+            Assert.AreEqual(expected.AccountOwnership, actual.AccountOwnership);
+            Assert.AreEqual(expected.Balance, actual.Balance);
+            Assert.AreEqual(expected.Frequency, actual.Frequency);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
         }
 
-        //private List<Account> GetAccounts(Customer c)
-        //{
-        //    return ctx.Accounts.Where(a => a.Dispositions.Any(d => d.CustomerId == c.CustomerId)).ToList();
-        //}
+        private List<Account> GetAccounts(Customer c)
+        {
+            return ctx.Accounts.Where(a => a.Dispositions.Any(d => d.CustomerId == c.CustomerId)).ToList();
+        }
     }
 }
