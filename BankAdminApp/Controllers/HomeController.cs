@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SharedThings;
 using SharedThings.Data;
@@ -19,12 +20,15 @@ namespace BankAdminApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _dbContext;
         private readonly ICustomerService _customerService;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext, ICustomerService customerService)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext, ICustomerService customerService,
+            SignInManager<IdentityUser> signInManager)
         {
             _logger = logger;
             _dbContext = dbContext;
             _customerService = customerService;
+            _signInManager = signInManager;
         }
 
         [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Any)]

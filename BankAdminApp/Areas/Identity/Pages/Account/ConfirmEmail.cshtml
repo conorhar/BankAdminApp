@@ -4,4 +4,19 @@
     ViewData["Title"] = "Confirm email";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-lg-6 col-md-12 ml-auto mr-auto">
+        <div class="card card-pricing card-raised">
+            <div class="card-body">
+                <h6 class="card-category">Email Confirmed</h6>
+                <div class="card-icon icon-rose">
+                    <i class="material-icons">contact_mail</i>
+                </div>
+                <p class="card-description">
+                    Email has been confirmed!
+                </p>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-rose btn-round">To dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>

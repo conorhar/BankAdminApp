@@ -4,19 +4,21 @@
     ViewData["Title"] = "Register confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
-    }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
-}
+
+<div class="row">
+    <div class="col-lg-6 col-md-12 ml-auto mr-auto">
+        <div class="card card-pricing card-raised">
+            <div class="card-body">
+                <h6 class="card-category">Confirm Account</h6>
+                <div class="card-icon icon-rose">
+                    <i class="material-icons">contact_mail</i>
+                </div>
+                <p class="card-description">
+                    This app does not currently have a real email sender registered.
+                </p>
+                <a href="@Model.EmailConfirmationUrl" class="btn btn-rose btn-round">Confirm account</a>
+            </div>
+        </div>
+    </div>
+</div>
+
