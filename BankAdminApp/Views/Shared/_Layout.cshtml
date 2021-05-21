@@ -150,7 +150,8 @@ The above copyright notice and this permission notice shall be included in all c
 
                     @if (_signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Cashier")))
                     {
-                        <li class="@(activeController == "Customer" && activeAction != "GetApiKey" ? "nav-item active" : "nav-item")">
+                        <li class="@((activeController == "Customer" || activeController == "Country") && activeAction != "GetApiKey" ? 
+                                       "nav-item active" : "nav-item")">
                             <a class="nav-link" data-toggle="collapse" href="#pagesExamples">
                                 <i class="material-icons">groups</i>
                                 <p>
@@ -582,15 +583,6 @@ The above copyright notice and this permission notice shall be included in all c
                 });
             });
         </script>*@
-    <script>
-        $(document).ready(function () {
-            // Javascript method's body can be found in assets/js/demos.js
-            md.initDashboardPageCharts();
-
-            md.initVectorMap();
-
-        });
-    </script>
 </body>
 
 </html>

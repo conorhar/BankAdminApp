@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SharedThings;
 using SharedThings.Data;
 using SharedThings.Services.Customers;
@@ -42,18 +45,37 @@ namespace BankAdminApp.Controllers
                 AccountId = accountId
             };
 
-            var countries = _dbContext.Customers.Select(r => r.Country).Distinct().ToList();
+            var countries = _dbContext.Customers.Select(r => new
+            {
+                Country = r.Country,
+                CountryCode = r.CountryCode
+            }).Distinct().ToList();
 
             viewModel.CountryItems.AddRange(
-                countries.Select(country => new HomeIndexViewModel.CountryItem
+                countries.Select(c => new HomeIndexViewModel.CountryItem
                 {
-                    Country = country,
-                    TotalCustomers = _dbContext.Customers.Count(r => r.Country == country),
-                    TotalAccounts = _dbContext.Accounts.Count(r => r.Dispositions.Any(d => d.Customer.Country == country && d.Type == "OWNER")),
-                    TotalBalance = _dbContext.Accounts.Where(r => r.Dispositions.Any(d => d.Customer.Country == country && d.Type == "OWNER")).Sum(r => r.Balance)
+                    CountryCode = c.CountryCode,
+                    Country = c.Country,
+                    TotalCustomers = _dbContext.Customers.Count(r => r.Country == c.Country),
+                    TotalAccounts = _dbContext.Accounts.Count(r => r.Dispositions.Any(d => d.Customer.Country == c.Country && d.Type == "OWNER")),
+                    TotalBalance = _dbContext.Accounts.Where(r => r.Dispositions.Any(d => d.Customer.Country == c.Country && d.Type == "OWNER")).Sum(r => r.Balance)
                 }).ToList());
 
+            var vectorMapList = viewModel.CountryItems.Select(c =>
+                new HomeIndexViewModel.CountryCodeItem
+                {
+                    Code = c.CountryCode,
+                    Value = CalculateValue(c.TotalBalance)
+                }).ToList();
+
+            viewModel.VectorMapCodesAndValues =  new HtmlString(JsonConvert.SerializeObject(vectorMapList));
+
             return View(viewModel);
+        }
+
+        private int CalculateValue(decimal amt)
+        {
+            return Convert.ToInt32(amt) / 100000;
         }
     }
 }

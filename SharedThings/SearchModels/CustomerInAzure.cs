@@ -5,7 +5,7 @@ namespace SharedThings.SearchModels
 {
     public class CustomerInAzure
     {
-        [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
+        [SimpleField(IsKey = true)]
         public string Id { get; set; }
 
         [SimpleField(IsSortable = true)]

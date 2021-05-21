@@ -129,14 +129,16 @@
             window.location.href = '/country/topten?country=' + country;
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
+
+            md.initVectorMap(@Model.VectorMapCodesAndValues);
             
-            setTimeout(function() {
+            setTimeout(function () {
                     if (@Model.AccountId !== 0) {
                         $("#successModal").modal('show');
                     }
                 },
                 500);
-        })
+        });
     </script>
 }

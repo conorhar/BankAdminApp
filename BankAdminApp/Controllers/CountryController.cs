@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SharedThings.Data;
@@ -19,6 +20,7 @@ namespace BankAdminApp.Controllers
         }
 
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new[] { "country" })]
+        [Authorize(Roles = "Admin, Cashier")]
         public IActionResult TopTen(string country)
         {
             var topCustomers = _dbContext.Customers.Include(c => c.Dispositions)
