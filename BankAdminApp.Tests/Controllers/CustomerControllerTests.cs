@@ -44,6 +44,14 @@ namespace BankAdminApp.Tests
         }
 
         [TestMethod]
+        public void WhenDetailsIsCalledExceptionIsThrownIfCustomerIdIsNotValid()
+        {
+            int id = 111;
+
+            Assert.ThrowsException<InvalidOperationException>(() => sut.Details(id));
+        }
+        
+        [TestMethod]
         public void CheckCorrectValuesAreAssignedInCustomerDetails()
         {
             var customer = fixture.Build<Customer>().Without(r => r.Dispositions).Create<Customer>();

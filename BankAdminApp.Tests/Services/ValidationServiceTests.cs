@@ -29,7 +29,7 @@ namespace BankAdminApp.Tests.Services
         }
 
         [TestMethod]
-        public void BalanceIsInsufficientValidationReturnsTrueWhenTypeIsDebitAndBalanceIsInsufficient()
+        public void BalanceIsInsufficientValidationShouldReturnTrueWhenTypeIsDebitAndBalanceIsInsufficient()
         {
             var account = fixture.Create<Account>();
             account.Balance = 50;

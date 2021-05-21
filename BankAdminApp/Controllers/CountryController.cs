@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SharedThings.Data;
 using SharedThings.Services.Customers;
 using SharedThings.ViewModels;
@@ -20,10 +21,10 @@ namespace BankAdminApp.Controllers
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new[] { "country" })]
         public IActionResult TopTen(string country)
         {
-            //include
-            var topCustomers = _dbContext.Customers.Where(c => c.Country == country)
+            var topCustomers = _dbContext.Customers.Include(c => c.Dispositions)
+                .ThenInclude(d => d.Account).Where(c => c.Country == country)
                 .OrderByDescending(c => c.Dispositions.Sum(d => d.Account.Balance))
-                .Take(10);
+                .Take(10).ToList();
 
             var viewModel = new CountryTopTenViewModel
             {
