@@ -70,7 +70,7 @@
                             <label asp-for="ExternalAccount" class="col-md-3 col-form-label">Account number receiver</label>
                             <div class="col-md-9">
                                 <div class="form-group">
-                                    <input asp-for="ExternalAccount" class="form-control">
+                                    <input asp-for="ExternalAccount" class="form-control" onfocusout="showMessage();">
                                     <span asp-validation-for="ExternalAccount" class="field-validation-error"></span>
                                 </div>
                             </div>
@@ -127,6 +127,15 @@
                 });
             });
         });
+
+        function showMessage() {
+            swal({
+                title: "Notice",
+                text: "System will not verify external bank details, please ensure input is correct.",
+                buttonsStyling: false,
+                confirmButtonClass: "btn btn-info"
+            }).catch(swal.noop);
+        }
     </script>
 }
 

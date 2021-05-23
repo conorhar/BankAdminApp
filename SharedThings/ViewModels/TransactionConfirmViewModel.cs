@@ -8,7 +8,11 @@ namespace SharedThings.ViewModels
     {
         public string CustomerName { get; set; }
         public int CustomerId { get; set; }
+        
+        [Required]
         public int AccountId { get; set; }
+        
+        [Required]
         public string Operation { get; set; }
 
         [Required]
@@ -27,7 +31,10 @@ namespace SharedThings.ViewModels
         public decimal CurrentBalance { get; set; }
         public string DisplayCurrentBalance { get; set; }
         public string RemainingBalance { get; set; }
+
+        [Required]
         public string Type { get; set; }
+        
         public int InternalAccountId { get; set; }
     }
 }

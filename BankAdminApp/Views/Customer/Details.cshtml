@@ -24,19 +24,19 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title"><b>Name:</b> @Model.FullName</h5>
-                            <br />
+                            <br/>
                             <h5 class="card-title"><b>Customer Id:</b> @Model.Id</h5>
-                            <br />
+                            <br/>
                             <h5 class="card-title"><b>Address:</b> @Model.FullAddress</h5>
-                            <br />
+                            <br/>
                             <h5 class="card-title"><b>Date of birth:</b> @Model.Birthday</h5>
-                            <br />
+                            <br/>
                             <h5 class="card-title"><b>Gender:</b> @Model.Gender</h5>
-                            <br />
+                            <br/>
                             <h5 class="card-title"><b>National Id:</b> @Model.NationalId</h5>
-                            <br />
+                            <br/>
                             <h5 class="card-title"><b>Phone number:</b> @Model.FullTelephoneNumber</h5>
-                            <br />
+                            <br/>
                             <h5 class="card-title"><b>Email address:</b> @Model.Email</h5>
                         </div>
                     </div>
@@ -52,14 +52,14 @@
                                         <b>Account number: @a.AccountNumber</b>
                                     </a>
                                 </h4>
-                                <h5 class="card-title"><b>Balance:</b> @a.Balance</h5>
+                                <h5 class="card-title"><b>Balance:</b> @a.DisplayBalance</h5>
                                 <h5 class="card-title"><b>Frequency:</b> @a.Frequency</h5>
                                 <h5 class="card-title"><b>Created:</b> @a.CreationDate</h5>
                                 <h5 class="card-title"><b>Ownership:</b> @a.AccountOwnership</h5>
                                 <br/>
                             }
 
-                            <h4 class="card-title">Total balance @Model.TotalBalance</h4>
+                            <h4 class="card-title">Total balance @Model.DisplayTotalBalance</h4>
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,8 @@ namespace SharedThings.ViewModels
         public string NationalId { get; set; }
         public string FullTelephoneNumber { get; set; }
         public string Email { get; set; }
-        public string TotalBalance { get; set; }
+        public decimal TotalBalance { get; set; }
+        public string DisplayTotalBalance { get; set; }
         
         public List<AccountItem> AccountItems { get; set; }
 
@@ -21,7 +22,8 @@ namespace SharedThings.ViewModels
             public int AccountNumber { get; set; }
             public string Frequency { get; set; }
             public string CreationDate { get; set; }
-            public string Balance { get; set; }
+            public string DisplayBalance { get; set; }
+            public decimal Balance { get; set; }
             public string AccountOwnership { get; set; }
         }
     }

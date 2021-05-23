@@ -38,8 +38,6 @@ namespace BankAdminApp.Controllers
         [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Any)]
         public IActionResult Index(int accountId)
         {
-
-
             var viewModel = new HomeIndexViewModel
             {
                 TotalCustomers = _dbContext.Customers.Count(),

@@ -93,14 +93,15 @@ namespace BankAdminApp.Controllers
                 AccountItems = _customerService.GetAccounts(dbCustomer.CustomerId).Select(r => new CustomerDetailsViewModel.AccountItem
                 {
                     AccountNumber = r.AccountId,
-                    Balance = _customerService.FormatAmount(r.Balance),
+                    Balance = r.Balance,
+                    DisplayBalance = _customerService.FormatAmount(r.Balance),
                     CreationDate = r.Created.ToString("yyyy-MM-dd"),
                     Frequency = r.Frequency,
                     AccountOwnership = _customerService.GetAccountOwnershipInfo(dbCustomer.CustomerId, r.AccountId)
                 }).ToList()
             };
 
-            viewModel.TotalBalance = _customerService.FormatAmount(viewModel.AccountItems.Sum(r => Convert.ToDecimal(r.Balance)));
+            viewModel.DisplayTotalBalance = _customerService.FormatAmount(viewModel.AccountItems.Sum(r => Convert.ToDecimal(r.Balance)));
 
             return View(viewModel);
         }

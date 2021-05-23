@@ -63,5 +63,10 @@ namespace SharedThings.Services.Accounts
         {
             return _dbContext.Accounts.First(r => r.AccountId == accountId).Balance;
         }
+
+        public int GetCustomerId(int accountId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

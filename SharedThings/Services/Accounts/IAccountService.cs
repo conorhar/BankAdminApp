@@ -11,5 +11,6 @@ namespace SharedThings.Services.Accounts
         string GetCustomerFirstName(int accountId);
         string GetCustomerLastName(int accountId);
         decimal GetBalance(int accountId);
+        int GetCustomerId(int accountId);
     }
 }
