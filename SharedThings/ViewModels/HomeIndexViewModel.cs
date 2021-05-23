@@ -8,7 +8,7 @@ namespace SharedThings.ViewModels
     {
         public int TotalCustomers { get; set; }
         public int TotalAccounts { get; set; }
-        public decimal TotalBalance { get; set; }
+        public string TotalBalance { get; set; }
         public int AccountId { get; set; }
         public HtmlString VectorMapCodesAndValues { get; set; }
 
@@ -20,7 +20,7 @@ namespace SharedThings.ViewModels
             public string Country { get; set; }
             public int TotalCustomers { get; set; }
             public int TotalAccounts { get; set; }
-            public decimal TotalBalance { get; set; }
+            public string TotalBalance { get; set; }
         }
 
         public class CountryCodeItem

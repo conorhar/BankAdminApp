@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using SharedThings;
 using SharedThings.Data;
 using SharedThings.Services.Accounts;
+using SharedThings.Services.Customers;
 using SharedThings.ViewModels;
 
 namespace BankAdminApp.Controllers
@@ -14,11 +15,13 @@ namespace BankAdminApp.Controllers
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IAccountService _accountService;
+        private readonly ICustomerService _customerService;
 
-        public AccountController(ApplicationDbContext dbContext, IAccountService accountService)
+        public AccountController(ApplicationDbContext dbContext, IAccountService accountService, ICustomerService customerService)
         {
             _dbContext = dbContext;
             _accountService = accountService;
+            _customerService = customerService;
         }
 
         [Authorize(Roles = "Admin, Cashier")]
@@ -32,7 +35,7 @@ namespace BankAdminApp.Controllers
             {
                 AmountClicksUntilEnd = (_accountService.GetTotalAmountTransactions(id) / 20) + 1,
                 AccountId = dbAccount.AccountId,
-                Balance = dbAccount.Balance,
+                Balance = _customerService.FormatAmount(dbAccount.Balance),
                 TotalTransactions = _accountService.GetTotalAmountTransactions(id),
 
                 TransactionItems = dbTransactions.Select(r => new AccountTransactionRowViewModel()
@@ -40,8 +43,8 @@ namespace BankAdminApp.Controllers
                     TransactionId = r.TransactionId,
                     Date = r.Date.ToString("yyyy-MM-dd"),
                     Type = r.Type,
-                    Amount = r.Amount,
-                    Balance = r.Balance,
+                    Amount = _customerService.FormatAmount(r.Amount),
+                    Balance = _customerService.FormatAmount(r.Balance),
                     JsonObj = JsonConvert.SerializeObject(r, Formatting.Indented,
                     new JsonSerializerSettings
                     {
@@ -71,8 +74,8 @@ namespace BankAdminApp.Controllers
                 TransactionId = r.TransactionId,
                 Date = r.Date.ToString("yyyy-MM-dd"),
                 Type = r.Type,
-                Amount = r.Amount,
-                Balance = r.Balance,
+                Amount = _customerService.FormatAmount(r.Amount),
+                Balance = _customerService.FormatAmount(r.Balance),
                 JsonObj = JsonConvert.SerializeObject(r, Formatting.Indented,
                     new JsonSerializerSettings
                     {

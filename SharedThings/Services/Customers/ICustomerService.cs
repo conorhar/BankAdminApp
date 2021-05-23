@@ -17,5 +17,7 @@ namespace SharedThings.Services.Customers
         List<SelectListItem> GetCountriesListItems(string newOrEdit = null);
         string GetCountryCode(string customerCountry);
         Account CreateAccount(Customer customer);
+
+        string FormatAmount(decimal balance);
     }
 }

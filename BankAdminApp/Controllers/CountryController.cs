@@ -35,7 +35,7 @@ namespace BankAdminApp.Controllers
                     FullName = _customerService.GetFullName(c),
                     City = c.City,
                     Id = c.CustomerId,
-                    TotalBalance = c.Dispositions.Sum(d => d.Account.Balance)
+                    TotalBalance = _customerService.FormatAmount(c.Dispositions.Sum(d => d.Account.Balance))
                 }).ToList()
             };
             viewModel.Country = country;

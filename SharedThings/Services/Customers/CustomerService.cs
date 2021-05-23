@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -131,7 +132,15 @@ namespace SharedThings.Services.Customers
 
             return account;
         }
-        
+
+        public string FormatAmount(decimal balance)
+        {
+            var nfi = (NumberFormatInfo)CultureInfo.CurrentCulture.NumberFormat.Clone();
+            nfi.NumberGroupSeparator = " ";
+            
+            return balance.ToString("#,0.00", nfi); // "1 234 897.11"
+        }
+
         //public IQueryable<Customer> BuildQuery(string sortField, string sortOrder, string q, int page, int pageSize)
         //{
         //    var query = GetResults(q);

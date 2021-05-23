@@ -48,14 +48,11 @@
                 }
 
                 <br />
-                <h5 class="card-title"><b>Current balance:</b> @Model.CurrentBalance</h5>
+                <h5 class="card-title"><b>Current balance:</b> @Model.DisplayCurrentBalance</h5>
                 <br />
-                <h5 class="card-title"><b>Transaction amount:</b> @Model.Amount.ToString("F")</h5>
+                <h5 class="card-title"><b>Transaction amount:</b> @Model.DisplayAmount</h5>
                 <br />
-                <h5 class="card-title">
-                    <b>Remaining balance:</b>
-                    @(Model.Type == "Debit" ? (Model.CurrentBalance - Model.Amount).ToString("F") : (Model.CurrentBalance + Model.Amount).ToString("F"))
-                </h5>
+                <h5 class="card-title"><b>Remaining balance:</b> @Model.RemainingBalance</h5>
             </div>
             <div class="card-footer ">
                 <div class="ml-auto">

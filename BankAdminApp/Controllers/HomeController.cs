@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Identity;
@@ -37,11 +38,13 @@ namespace BankAdminApp.Controllers
         [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Any)]
         public IActionResult Index(int accountId)
         {
+
+
             var viewModel = new HomeIndexViewModel
             {
                 TotalCustomers = _dbContext.Customers.Count(),
                 TotalAccounts = _dbContext.Accounts.Count(),
-                TotalBalance = _dbContext.Accounts.Sum(r => r.Balance),
+                TotalBalance = _customerService.FormatAmount(_dbContext.Accounts.Sum(r => r.Balance)),
                 AccountId = accountId
             };
 
@@ -58,14 +61,16 @@ namespace BankAdminApp.Controllers
                     Country = c.Country,
                     TotalCustomers = _dbContext.Customers.Count(r => r.Country == c.Country),
                     TotalAccounts = _dbContext.Accounts.Count(r => r.Dispositions.Any(d => d.Customer.Country == c.Country && d.Type == "OWNER")),
-                    TotalBalance = _dbContext.Accounts.Where(r => r.Dispositions.Any(d => d.Customer.Country == c.Country && d.Type == "OWNER")).Sum(r => r.Balance)
+                    TotalBalance = _customerService.FormatAmount(_dbContext.Accounts.Where(r => r.Dispositions
+                                    .Any(d => d.Customer.Country == c.Country && d.Type == "OWNER"))
+                                    .Sum(r => r.Balance))
                 }).ToList());
 
             var vectorMapList = viewModel.CountryItems.Select(c =>
                 new HomeIndexViewModel.CountryCodeItem
                 {
                     Code = c.CountryCode,
-                    Value = CalculateValue(c.TotalBalance)
+                    Value = CalculateValue(c)
                 }).ToList();
 
             viewModel.VectorMapCodesAndValues =  new HtmlString(JsonConvert.SerializeObject(vectorMapList));
@@ -73,9 +78,13 @@ namespace BankAdminApp.Controllers
             return View(viewModel);
         }
 
-        private int CalculateValue(decimal amt)
+        private int CalculateValue(HomeIndexViewModel.CountryItem c)
         {
-            return Convert.ToInt32(amt) / 100000;
+            var totalBalance = _dbContext.Accounts.Where(r => r.Dispositions
+                    .Any(d => d.Customer.Country == c.Country && d.Type == "OWNER"))
+                    .Sum(r => r.Balance);
+
+            return Convert.ToInt32(totalBalance) / 100000;
         }
     }
 }

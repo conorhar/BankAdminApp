@@ -16,6 +16,8 @@ namespace SharedThings.ViewModels
         [Remote("ValidateAmount", "Transaction", AdditionalFields = "AccountId, Type")]
         public decimal Amount { get; set; }
 
+        public string DisplayAmount { get; set; }
+
         [Remote("ValidateBankCode", "Transaction", AdditionalFields = "Operation")]
         public string Bank { get; set; }
 
@@ -23,6 +25,8 @@ namespace SharedThings.ViewModels
         public string ExternalAccount { get; set; }
         
         public decimal CurrentBalance { get; set; }
+        public string DisplayCurrentBalance { get; set; }
+        public string RemainingBalance { get; set; }
         public string Type { get; set; }
         public int InternalAccountId { get; set; }
     }

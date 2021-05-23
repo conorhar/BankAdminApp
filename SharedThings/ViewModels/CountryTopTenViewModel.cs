@@ -12,7 +12,7 @@ namespace SharedThings.ViewModels
             public int Id { get; set; }
             public string FullName { get; set; }
             public string City { get; set; }
-            public decimal TotalBalance { get; set; }
+            public string TotalBalance { get; set; }
         }
     }
 }

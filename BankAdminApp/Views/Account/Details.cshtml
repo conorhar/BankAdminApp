@@ -115,8 +115,8 @@
                 output += `<h5><b>Operation:</b> ${obj.Operation}</h5>`;
             }
 
-            output += `<h5><b>Amount:</b> ${(Math.round(obj.Amount * 100) / 100).toFixed(2).toString().replace('.', ',')}</h5>
-                        <h5><b>Balance:</b> ${(Math.round(obj.Balance * 100) / 100).toFixed(2).toString().replace('.', ',')}</h5>`;
+            output += `<h5><b>Amount:</b> ${(Math.round(obj.Amount * 100) / 100).toFixed(2).toString().replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}</h5>
+                        <h5><b>Balance:</b> ${(Math.round(obj.Balance * 100) / 100).toFixed(2).toString().replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}</h5>`;
 
             if (!(isNullOrWhiteSpace(obj.Symbol))) {
                 output += `<h5><b>Symbol:</b> ${obj.Symbol}</h5>`;

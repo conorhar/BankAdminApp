@@ -97,12 +97,20 @@ namespace BankAdminApp.Controllers
                     AccountId = viewModel.AccountId,
                     Operation = viewModel.Operation,
                     Amount = viewModel.Amount,
+                    DisplayAmount = _customerService.FormatAmount(viewModel.Amount),
                     Bank = viewModel.Bank,
                     ExternalAccount = viewModel.ExternalAccount,
                     Type = viewModel.Type,
                     CurrentBalance = viewModel.CurrentBalance,
+                    DisplayCurrentBalance = _customerService.FormatAmount(viewModel.CurrentBalance),
                     InternalAccountId = viewModel.InternalAccountId
                 };
+
+                var remainingBalance = viewModel.Type == "Debit"
+                    ? (viewModel.CurrentBalance - viewModel.Amount)
+                    : (viewModel.CurrentBalance + viewModel.Amount);
+
+                nextViewModel.RemainingBalance = _customerService.FormatAmount(remainingBalance);
 
                 return View("Confirm", nextViewModel);
             }
