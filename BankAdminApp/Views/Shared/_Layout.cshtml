@@ -150,8 +150,8 @@ The above copyright notice and this permission notice shall be included in all c
 
                     @if (_signInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Cashier")))
                     {
-                        <li class="@((activeController == "Customer" || activeController == "Country") && activeAction != "GetApiKey" ? 
-                                       "nav-item active" : "nav-item")">
+                        <li class="@((activeController == "Customer" || activeController == "Country" || activeController == "Account") 
+                                     && activeAction != "GetApiKey" ? "nav-item active" : "nav-item")">
                             <a class="nav-link" data-toggle="collapse" href="#pagesExamples">
                                 <i class="material-icons">groups</i>
                                 <p>
